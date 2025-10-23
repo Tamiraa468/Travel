@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { useTravelAgencyContext } from "../context/TravelAgencyContext";
 import { assets } from "../assets/assets";
 
@@ -35,7 +34,7 @@ const Navbar: React.FC = () => {
           </span>
         </div>
 
-        {/* Desktop Links + Auth */}
+        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-6">
           {/* Main Nav Links */}
           <Link href="/" className="hover:text-blue-700 transition">
@@ -64,34 +63,7 @@ const Navbar: React.FC = () => {
             </Link>
           )}
 
-          {/* Auth Links */}
-          <SignedIn>
-            <UserButton
-              appearance={{
-                elements: {
-                  userButtonBox: "h-10 w-10",
-                  userButtonTrigger: "h-10 w-10",
-                  userButtonAvatarBox: "h-10 w-10",
-                },
-              }}
-              afterSignOutUrl="/"
-            />
-          </SignedIn>
-
-          <SignedOut>
-            <Link
-              href="/auth/sign-in"
-              className="px-4 py-2 text-blue-600 hover:text-blue-700 transition"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth/sign-up"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-            >
-              Sign Up
-            </Link>
-          </SignedOut>
+          {/* No auth: removed Clerk buttons and links */}
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -149,25 +121,7 @@ const Navbar: React.FC = () => {
             </Link>
           )}
 
-          {/* Auth Links for Mobile */}
-          <SignedOut>
-            <div className="px-6 py-3 border-t">
-              <Link
-                href="/auth/sign-in"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-2 text-center text-blue-600 hover:bg-blue-50 rounded transition"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/auth/sign-up"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-2 mt-2 text-center bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </SignedOut>
+          {/* No auth on mobile */}
         </div>
       )}
     </header>

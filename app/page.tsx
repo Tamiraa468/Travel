@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Navbar from "../Components/Navbar";
 import HeaderSlider from "../Components/HeaderSlider";
 import RecommendedTours from "@/Components/RecommendedTours";
