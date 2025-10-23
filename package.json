@@ -16,6 +16,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "autoprefixer": "^10.4.16",
+    "tailwindcss": "^4.1.14",
+    "@tailwindcss/postcss": "^4.1.14",
     "lucide-react": "^0.292.0",
     "nodemailer": "^6.9.7",
     "@types/nodemailer": "^6.4.14"
@@ -24,8 +26,6 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "tailwindcss": "^4.1.14",
-    "@tailwindcss/postcss": "^4.1.14",
     "typescript": "^5"
   }
 }
