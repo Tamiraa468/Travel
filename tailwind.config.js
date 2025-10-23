@@ -4,7 +4,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./Components/**/*.{js,ts,jsx,tsx,mdx}", // Capitalized folder on Linux/Vercel
+    "./Components/**/*.{js,ts,jsx,tsx,mdx}", // capitalized folder on Linux/Vercel
   ],
   theme: {
     extend: {},
