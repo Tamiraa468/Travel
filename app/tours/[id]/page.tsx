@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useTravelAgencyContext, Tour } from "@/context/TravelAgencyContext";
 import Navbar from "../../../Components/Navbar";
 import Footer from "../../../Components/Footer";
@@ -18,6 +18,7 @@ const TourPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
     "overview" | "itinerary" | "included"
   >("overview");
+  const router = useRouter();
 
   useEffect(() => {
     const tour = tours.find((t) => t.id === id);
@@ -159,9 +160,18 @@ const TourPage: React.FC = () => {
                 </div>
               )}
 
-              {/* CTA Button */}
+              {/* CTA Button - navigate to dedicated payment page */}
               <div className="flex justify-center mt-10">
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors duration-300 transform hover:scale-105">
+                <button
+                  onClick={() =>
+                    router.push(
+                      `/payment?tourId=${encodeURIComponent(
+                        tourData.id
+                      )}&amount=${Math.round(Number(tourData.price) * 100)}`
+                    )
+                  }
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-medium transition-colors duration-300 transform hover:scale-105"
+                >
                   Book This Tour
                 </button>
               </div>
@@ -409,7 +419,16 @@ const TourPage: React.FC = () => {
                   </div>
                 </div>
 
-                <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300">
+                <button
+                  onClick={() =>
+                    router.push(
+                      `/payment?tourId=${encodeURIComponent(
+                        tourData.id
+                      )}&amount=${Math.round(Number(tourData.price) * 100)}`
+                    )
+                  }
+                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+                >
                   Book Now
                 </button>
               </div>
