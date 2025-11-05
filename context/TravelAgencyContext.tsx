@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { useRouter } from "next/navigation";
 import { assets } from "@/assets/assets";
+import TOURS from "@/data/tours";
 
 // ---------------- Types ----------------
 export type Traveler = {
@@ -71,198 +72,7 @@ export const useTravelAgencyContext = () => {
   return ctx;
 };
 
-// ---------------- Dummy Data ----------------
-
-const DUMMY_TOURS: Tour[] = [
-  {
-    id: "gobi-001",
-    title: "Gobi Desert Adventure",
-    description:
-      "Explore the vast dunes, camels, and nomadic lifestyle of the Gobi Desert.",
-    price: 850,
-    duration: "7 Days",
-    image: assets.tourImages.gobi,
-    location: "Gobi Desert, Mongolia",
-    highlights: [
-      "Camel riding through sand dunes",
-      "Visit to local nomadic families",
-      "Explore ancient dinosaur fossils",
-      "Sunset photography at the Singing Sands",
-      "Traditional Mongolian barbecue dinner",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrival in Gobi",
-        description:
-          "Arrive in the Gobi region, meet your guide, and settle into your ger camp. Welcome dinner and orientation.",
-      },
-      {
-        day: 2,
-        title: "Sand Dunes Adventure",
-        description:
-          "Full day exploring the Khongoryn Els sand dunes with camel riding and photography opportunities.",
-      },
-      {
-        day: 3,
-        title: "Nomadic Culture",
-        description:
-          "Visit local families, learn about traditional nomadic lifestyle, and participate in daily activities.",
-      },
-      {
-        day: 4,
-        title: "Dinosaur Valley",
-        description:
-          "Explore famous dinosaur fossil sites and the Flaming Cliffs, with sunset viewing.",
-      },
-      {
-        day: 5,
-        title: "Desert Flora and Fauna",
-        description:
-          "Nature walk to observe desert wildlife and plants, evening star-gazing session.",
-      },
-      {
-        day: 6,
-        title: "Local Traditions",
-        description:
-          "Learn about Mongolian customs, try traditional archery, and enjoy a farewell dinner.",
-      },
-      {
-        day: 7,
-        title: "Departure",
-        description:
-          "Morning activities and departure with lasting memories of the Gobi Desert.",
-      },
-    ],
-    included: [
-      "Professional English-speaking guide",
-      "All transportation during the tour",
-      "Accommodation in ger camps",
-      "All meals during the tour",
-      "Entrance fees to protected areas",
-      "Camel riding activities",
-      "Traditional cultural performances",
-    ],
-    notIncluded: [
-      "International flights",
-      "Travel insurance",
-      "Personal expenses",
-      "Alcoholic beverages",
-      "Gratuities",
-    ],
-  },
-  {
-    id: "khuvsgul-002",
-    title: "Lake Khövsgöl Retreat",
-    description:
-      "Experience Mongolia's Blue Pearl — crystal lake and reindeer culture.",
-    price: 950,
-    duration: "6 Days",
-    image: assets.tourImages.khuvsgul,
-    location: "Khövsgöl Province, Mongolia",
-    highlights: [
-      "Boat trip on Lake Khövsgöl",
-      "Meet Tsaatan reindeer herders",
-      "Horseback riding through taiga forest",
-      "Traditional shaman ceremony",
-      "Lakeside camping experience",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Journey to Khövsgöl",
-        description:
-          "Travel to Lake Khövsgöl, settle in at lakeside camp, evening welcome dinner.",
-      },
-      {
-        day: 2,
-        title: "Lake Exploration",
-        description:
-          "Boat trip on the crystal-clear waters, hiking along the shore, sunset photography.",
-      },
-      {
-        day: 3,
-        title: "Reindeer Herders",
-        description:
-          "Visit Tsaatan community, learn about their unique lifestyle with reindeer herds.",
-      },
-      {
-        day: 4,
-        title: "Taiga Adventure",
-        description:
-          "Horseback riding through the taiga forest, picnic lunch in nature.",
-      },
-      {
-        day: 5,
-        title: "Cultural Immersion",
-        description:
-          "Traditional shaman ceremony, local crafts workshop, farewell dinner.",
-      },
-      {
-        day: 6,
-        title: "Return Journey",
-        description:
-          "Morning by the lake, departure with memories of Mongolia's blue pearl.",
-      },
-    ],
-    included: [
-      "Expert local guide",
-      "All transportation",
-      "Lakeside accommodation",
-      "All meals",
-      "Boat trip fees",
-      "Horse riding",
-      "Cultural activities",
-    ],
-    notIncluded: [
-      "Flights to/from Khövsgöl",
-      "Travel insurance",
-      "Personal expenses",
-      "Optional activities",
-      "Tips for guides",
-    ],
-  },
-  {
-    id: "terelj-003",
-    title: "Terelj National Park Day Tour",
-    description:
-      "Visit Turtle Rock, Aryabal Temple, and enjoy traditional Mongolian food.",
-    price: 150,
-    duration: "1 Day",
-    image: assets.tourImages.terelj,
-    location: "Terelj National Park, Mongolia",
-    highlights: [
-      "Visit iconic Turtle Rock",
-      "Hike to Aryabal Temple",
-      "Traditional Mongolian lunch",
-      "Short horse riding session",
-      "Visit to nomad family",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Terelj Adventure",
-        description:
-          "Morning pickup from Ulaanbaatar, drive to Terelj National Park. Visit Turtle Rock, hike to Aryabal Temple, enjoy traditional lunch, meet local family, and return to the city by evening.",
-      },
-    ],
-    included: [
-      "Transportation from/to Ulaanbaatar",
-      "English speaking guide",
-      "Traditional lunch",
-      "Entrance fees",
-      "Short horse riding",
-      "Bottled water",
-    ],
-    notIncluded: [
-      "Additional snacks",
-      "Optional activities",
-      "Personal expenses",
-      "Gratuities",
-      "Travel insurance",
-    ],
-  },
-];
+// We'll map TOURS into the richer client-side shape when the client sets state.
 
 // ---------------- Provider ----------------
 export default function TravelAgencyProvider({
@@ -281,7 +91,13 @@ export default function TravelAgencyProvider({
   const fetchTours = async () => {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
-        setTours(DUMMY_TOURS);
+        // Map the shared minimal TOURS data into the client-side Tour shape
+        const mapped = TOURS.map((t) => ({
+          ...t,
+          // attach the actual image strings/objects from assets using the imageKey
+          image: (assets as any).tourImages?.[t.imageKey as string] || t.imageKey,
+        }));
+        setTours(mapped as any);
         resolve();
       }, 100);
     });

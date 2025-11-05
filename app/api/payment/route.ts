@@ -20,7 +20,7 @@ const stripe = new Stripe(stripeSecret, {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { amount, currency = "usd", receipt_email } = body || {};
+  const { amount, currency = "usd", receipt_email, tourId } = body || {};
 
     // Basic validation
     if (
@@ -38,6 +38,27 @@ export async function POST(request: Request) {
       );
     }
 
+    // If a tourId is provided, verify the amount matches the canonical tour price.
+    if (tourId) {
+      try {
+        // Import shared tour list (synchronous import is fine on the server)
+        const { TOURS } = await import("@/data/tours");
+        const tour = TOURS.find((t: any) => t.id === tourId);
+        if (!tour) {
+          return NextResponse.json({ error: "Invalid tourId" }, { status: 400 });
+        }
+        const expected = Math.round(Number(tour.price) * 100);
+        if (expected !== amount) {
+          return NextResponse.json(
+            { error: `Amount mismatch for tour ${tourId}. Expected ${expected}` },
+            { status: 400 }
+          );
+        }
+      } catch (e) {
+        console.error("Could not verify tour price", e);
+      }
+    }
+
     // Create a PaymentIntent with automatic payment methods enabled.
     // We return the client_secret to the frontend which will confirm the payment securely
     // using Stripe.js and Elements (card details never touch your server).
@@ -49,8 +70,14 @@ export async function POST(request: Request) {
       receipt_email,
     });
 
+    // Return useful info to the frontend. The frontend will use clientSecret to
+    // confirm the payment with Stripe.js. We also return the PaymentIntent id
+    // and status for logging/verification on the client if needed.
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
+      id: paymentIntent.id,
+      amount: paymentIntent.amount,
+      currency: paymentIntent.currency,
       status: paymentIntent.status,
     });
   } catch (err: any) {
