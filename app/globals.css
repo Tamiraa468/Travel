@@ -1,3 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Use the Tailwind v4 import form. The PostCSS plugin @tailwindcss/postcss
+	will expand this import into base/components/utilities during the build. */
+@import "tailwindcss";
+
+/* You can add global custom styles below */
