@@ -95,7 +95,8 @@ export default function TravelAgencyProvider({
         const mapped = TOURS.map((t) => ({
           ...t,
           // attach the actual image strings/objects from assets using the imageKey
-          image: (assets as any).tourImages?.[t.imageKey as string] || t.imageKey,
+          image:
+            (assets as any).tourImages?.[t.imageKey as string] || t.imageKey,
         }));
         setTours(mapped as any);
         resolve();

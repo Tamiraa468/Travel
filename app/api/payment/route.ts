@@ -20,7 +20,7 @@ const stripe = new Stripe(stripeSecret, {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-  const { amount, currency = "usd", receipt_email, tourId } = body || {};
+    const { amount, currency = "usd", receipt_email, tourId } = body || {};
 
     // Basic validation
     if (
@@ -45,12 +45,17 @@ export async function POST(request: Request) {
         const { TOURS } = await import("@/data/tours");
         const tour = TOURS.find((t: any) => t.id === tourId);
         if (!tour) {
-          return NextResponse.json({ error: "Invalid tourId" }, { status: 400 });
+          return NextResponse.json(
+            { error: "Invalid tourId" },
+            { status: 400 }
+          );
         }
         const expected = Math.round(Number(tour.price) * 100);
         if (expected !== amount) {
           return NextResponse.json(
-            { error: `Amount mismatch for tour ${tourId}. Expected ${expected}` },
+            {
+              error: `Amount mismatch for tour ${tourId}. Expected ${expected}`,
+            },
             { status: 400 }
           );
         }

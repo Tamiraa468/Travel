@@ -4,7 +4,12 @@ import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 type Props = {
-  // clientSecret is not required here because we fetch it from the server
+  // amount to charge in the smallest currency unit (e.g. cents)
+  amount: number;
+  // optional email for the receipt
+  receiptEmail?: string;
+  // called when payment succeeds with the paymentIntent id
+  onSuccess?: (paymentIntentId?: string) => void;
 };
 
 // A small style object for the CardElement
@@ -24,7 +29,11 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-export default function CheckoutForm(_: Props) {
+export default function CheckoutForm({
+  amount,
+  receiptEmail,
+  onSuccess,
+}: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -44,13 +53,16 @@ export default function CheckoutForm(_: Props) {
     setLoading(true);
 
     try {
-      // Example: charge $10.00 -> amount in cents
-      const amount = 1000; // TODO: replace with real amount calculation
-
+      // amount is provided by the parent component (in cents). The server
+      // validates it again to avoid client-side manipulation.
       const res = await fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount, currency: "usd" }),
+        body: JSON.stringify({
+          amount,
+          currency: "usd",
+          receipt_email: receiptEmail,
+        }),
       });
 
       const data = await res.json();
@@ -86,6 +98,7 @@ export default function CheckoutForm(_: Props) {
           confirmResult.paymentIntent.status === "succeeded"
         ) {
           setMessage("Payment succeeded! Thank you.");
+          if (onSuccess) onSuccess(confirmResult.paymentIntent.id);
         } else {
           setMessage(`Payment status: ${confirmResult.paymentIntent?.status}`);
         }
@@ -113,7 +126,7 @@ export default function CheckoutForm(_: Props) {
         disabled={!stripe || loading}
         className="w-full bg-blue-600 text-white py-2 rounded disabled:opacity-50"
       >
-        {loading ? "Processing…" : "Pay $10.00"}
+        {loading ? "Processing…" : `Pay $${(amount / 100).toFixed(2)}`}
       </button>
 
       {message && <p className="mt-4 text-center">{message}</p>}
