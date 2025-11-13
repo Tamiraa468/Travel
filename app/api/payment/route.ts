@@ -11,7 +11,7 @@ if (!stripeSecret) {
 }
 
 const stripe = new Stripe(stripeSecret, {
-  apiVersion: "2022-11-15",
+  apiVersion: "2025-10-29",
 });
 
 // This route handles POST /api/payment

@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   CheckCircle,
   Globe2,
@@ -47,38 +48,140 @@ const features = [
 ];
 
 const WhyChooseUs = () => {
+  const sectionRef = useRef(null);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  // Track scroll direction
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Animation trigger: only when scrolled into view
+  const isInView = useInView(sectionRef, {
+    once: true, // Animation plays only once, when first entering viewport
+    margin: "0px 0px -100px 0px", // Trigger 100px before entering viewport
+  });
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const headingVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" as any },
+    },
+  };
+
+  const lineVariants = {
+    hidden: { width: 0 },
+    visible: {
+      width: 96,
+      transition: { duration: 0.6, delay: 0.3, ease: "easeOut" as any },
+    },
+  };
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay: 0.2, ease: "easeOut" as any },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" as any },
+    },
+  };
   return (
-    <section className="py-20 bg-white">
+    <motion.section
+      ref={sectionRef}
+      className="py-20 bg-white"
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
       {/* Header */}
-      <div className="flex flex-col items-center text-center px-4">
-        <h2 className="text-3xl md:text-4xl font-semibold text-gray-800">
+      <motion.div
+        className="flex flex-col items-center text-center px-4"
+        variants={containerVariants}
+      >
+        <motion.h2
+          className="text-3xl md:text-4xl font-semibold text-gray-800"
+          variants={headingVariants}
+        >
           Why <span className="text-blue-800">Choose Us?</span>
-        </h2>
-        <div className="w-24 h-0.5 bg-blue-800 mt-3"></div>
-        <p className="text-gray-600 max-w-xl mt-4">
+        </motion.h2>
+        <motion.div
+          className="h-0.5 bg-blue-800 mt-3"
+          variants={lineVariants}
+        />
+        <motion.p
+          className="text-gray-600 max-w-xl mt-4"
+          variants={textVariants}
+        >
           We go beyond ordinary tours — offering authentic, safe, and
           unforgettable experiences across Mongolia.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       {/* Features grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-16 px-6 md:px-16 lg:px-32">
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-16 px-6 md:px-16 lg:px-32"
+        variants={containerVariants}
+      >
         {features.map(({ id, icon, title, description }) => (
-          <div
+          <motion.div
             key={id}
-            className="bg-white shadow-md rounded-2xl p-8 flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-lg transition duration-300"
+            className="bg-white shadow-md rounded-2xl p-8 flex flex-col items-center text-center"
+            variants={cardVariants}
+            whileHover={{
+              y: -8,
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
+              transition: { duration: 0.3 },
+            }}
           >
-            <div className="mb-4">{icon}</div>
+            <motion.div
+              className="mb-4"
+              whileHover={{
+                scale: 1.1,
+                rotate: 10,
+                transition: { duration: 0.3 },
+              }}
+            >
+              {icon}
+            </motion.div>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
               {title}
             </h3>
             <p className="text-gray-600 text-sm leading-relaxed">
               {description}
             </p>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 
