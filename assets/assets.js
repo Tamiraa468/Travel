@@ -5,7 +5,7 @@ import logo from './logo.png';
 import gobi from './gobi.jpg';
 import khuvsgul from './khuvsgul.jpg';
 import terelj from './terelj.jpg';
-import Hero  from './gobi_hero.jpg';
+import Hero  from './gobi_Hero.jpg';
 
 export const assets = { 
   sliderImages: [Slider1, Slider2],
