@@ -1,7 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "./lib/auth";
-
-export const runtime = "nodejs";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -11,10 +8,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Protect admin routes
+  // Protect admin routes - just check if session cookie exists
   if (pathname.startsWith("/admin")) {
-    const session = await getSession();
-    if (!session?.isAdmin) {
+    const sessionCookie = request.cookies.get("admin_session")?.value;
+    if (!sessionCookie) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }
   }
