@@ -10,7 +10,7 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true, // Only use this if you're having typescript issues during deployment
-  }
+  },
 };
 
 module.exports = nextConfig;
