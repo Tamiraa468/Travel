@@ -9,7 +9,10 @@ const nextConfig = {
     ],
   },
   typescript: {
-    ignoreBuildErrors: true, // Only use this if you're having typescript issues during deployment
+    ignoreBuildErrors: true,
+  },
+  experimental: {
+    serverActions: true,
   },
 };
 
