@@ -7,7 +7,8 @@ export async function GET() {
       include: { dates: true },
       orderBy: { createdAt: "desc" },
     });
-    return NextResponse.json({ ok: true, data: tours });
+    console.log("API GET /tours: Found", tours.length, "tours");
+    return NextResponse.json(tours); // Return array directly for easier client consumption
   } catch (error) {
     console.error("GET /api/tours error", error);
     return NextResponse.json(

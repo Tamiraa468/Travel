@@ -1,8 +1,5 @@
 import { cookies } from "next/headers";
-import crypto from "crypto";
 
-const SESSION_SECRET =
-  process.env.SESSION_SECRET || "your-secret-key-change-in-production";
 const SESSION_NAME = "admin_session";
 
 export type SessionData = {
@@ -11,18 +8,13 @@ export type SessionData = {
 };
 
 /**
- * Create signed session cookie
+ * Create session cookie - simplified without signature
  */
 export async function createSession(data: SessionData) {
   const cookieStore = await cookies();
   const sessionData = JSON.stringify(data);
-  const timestamp = Date.now();
-  const signature = crypto
-    .createHmac("sha256", SESSION_SECRET)
-    .update(`${sessionData}${timestamp}`)
-    .digest("hex");
 
-  cookieStore.set(SESSION_NAME, `${sessionData}.${timestamp}.${signature}`, {
+  cookieStore.set(SESSION_NAME, sessionData, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -31,7 +23,7 @@ export async function createSession(data: SessionData) {
 }
 
 /**
- * Get and verify session
+ * Get session from cookie
  */
 export async function getSession(): Promise<SessionData | null> {
   const cookieStore = await cookies();
@@ -39,23 +31,12 @@ export async function getSession(): Promise<SessionData | null> {
 
   if (!sessionCookie) return null;
 
-  const [sessionData, timestamp, signature] = sessionCookie.split(".");
-  const expectedSignature = crypto
-    .createHmac("sha256", SESSION_SECRET)
-    .update(`${sessionData}${timestamp}`)
-    .digest("hex");
-
-  if (signature !== expectedSignature) {
-    return null;
-  }
-
   try {
-    return JSON.parse(sessionData);
+    return JSON.parse(sessionCookie);
   } catch {
     return null;
   }
 }
-
 /**
  * Delete session
  */

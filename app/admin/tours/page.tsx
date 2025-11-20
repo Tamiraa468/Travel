@@ -16,6 +16,7 @@ async function handleDeleteTour(tourId: string) {
 
 export default async function ToursPage() {
   const tours = await getAllTours();
+  console.log("Tours fetched in page:", tours.length, tours);
 
   return (
     <div className="space-y-6">

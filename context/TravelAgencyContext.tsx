@@ -87,21 +87,42 @@ export default function TravelAgencyProvider({
   const [tours, setTours] = useState<Tour[]>([]);
   const [bookingRequests, setBookingRequests] = useState<BookingRequest[]>([]);
 
-  // Fetch tours (could be from API)
+  // Fetch tours from database
   const fetchTours = async () => {
-    return new Promise<void>((resolve) => {
+    try {
+      // Call the getAllTours API route
+      const response = await fetch("/api/tours", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const result = await response.json();
+      const dbTours = result.data || result; // Handle both { data: [] } and []
+
+      // Map database tours to context Tour type
+      const mapped = dbTours.map((t: any) => ({
+        id: t.id,
+        title: t.title,
+        description: t.description,
+        price: t.priceFrom || t.price || 0, // Map priceFrom to price
+        duration: `${t.days || 1} days`, // Create duration from days
+        location: "Mongolia", // Default location
+        image: t.mainImage || "", // Use mainImage
+        highlights: t.highlights || [],
+        included: t.includes || [],
+      }));
+      setTours(mapped);
+    } catch (error) {
+      console.error("Error fetching tours from database:", error);
+      // Fallback to static tours if database fetch fails
       setTimeout(() => {
-        // Map the shared minimal TOURS data into the client-side Tour shape
         const mapped = TOURS.map((t) => ({
           ...t,
-          // attach the actual image strings/objects from assets using the imageKey
           image:
             (assets as any).tourImages?.[t.imageKey as string] || t.imageKey,
         }));
         setTours(mapped as any);
-        resolve();
       }, 100);
-    });
+    }
   };
 
   // Submit booking request & send mail

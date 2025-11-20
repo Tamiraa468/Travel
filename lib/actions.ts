@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import {
   createTourSchema,
   updateTourSchema,
@@ -13,7 +14,9 @@ import { getSession } from "@/lib/auth";
  */
 async function requireAdmin() {
   const session = await getSession();
+  console.log("Session in requireAdmin:", JSON.stringify(session));
   if (!session?.isAdmin) {
+    console.warn("Admin check failed - session:", session);
     throw new Error("Unauthorized: Admin access required");
   }
 }
@@ -24,7 +27,7 @@ export async function createTour(data: any) {
   await requireAdmin();
   const validated = createTourSchema.parse(data);
 
-  return await prisma.tour.create({
+  const tour = await prisma.tour.create({
     data: {
       ...validated,
       images: validated.images || [],
@@ -32,16 +35,23 @@ export async function createTour(data: any) {
       highlights: validated.highlights || [],
     },
   });
+
+  revalidatePath("/admin/tours");
+  return tour;
 }
 
 export async function updateTour(id: string, data: any) {
   await requireAdmin();
   const validated = updateTourSchema.parse(data);
 
-  return await prisma.tour.update({
+  const tour = await prisma.tour.update({
     where: { id },
     data: validated,
   });
+
+  revalidatePath("/admin/tours");
+  revalidatePath(`/admin/tours/${id}/edit`);
+  return tour;
 }
 
 export async function deleteTour(id: string) {
@@ -56,9 +66,11 @@ export async function deleteTour(id: string) {
     where: { tourId: id },
   });
 
-  return await prisma.tour.delete({
+  await prisma.tour.delete({
     where: { id },
   });
+
+  revalidatePath("/admin/tours");
 }
 
 export async function getTourById(id: string) {
@@ -70,10 +82,17 @@ export async function getTourById(id: string) {
 }
 
 export async function getAllTours() {
-  return await prisma.tour.findMany({
-    include: { dates: true, bookings: true },
-    orderBy: { createdAt: "desc" },
-  });
+  try {
+    const tours = await prisma.tour.findMany({
+      include: { dates: true, bookings: true },
+      orderBy: { createdAt: "desc" },
+    });
+    console.log("getAllTours SUCCESS:", tours.length, "tours found");
+    return tours;
+  } catch (error) {
+    console.error("getAllTours ERROR:", error);
+    throw error;
+  }
 }
 
 // ===== TOUR DATE ACTIONS =====
@@ -82,12 +101,15 @@ export async function createTourDate(tourId: string, data: any) {
   await requireAdmin();
   const validated = tourDateSchema.parse(data);
 
-  return await prisma.tourDate.create({
+  const tourDate = await prisma.tourDate.create({
     data: {
       ...validated,
       tourId,
     },
   });
+
+  revalidatePath(`/admin/tours/${tourId}/edit`);
+  return tourDate;
 }
 
 export async function deleteTourDate(id: string) {
@@ -102,9 +124,17 @@ export async function deleteTourDate(id: string) {
     throw new Error("Cannot delete tour date with existing bookings");
   }
 
-  return await prisma.tourDate.delete({
+  const tourDate = await prisma.tourDate.findUnique({
     where: { id },
   });
+
+  await prisma.tourDate.delete({
+    where: { id },
+  });
+
+  if (tourDate) {
+    revalidatePath(`/admin/tours/${tourDate.tourId}/edit`);
+  }
 }
 
 // ===== BOOKING ACTIONS =====
