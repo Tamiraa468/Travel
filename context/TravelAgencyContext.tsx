@@ -22,6 +22,7 @@ export type Traveler = {
 
 export type Tour = {
   id: string;
+  slug?: string; // Add slug for URL-friendly identifiers
   title: string;
   description: string;
   price: number;
@@ -101,6 +102,7 @@ export default function TravelAgencyProvider({
       // Map database tours to context Tour type
       const mapped = dbTours.map((t: any) => ({
         id: t.id,
+        slug: t.slug, // Add slug for URL generation
         title: t.title,
         description: t.description,
         price: t.priceFrom || t.price || 0, // Map priceFrom to price
