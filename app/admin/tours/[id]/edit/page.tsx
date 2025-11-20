@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AdminInput from "@/Components/AdminInput";
 import AdminButton from "@/Components/AdminButton";
+import ImageUpload from "@/Components/ImageUpload";
 import {
   getTourById,
   updateTour,
@@ -127,6 +128,12 @@ export default function EditTourPage({ params }: { params: { id: string } }) {
             onChange={(v) => setFormData({ ...formData, priceFrom: v })}
           />
         </div>
+
+        <ImageUpload
+          label="Main Image"
+          value={formData?.mainImage || ""}
+          onChange={(url) => setFormData({ ...formData, mainImage: url })}
+        />
 
         {error && (
           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">

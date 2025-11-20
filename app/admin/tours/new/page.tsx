@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AdminInput from "@/Components/AdminInput";
 import AdminButton from "@/Components/AdminButton";
+import ImageUpload from "@/Components/ImageUpload";
 import { createTour } from "@/lib/actions";
 
 export default function NewTourPage() {
@@ -89,6 +90,12 @@ export default function NewTourPage() {
           type="text"
           value={formData.mainImage}
           onChange={(v) => setFormData({ ...formData, mainImage: String(v) })}
+        />
+
+        <ImageUpload
+          label="Or Upload Main Image from Desktop"
+          value={formData.mainImage}
+          onChange={(url) => setFormData({ ...formData, mainImage: url })}
         />
 
         <AdminInput
