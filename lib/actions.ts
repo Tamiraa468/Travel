@@ -83,14 +83,29 @@ export async function getTourById(id: string) {
 
 export async function getAllTours() {
   try {
+    console.log("getAllTours called");
+
+    // First, try a simple query without includes
+    const toursSimple = await prisma.tour.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    console.log("Simple query returned:", toursSimple.length, "tours");
+
+    // Then try with includes
     const tours = await prisma.tour.findMany({
       include: { dates: true, bookings: true },
       orderBy: { createdAt: "desc" },
     });
+    console.log("Query with includes returned:", tours.length, "tours");
     console.log("getAllTours SUCCESS:", tours.length, "tours found");
+
     return tours;
   } catch (error) {
     console.error("getAllTours ERROR:", error);
+    console.error(
+      "Error details:",
+      error instanceof Error ? error.message : String(error)
+    );
     throw error;
   }
 }

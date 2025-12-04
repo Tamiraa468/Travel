@@ -35,3 +35,31 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export type CreateTourInput = z.infer<typeof createTourSchema>;
 export type UpdateTourInput = z.infer<typeof updateTourSchema>;
 export type TourDateInput = z.infer<typeof tourDateSchema>;
+
+// RequestInfo validation schema
+export const requestInfoSchema = z.object({
+  fullName: z
+    .string()
+    .min(2, "Full name must be at least 2 characters")
+    .max(100),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().max(20).optional().or(z.literal("")),
+  preferredStartDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format")
+    .optional()
+    .or(z.literal("")),
+  adults: z.number().int().min(1, "Must have at least 1 adult").default(1),
+  children: z
+    .number()
+    .int()
+    .min(0, "Children count cannot be negative")
+    .default(0),
+  message: z.string().max(1000).optional().or(z.literal("")),
+  tourId: z.string().optional().or(z.literal("")),
+  tourName: z.string().optional().or(z.literal("")),
+  marketingConsent: z.boolean().default(false),
+  hp: z.string().optional().or(z.literal("")), // Honeypot field
+});
+
+export type RequestInfoInput = z.infer<typeof requestInfoSchema>;

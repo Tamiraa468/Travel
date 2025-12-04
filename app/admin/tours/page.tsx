@@ -1,22 +1,20 @@
 import { getAllTours, deleteTour } from "@/lib/actions";
-import AdminTable from "@/Components/AdminTable";
-import AdminButton from "@/Components/AdminButton";
+import ToursTable from "@/Components/ToursTable";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-
-async function handleDeleteTour(tourId: string) {
-  "use server";
-  try {
-    await deleteTour(tourId);
-    redirect("/admin/tours");
-  } catch (error) {
-    console.error("Delete error:", error);
-  }
-}
 
 export default async function ToursPage() {
   const tours = await getAllTours();
   console.log("Tours fetched in page:", tours.length, tours);
+
+  const handleDelete = async (tourId: string) => {
+    "use server";
+    try {
+      await deleteTour(tourId);
+    } catch (error) {
+      console.error("Delete error:", error);
+      throw error;
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -31,40 +29,7 @@ export default async function ToursPage() {
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-6">
-        <AdminTable
-          data={tours}
-          columns={[
-            { key: "title" as const, label: "Title" },
-            { key: "slug" as const, label: "Slug" },
-            { key: "days" as const, label: "Days" },
-            {
-              key: "priceFrom" as const,
-              label: "Price From",
-              render: (value) => `$${value}`,
-            },
-          ]}
-          actions={(tour: any) => (
-            <div className="flex gap-2">
-              <Link
-                href={`/admin/tours/${tour.id}/edit`}
-                className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600"
-              >
-                Edit
-              </Link>
-              <form action={handleDeleteTour.bind(null, tour.id)}>
-                <button
-                  type="submit"
-                  className="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600"
-                  onClick={(e) => {
-                    if (!confirm("Are you sure?")) e.preventDefault();
-                  }}
-                >
-                  Delete
-                </button>
-              </form>
-            </div>
-          )}
-        />
+        <ToursTable tours={tours} onDelete={handleDelete} />
       </div>
     </div>
   );
