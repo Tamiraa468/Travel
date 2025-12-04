@@ -3,6 +3,14 @@
 import AdminTable from "@/Components/AdminTable";
 import StatusBadge from "@/Components/StatusBadge";
 
+type StatusType =
+  | "PENDING"
+  | "CONFIRMED"
+  | "CANCELLED"
+  | "UNPAID"
+  | "PAID"
+  | "REFUNDED";
+
 type Booking = any;
 
 export default function BookingsTable({ bookings }: { bookings: Booking[] }) {
@@ -50,14 +58,14 @@ export default function BookingsTable({ bookings }: { bookings: Booking[] }) {
         {
           key: "status" as const,
           label: "Booking Status",
-          render: (status: string) => <StatusBadge status={status} />,
+          render: (status: StatusType) => <StatusBadge status={status} />,
         },
         {
           key: "payment" as const,
           label: "Payment Status",
           render: (payment: any) =>
             payment ? (
-              <StatusBadge status={payment.status} />
+              <StatusBadge status={payment.status as StatusType} />
             ) : (
               <span className="text-gray-500">N/A</span>
             ),
