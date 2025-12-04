@@ -1,5 +1,6 @@
 import "./globals.css";
-import { ConfigProvider } from "antd";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import AntdProvider from "@/Components/AntdProvider";
 import TravelAgencyProvider from "../context/TravelAgencyContext";
 
 export default function RootLayout({
@@ -10,9 +11,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ConfigProvider theme={{ token: { colorPrimary: "#1677ff" } }}>
+        <AntdProvider>
           <TravelAgencyProvider>{children}</TravelAgencyProvider>
-        </ConfigProvider>
+        </AntdProvider>
       </body>
     </html>
   );
