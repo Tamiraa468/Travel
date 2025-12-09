@@ -42,25 +42,28 @@ export async function withRetry<T>(
   delay: number = 1000
 ): Promise<T> {
   let lastError: Error | null = null;
-  
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       return await operation();
     } catch (error: any) {
       lastError = error;
-      console.error(`Database operation failed (attempt ${attempt}/${maxRetries}):`, error.message);
-      
+      console.error(
+        `Database operation failed (attempt ${attempt}/${maxRetries}):`,
+        error.message
+      );
+
       // Don't retry on validation errors
       if (error.code === "P2002" || error.code === "P2025") {
         throw error;
       }
-      
+
       if (attempt < maxRetries) {
         await new Promise((resolve) => setTimeout(resolve, delay * attempt));
       }
     }
   }
-  
+
   throw lastError;
 }
 

@@ -1,6 +1,6 @@
 /**
  * Health Check API
- * 
+ *
  * Use this to monitor your application and database status
  * URL: GET /api/health
  */
@@ -10,12 +10,12 @@ import { checkDatabaseConnection } from "@/lib/prisma";
 
 export async function GET() {
   const startTime = Date.now();
-  
+
   try {
     // Check database connection
     const dbConnected = await checkDatabaseConnection();
     const responseTime = Date.now() - startTime;
-    
+
     if (dbConnected) {
       return NextResponse.json({
         status: "healthy",

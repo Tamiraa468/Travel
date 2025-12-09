@@ -7,22 +7,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ============================================
+// TOUR CATEGORY MODEL
+// ============================================
+model TourCategory {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  image       String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tours       Tour[]
+}
+
+// ============================================
+// TOUR MODEL (UPDATED)
+// ============================================
 model Tour {
-  id           String     @id @default(cuid())
+  id           String        @id @default(cuid())
   title        String
-  slug         String     @unique
+  slug         String        @unique
   description  String?
   days         Int
   priceFrom    Float
   mainImage    String?
-  images       String[]   @default([])
-  includes     String[]   @default([])
-  highlights   String[]   @default([])
+  images       String[]      @default([])
+  includes     String[]      @default([])
+  excludes     String[]      @default([])  // NEW: Package excludes
+  highlights   String[]      @default([])
   mapEmbed     String?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  season       String?       // NEW: Best season (e.g., "June-September")
+  groupSize    String?       // NEW: e.g., "1-10 pax"
+  activityLevel String?      // NEW: e.g., "Moderate", "Easy", "Challenging"
+  isActive     Boolean       @default(true)
+  isFeatured   Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  // Relations
+  category     TourCategory? @relation(fields: [categoryId], references: [id])
+  categoryId   String?
   dates        TourDate[]
   bookings     Booking[]
+  itinerary    TourItinerary[]
+  priceTiers   TourPriceTier[]
+  
+  @@index([categoryId])
+  @@index([isActive])
+  @@index([isFeatured])
+}
+
+// ============================================
+// TOUR ITINERARY MODEL (Day-by-Day)
+// ============================================
+model TourItinerary {
+  id          String   @id @default(cuid())
+  tour        Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId      String
+  dayNumber   Int
+  title       String
+  description String
+  meals       String?  // e.g., "B/L/D" or "Breakfast, Lunch, Dinner"
+  accommodation String? // e.g., "Ger Camp", "Hotel"
+  highlights  String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([tourId, dayNumber])
+  @@index([tourId])
+}
+
+// ============================================
+// TOUR PRICE TIER MODEL (Group Size Pricing)
+// ============================================
+model TourPriceTier {
+  id          String   @id @default(cuid())
+  tour        Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  tourId      String
+  minPax      Int
+  maxPax      Int
+  pricePerPerson Float
+  description String?  // e.g., "Solo traveler", "Small group"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([tourId])
 }
 
 model TourDate {
@@ -135,4 +207,152 @@ enum RequestBookingStatus {
   UNCONFIRMED
   CONFIRMED
   CANCELLED
+}
+
+// ============================================
+// BLOG POST MODEL
+// ============================================
+model BlogPost {
+  id          String       @id @default(cuid())
+  title       String
+  slug        String       @unique
+  excerpt     String?
+  content     String       // Rich text/markdown content
+  coverImage  String?
+  author      String?
+  category    BlogCategory @default(NEWS)
+  tags        String[]     @default([])
+  isPublished Boolean      @default(false)
+  publishedAt DateTime?
+  views       Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  
+  @@index([slug])
+  @@index([isPublished])
+  @@index([category])
+}
+
+enum BlogCategory {
+  NEWS
+  FESTIVAL
+  TRAVEL_GUIDE
+  CULTURE
+  ADVENTURE
+  TIPS
+}
+
+// ============================================
+// TESTIMONIAL MODEL
+// ============================================
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  country     String?
+  avatar      String?
+  rating      Int      @default(5) // 1-5 stars
+  text        String
+  tourName    String?
+  travelDate  String?  // e.g., "July 2024"
+  isApproved  Boolean  @default(false)
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([isApproved])
+  @@index([isFeatured])
+}
+
+// ============================================
+// FAQ MODEL
+// ============================================
+model FAQ {
+  id          String      @id @default(cuid())
+  question    String
+  answer      String
+  category    FAQCategory @default(GENERAL)
+  order       Int         @default(0)
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@index([category])
+  @@index([isActive])
+}
+
+enum FAQCategory {
+  GENERAL
+  BOOKING
+  PAYMENT
+  TRAVEL
+  VISA
+  ACCOMMODATION
+  TRANSPORTATION
+}
+
+// ============================================
+// TEAM MEMBER MODEL
+// ============================================
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  bio         String?
+  image       String?
+  email       String?
+  phone       String?
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// CONTENT PAGE MODEL (For Why Mongolia, Travel Guide, etc.)
+// ============================================
+model ContentPage {
+  id          String          @id @default(cuid())
+  title       String
+  slug        String          @unique
+  content     String          // Rich text/markdown
+  excerpt     String?
+  coverImage  String?
+  section     ContentSection
+  parentSlug  String?         // For nested pages
+  order       Int             @default(0)
+  isPublished Boolean         @default(true)
+  metaTitle   String?
+  metaDescription String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  
+  @@index([slug])
+  @@index([section])
+  @@index([isPublished])
+}
+
+enum ContentSection {
+  WHY_MONGOLIA
+  TRAVEL_GUIDE
+  ABOUT
+  POLICY
+}
+
+// ============================================
+// SOCIAL MEDIA SETTINGS MODEL
+// ============================================
+model SiteSettings {
+  id              String   @id @default(cuid())
+  siteName        String   @default("UTravel Mongolia")
+  tagline         String?
+  email           String?
+  phone           String?
+  address         String?
+  facebookUrl     String?
+  instagramUrl    String?
+  whatsappNumber  String?
+  twitterUrl      String?
+  youtubeUrl      String?
+  linkedinUrl     String?
+  updatedAt       DateTime @updatedAt
 }

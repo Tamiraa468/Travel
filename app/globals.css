@@ -2,4 +2,231 @@
 	will expand this import into base/components/utilities during the build. */
 @import "tailwindcss";
 
-/* You can add global custom styles below */
+/* ============================================
+   LUXURY PREMIUM THEME - Mongolia Travel
+   ============================================ */
+
+/* Custom Fonts - Premium Feel */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* Luxury Color Palette */
+  --color-gold: #c9a962;
+  --color-gold-light: #e5d4a1;
+  --color-gold-dark: #a68b4b;
+  --color-navy: #1a2b4a;
+  --color-navy-light: #2a3f5f;
+  --color-navy-dark: #0f1a2e;
+  --color-cream: #faf8f5;
+  --color-charcoal: #2d2d2d;
+  --color-white: #ffffff;
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(
+    135deg,
+    #c9a962 0%,
+    #e5d4a1 50%,
+    #c9a962 100%
+  );
+  --gradient-navy: linear-gradient(135deg, #1a2b4a 0%, #2a3f5f 100%);
+  --gradient-dark: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-strong: 0 15px 50px rgba(0, 0, 0, 0.15);
+  --shadow-gold: 0 4px 20px rgba(201, 169, 98, 0.3);
+
+  /* Transitions */
+  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-white);
+  color: var(--color-charcoal);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings - Luxury Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-navy);
+}
+
+/* Premium Button Styles */
+.btn-luxury {
+  @apply relative overflow-hidden px-8 py-4 font-medium tracking-wide;
+  font-family: var(--font-body);
+  transition: var(--transition-smooth);
+}
+
+.btn-luxury-gold {
+  @apply bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 text-white;
+  background-size: 200% auto;
+}
+
+.btn-luxury-gold:hover {
+  background-position: right center;
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-2px);
+}
+
+.btn-luxury-outline {
+  @apply border-2 border-amber-600 text-amber-700 bg-transparent;
+}
+
+.btn-luxury-outline:hover {
+  @apply bg-amber-600 text-white;
+  transform: translateY(-2px);
+}
+
+/* Premium Card Styles */
+.card-luxury {
+  @apply bg-white rounded-2xl overflow-hidden;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-smooth);
+}
+
+.card-luxury:hover {
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-8px);
+}
+
+/* Gold Accent Line */
+.gold-line {
+  @apply h-1 w-20 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded-full;
+}
+
+/* Section Spacing */
+.section-padding {
+  @apply py-20 md:py-28 lg:py-32;
+}
+
+/* Premium Image Overlay */
+.image-overlay-luxury {
+  @apply absolute inset-0;
+  background: linear-gradient(
+    180deg,
+    rgba(26, 43, 74, 0) 0%,
+    rgba(26, 43, 74, 0.4) 60%,
+    rgba(26, 43, 74, 0.9) 100%
+  );
+}
+
+/* Animated Underline */
+.underline-animated {
+  @apply relative;
+}
+
+.underline-animated::after {
+  content: "";
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500;
+  transition: width 0.3s ease;
+}
+
+.underline-animated:hover::after {
+  @apply w-full;
+}
+
+/* Glass Effect */
+.glass-effect {
+  @apply bg-white/10 backdrop-blur-md border border-white/20;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-dark);
+}
+
+/* Selection Color */
+::selection {
+  background-color: var(--color-gold);
+  color: white;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}

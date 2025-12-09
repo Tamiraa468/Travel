@@ -2,6 +2,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import AntdProvider from "@/Components/AntdProvider";
 import TravelAgencyProvider from "../context/TravelAgencyContext";
+import { WishlistProvider } from "@/Components/Wishlist";
 
 export default function RootLayout({
   children,
@@ -12,7 +13,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AntdProvider>
-          <TravelAgencyProvider>{children}</TravelAgencyProvider>
+          <TravelAgencyProvider>
+            <WishlistProvider>{children}</WishlistProvider>
+          </TravelAgencyProvider>
         </AntdProvider>
       </body>
     </html>

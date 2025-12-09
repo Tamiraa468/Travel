@@ -1,35 +1,22 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { useTravelAgencyContext, Tour } from "../context/TravelAgencyContext";
 import TourCard from "./TourCard";
 import TOURS from "@/data/tours";
+import { ChevronLeft, ChevronRight, Compass } from "lucide-react";
 
 const RecommendedTours: React.FC = () => {
   const { tours, fetchTours } = useTravelAgencyContext();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cardsPerSlide, setCardsPerSlide] = useState(1);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isScrollingDown, setIsScrollingDown] = useState(false);
   const sectionRef = useRef(null);
 
-  // Animation trigger: only when scrolled into view AND scrolling down
   const isInView = useInView(sectionRef, {
-    once: true, // Animation plays only once, when first entering viewport
-    margin: "0px 0px -100px 0px", // Trigger 100px before entering viewport
+    once: true,
+    margin: "0px 0px -100px 0px",
   });
-
-  // Track scroll direction
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsScrollingDown(currentScrollY > lastScrollY);
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   // Use tours from context if available, otherwise fallback to TOURS data
   const displayTours = tours && tours.length > 0 ? tours : TOURS;
@@ -44,7 +31,7 @@ const RecommendedTours: React.FC = () => {
   // Handle responsive card count
   useEffect(() => {
     const updateCardsPerSlide = () => {
-      if (window.innerWidth >= 1024) setCardsPerSlide(3);
+      if (window.innerWidth >= 1280) setCardsPerSlide(3);
       else if (window.innerWidth >= 768) setCardsPerSlide(2);
       else setCardsPerSlide(1);
     };
@@ -53,141 +40,134 @@ const RecommendedTours: React.FC = () => {
     return () => window.removeEventListener("resize", updateCardsPerSlide);
   }, []);
 
-  // Auto-rotate carousel every 5 seconds
-  useEffect(() => {
-    if (!displayTours || displayTours.length === 0) return;
-    const interval = setInterval(() => {
-      setCurrentSlide(
-        (prev) => (prev + 1) % Math.ceil(displayTours.length / cardsPerSlide)
-      );
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [displayTours.length, cardsPerSlide]);
-
   // Split tours into chunks for each slide
   const slides: Tour[][] = [];
   for (let i = 0; i < displayTours.length; i += cardsPerSlide) {
     slides.push(displayTours.slice(i, i + cardsPerSlide));
   }
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const headingVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" as any },
-    },
-  };
-
-  const textVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, delay: 0.2, ease: "easeOut" as any },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" as any },
-    },
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const prevSlide = () =>
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <motion.section
+    <section
       ref={sectionRef}
-      className="w-full py-12 bg-white"
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={containerVariants}
+      className="relative py-24 bg-slate-50 overflow-hidden"
     >
-      {/* Heading */}
-      <motion.div
-        className="text-center mb-8 px-4"
-        variants={containerVariants}
-      >
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-blue-800 mb-4"
-          variants={headingVariants}
-        >
-          Explore the Beauty of Mongolia
-        </motion.h2>
-        <motion.p
-          className="text-gray-600 max-w-2xl mx-auto"
-          variants={textVariants}
-        >
-          Discover the vast steppes, pristine lakes, deserts, and rich nomadic
-          culture. Choose from our carefully curated tours to experience the
-          true spirit of Mongolia.
-        </motion.p>
-      </motion.div>
+      {/* Background Decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-100/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
-      {/* Slider */}
-      <div className="relative w-full overflow-hidden">
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* Header */}
         <motion.div
-          className="flex transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          {slides.map((slideTours, index) => (
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full mb-6">
+            <Compass size={18} className="text-amber-600" />
+            <span className="text-sm font-medium text-amber-700 tracking-wide uppercase">
+              Featured Destinations
+            </span>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-800 mb-6">
+            Explore the Beauty of{" "}
+            <span className="text-amber-600">Mongolia</span>
+          </h2>
+
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Discover vast steppes, pristine lakes, and rich nomadic culture.
+            Choose from our carefully curated tours to experience the true
+            spirit of Mongolia.
+          </p>
+
+          {/* Decorative Line */}
+          <div className="flex items-center justify-center gap-3 mt-8">
+            <div className="w-12 h-px bg-slate-300" />
+            <div className="w-3 h-3 bg-amber-500 rounded-full" />
+            <div className="w-12 h-px bg-slate-300" />
+          </div>
+        </motion.div>
+
+        {/* Tours Grid */}
+        <div className="relative">
+          {/* Navigation Arrows */}
+          {slides.length > 1 && (
+            <>
+              <button
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-amber-600 hover:shadow-xl transition-all duration-300 hidden lg:flex"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-amber-600 hover:shadow-xl transition-all duration-300 hidden lg:flex"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </>
+          )}
+
+          {/* Slider */}
+          <div className="overflow-hidden">
             <motion.div
-              key={index}
-              className="min-w-full flex justify-center gap-6 px-4"
-              variants={containerVariants}
+              className="flex transition-transform duration-700 ease-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
-              {slideTours.map((tour: Tour) => (
-                <motion.div
-                  key={tour.id}
-                  variants={cardVariants}
-                  whileHover={{
-                    y: -8,
-                    boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
-                    transition: { duration: 0.3 },
-                  }}
+              {slides.map((slideTours, slideIndex) => (
+                <div
+                  key={slideIndex}
+                  className="min-w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 px-2"
                 >
-                  <TourCard tour={tour} />
-                </motion.div>
+                  {slideTours.map((tour: Tour, tourIndex: number) => (
+                    <TourCard key={tour.id} tour={tour} index={tourIndex} />
+                  ))}
+                </div>
               ))}
             </motion.div>
-          ))}
-        </motion.div>
+          </div>
 
-        {/* Slide indicators */}
+          {/* Dots */}
+          {slides.length > 1 && (
+            <div className="flex justify-center gap-2 mt-10">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentSlide === index
+                      ? "w-8 bg-amber-500"
+                      : "w-2 bg-slate-300 hover:bg-slate-400"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* CTA */}
         <motion.div
-          className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-16"
         >
-          {slides.map((_, index) => (
-            <motion.button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-2 w-2 rounded-full cursor-pointer transition-colors ${
-                currentSlide === index ? "bg-blue-600" : "bg-gray-400/40"
-              }`}
-              whileHover={{ scale: 1.3 }}
-              transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            />
-          ))}
+          <Link
+            href="/tours"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-slate-800 text-white font-semibold rounded-full hover:bg-slate-900 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            View All Tours
+            <ChevronRight size={18} />
+          </Link>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

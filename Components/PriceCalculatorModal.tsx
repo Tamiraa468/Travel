@@ -1,22 +1,18 @@
-/**
- * PriceCalculatorModal Component
- *
- * A fully accessible modal for calculating custom tour prices based on:
- * - Number of adults and children
- * - Preferred travel date
- * - Base tour price from props
- *
- * Features:
- * - Keyboard accessible (ESC to close)
- * - Backdrop click to close
- * - Smooth animations (fade + slide)
- * - ARIA attributes for screen readers
- * - Prevents body scroll when open
- */
-
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  X,
+  Users,
+  Baby,
+  Calendar,
+  Calculator,
+  Sparkles,
+  Minus,
+  Plus,
+  CheckCircle,
+} from "lucide-react";
 
 export interface PriceCalculatorModalProps {
   isOpen: boolean;
@@ -38,27 +34,17 @@ export default function PriceCalculatorModal({
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  /**
-   * Calculate price based on travelers and base price
-   * Simple formula: basePrice * adults + (basePrice * 0.5 * children)
-   */
   const calculatePrice = () => {
     setIsCalculating(true);
-
-    // Simulate API call or calculation
     setTimeout(() => {
       const adultCost = basePrice * adults;
       const childrenCost = basePrice * 0.5 * children;
       const total = adultCost + childrenCost;
-
       setCalculatedPrice(total);
       setIsCalculating(false);
     }, 500);
   };
 
-  /**
-   * Handle ESC key press to close modal
-   */
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -68,9 +54,7 @@ export default function PriceCalculatorModal({
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-      // Prevent body scroll when modal is open
       document.body.style.overflow = "hidden";
-
       return () => {
         document.removeEventListener("keydown", handleEscape);
         document.body.style.overflow = "unset";
@@ -78,247 +62,232 @@ export default function PriceCalculatorModal({
     }
   }, [isOpen, onClose]);
 
-  /**
-   * Close modal when clicking outside (backdrop)
-   */
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <>
-      {/* Backdrop with fade animation */}
-      <div
-        className="fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300"
-        onClick={handleBackdropClick}
-        aria-hidden="true"
-      />
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm"
+            onClick={handleBackdropClick}
+          />
 
-      {/* Modal Container */}
-      <div
-        ref={modalRef}
-        className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center px-4 py-6 transition-all duration-300 ${
-          isOpen
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4 pointer-events-none"
-        }`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        {/* Modal Content */}
-        <div className="w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden transform transition-all">
-          {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-linear-to-r from-blue-50 to-indigo-50">
-            <h2 id="modal-title" className="text-2xl font-bold text-gray-900">
-              Calculate Price
-            </h2>
-            {/* Close Button */}
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors p-1 -mr-2"
-              aria-label="Close price calculator"
-              type="button"
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.3, type: "spring", damping: 25 }}
+            className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6"
+            onClick={handleBackdropClick}
+          >
+            <div
+              ref={modalRef}
+              className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Body */}
-          <div className="p-6 space-y-6">
-            {/* Tour Name */}
-            <div id="modal-description" className="text-sm text-gray-600">
-              <p>
-                <strong>Tour:</strong> {tourName}
-              </p>
-              <p>
-                <strong>Base Price:</strong> ${basePrice.toFixed(2)} per person
-              </p>
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-gray-200" />
-
-            {/* Adults Selector */}
-            <div className="space-y-2">
-              <label
-                htmlFor="adults"
-                className="block text-sm font-semibold text-gray-700"
-              >
-                Number of Adults *
-              </label>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setAdults(Math.max(1, adults - 1))}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all font-bold text-gray-700 flex items-center justify-center"
-                  type="button"
-                  aria-label="Decrease adults"
-                >
-                  −
-                </button>
-
-                <input
-                  id="adults"
-                  type="number"
-                  min="1"
-                  value={adults}
-                  onChange={(e) =>
-                    setAdults(Math.max(1, parseInt(e.target.value) || 1))
-                  }
-                  className="flex-1 px-3 py-2 border-2 border-gray-300 rounded-lg text-center font-semibold focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-
-                <button
-                  onClick={() => setAdults(adults + 1)}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all font-bold text-gray-700 flex items-center justify-center"
-                  type="button"
-                  aria-label="Increase adults"
-                >
-                  +
-                </button>
+              {/* Header */}
+              <div className="relative bg-gradient-to-r from-slate-800 to-slate-900 px-6 py-5">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400" />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                      <Calculator className="w-5 h-5 text-amber-400" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-serif font-bold text-white">
+                        Calculate Price
+                      </h2>
+                      <p className="text-slate-400 text-sm">
+                        Get your custom quote
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={onClose}
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white transition-all"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-            </div>
 
-            {/* Children Selector */}
-            <div className="space-y-2">
-              <label
-                htmlFor="children"
-                className="block text-sm font-semibold text-gray-700"
-              >
-                Number of Children
-                <span className="text-xs text-gray-500 font-normal ml-2">
-                  (50% of adult price)
-                </span>
-              </label>
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setChildren(Math.max(0, children - 1))}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all font-bold text-gray-700 flex items-center justify-center"
-                  type="button"
-                  aria-label="Decrease children"
-                >
-                  −
-                </button>
+              {/* Body */}
+              <div className="p-6 space-y-5">
+                {/* Tour Info */}
+                <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-amber-50 to-slate-50 rounded-xl border border-amber-100">
+                  <Sparkles className="w-5 h-5 text-amber-500" />
+                  <div>
+                    <p className="text-sm text-slate-600">Selected Tour</p>
+                    <p className="font-semibold text-slate-800">{tourName}</p>
+                  </div>
+                </div>
 
-                <input
-                  id="children"
-                  type="number"
-                  min="0"
-                  value={children}
-                  onChange={(e) =>
-                    setChildren(Math.max(0, parseInt(e.target.value) || 0))
-                  }
-                  className="flex-1 px-3 py-2 border-2 border-gray-300 rounded-lg text-center font-semibold focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-
-                <button
-                  onClick={() => setChildren(children + 1)}
-                  className="w-10 h-10 rounded-lg border-2 border-gray-300 hover:border-blue-500 hover:bg-blue-50 transition-all font-bold text-gray-700 flex items-center justify-center"
-                  type="button"
-                  aria-label="Increase children"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            {/* Date Selector */}
-            <div className="space-y-2">
-              <label
-                htmlFor="date"
-                className="block text-sm font-semibold text-gray-700"
-              >
-                Preferred Travel Date
-                <span className="text-xs text-gray-500 font-normal ml-2">
-                  (Optional)
-                </span>
-              </label>
-              <input
-                id="date"
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-gray-200" />
-
-            {/* Price Display */}
-            <div className="bg-linear-to-br from-blue-50 to-indigo-50 p-4 rounded-lg border-2 border-blue-200">
-              <p className="text-sm text-gray-600 mb-2">
-                <strong>Travelers:</strong> {adults} adult(s), {children}{" "}
-                child(ren)
-              </p>
-
-              {calculatedPrice !== null ? (
+                {/* Adults Selector */}
                 <div className="space-y-2">
-                  <p className="text-xs text-gray-500">
-                    Estimated Total Price:
-                  </p>
-                  <p className="text-3xl font-bold text-blue-600">
-                    ${calculatedPrice.toFixed(2)}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Per person: $
-                    {(calculatedPrice / (adults + children)).toFixed(2)}
-                  </p>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <Users className="w-4 h-4 text-amber-500" />
+                    Adults
+                    <span className="text-slate-400 font-normal">
+                      €{basePrice}/person
+                    </span>
+                  </label>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setAdults(Math.max(1, adults - 1))}
+                      className="w-12 h-12 rounded-xl border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all flex items-center justify-center text-slate-600 hover:text-amber-600"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <div className="flex-1 text-center">
+                      <span className="text-2xl font-bold text-slate-800">
+                        {adults}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setAdults(adults + 1)}
+                      className="w-12 h-12 rounded-xl border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all flex items-center justify-center text-slate-600 hover:text-amber-600"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-              ) : (
-                <div className="text-center py-4">
-                  <p className="text-gray-500">
-                    Click "Calculate" to see the estimated price
-                  </p>
+
+                {/* Children Selector */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <Baby className="w-4 h-4 text-amber-500" />
+                    Children
+                    <span className="text-slate-400 font-normal">50% off</span>
+                  </label>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setChildren(Math.max(0, children - 1))}
+                      className="w-12 h-12 rounded-xl border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all flex items-center justify-center text-slate-600 hover:text-amber-600"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <div className="flex-1 text-center">
+                      <span className="text-2xl font-bold text-slate-800">
+                        {children}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setChildren(children + 1)}
+                      className="w-12 h-12 rounded-xl border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all flex items-center justify-center text-slate-600 hover:text-amber-600"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-              )}
+
+                {/* Date Selector */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <Calendar className="w-4 h-4 text-amber-500" />
+                    Preferred Date
+                    <span className="text-slate-400 font-normal">
+                      (Optional)
+                    </span>
+                  </label>
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-slate-700"
+                  />
+                </div>
+
+                {/* Price Display */}
+                <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-5 text-white">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-slate-400 text-sm">Travelers</span>
+                    <span className="text-white font-medium">
+                      {adults} adult{adults > 1 ? "s" : ""}, {children} child
+                      {children !== 1 ? "ren" : ""}
+                    </span>
+                  </div>
+
+                  <div className="h-px bg-slate-700 mb-4" />
+
+                  {calculatedPrice !== null ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-center"
+                    >
+                      <p className="text-slate-400 text-sm mb-1">
+                        Estimated Total
+                      </p>
+                      <p className="text-4xl font-serif font-bold text-amber-400">
+                        €{calculatedPrice.toLocaleString()}
+                      </p>
+                      <p className="text-slate-400 text-xs mt-2">
+                        ~€
+                        {Math.round(
+                          calculatedPrice / (adults + children)
+                        ).toLocaleString()}{" "}
+                        per person
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <div className="text-center py-3">
+                      <p className="text-slate-400 text-sm">
+                        Click calculate to see your quote
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-3">
+                  <button
+                    onClick={onClose}
+                    className="flex-1 py-3 px-4 rounded-xl font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={calculatePrice}
+                    disabled={isCalculating}
+                    className="flex-1 py-3 px-4 rounded-xl font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 shadow-lg shadow-amber-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isCalculating ? (
+                      <>
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                          className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                        />
+                        Calculating...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="w-4 h-4" />
+                        Calculate
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-
-            {/* Divider */}
-            <div className="border-t border-gray-200" />
-
-            {/* Calculate Button */}
-            <button
-              onClick={calculatePrice}
-              disabled={isCalculating}
-              className={`w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 ${
-                isCalculating
-                  ? "bg-gray-400 text-white cursor-not-allowed"
-                  : "bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800"
-              }`}
-              type="button"
-            >
-              {isCalculating ? "Calculating..." : "Calculate Price"}
-            </button>
-
-            {/* Close Button (Alt) */}
-            <button
-              onClick={onClose}
-              className="w-full py-3 px-4 rounded-lg font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all duration-200"
-              type="button"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }

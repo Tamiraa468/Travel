@@ -12,7 +12,6 @@ const ToursPage = () => {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-grow bg-gray-50">
-        <HeroSection />
         <ToursSection />
       </main>
       <Footer />
