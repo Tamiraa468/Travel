@@ -45,6 +45,7 @@ export default function PaymentRequestForm({
     preferredStartDate: "",
     message: "",
     payAdvanceOnly: true, // Default to 30% advance payment
+    directPay: false, // If true, redirect to Stripe immediately
   });
 
   const [loading, setLoading] = useState(false);
@@ -106,7 +107,13 @@ export default function PaymentRequestForm({
         throw new Error(data.error || "Failed to create payment");
       }
 
-      // Success! Show confirmation
+      // If directPay is true, redirect to Stripe immediately
+      if (formData.directPay && data.data?.paymentUrl) {
+        window.location.href = data.data.paymentUrl;
+        return;
+      }
+
+      // Otherwise, show success message (email sent)
       setSuccess(true);
       setPaymentData(data.data);
 
@@ -182,6 +189,7 @@ export default function PaymentRequestForm({
               email: "",
               phone: "",
               message: "",
+              directPay: false,
             });
           }}
           className="mt-6 text-gray-500 hover:text-gray-700 text-sm"
@@ -427,24 +435,50 @@ export default function PaymentRequestForm({
         </div>
       )}
 
-      {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={loading || !formData.totalPrice}
-        className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
-      >
-        {loading ? (
-          <>
-            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-            Creating Payment Link...
-          </>
-        ) : (
-          <>
-            <Mail className="w-5 h-5 mr-2" />
-            Send Payment Link to Email
-          </>
-        )}
-      </button>
+      {/* Submit Buttons */}
+      <div className="space-y-3">
+        {/* Pay Now Button - Direct to Stripe */}
+        <button
+          type="submit"
+          disabled={loading || !formData.totalPrice}
+          onClick={() => setFormData(prev => ({ ...prev, directPay: true }))}
+          className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              Processing...
+            </>
+          ) : (
+            <>
+              <CreditCard className="w-5 h-5 mr-2" />
+              💳 Pay with Card - ${amountToPay.toFixed(2)}
+            </>
+          )}
+        </button>
+
+        <div className="text-center text-gray-400 text-sm">or</div>
+
+        {/* Send Link to Email Button */}
+        <button
+          type="submit"
+          disabled={loading || !formData.totalPrice}
+          onClick={() => setFormData(prev => ({ ...prev, directPay: false }))}
+          className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              Creating Payment Link...
+            </>
+          ) : (
+            <>
+              <Mail className="w-5 h-5 mr-2" />
+              Send Payment Link to Email
+            </>
+          )}
+        </button>
+      </div>
 
       {/* Payment Methods Info */}
       <div className="mt-4 text-center text-sm text-gray-500">
