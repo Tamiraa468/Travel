@@ -32,9 +32,7 @@ import {
 // STRIPE CONFIGURATION
 // ==========================================
 // Initialize Stripe with your secret key (server-side only!)
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-10-29.clover",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // Base URL for redirects (changes between dev and production)
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";

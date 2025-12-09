@@ -30,34 +30,59 @@ import { sendPaymentConfirmationEmail } from "@/lib/email";
 // ==========================================
 // STRIPE CONFIGURATION
 // ==========================================
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-10-29.clover",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 // Webhook secret for verifying Stripe signatures
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+// IMPORTANT: This must match the secret from Stripe Dashboard → Webhooks
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+if (!webhookSecret) {
+  console.error("❌ STRIPE_WEBHOOK_SECRET is not set!");
+}
 
 // ==========================================
 // WEBHOOK HANDLER
 // ==========================================
 export async function POST(request: Request) {
+  console.log("🔔 Webhook endpoint hit!");
+  console.log("📅 Time:", new Date().toISOString());
+
   // Step 1: Get the raw body and signature
   const body = await request.text();
   const signature = request.headers.get("stripe-signature");
 
-  // Step 2: Validate signature exists
+  console.log("📝 Body length:", body.length);
+  console.log("🔐 Signature present:", !!signature);
+  console.log("🔑 Webhook secret set:", !!webhookSecret);
+
+  // Step 2: Validate webhook secret is configured
+  if (!webhookSecret) {
+    console.error("❌ STRIPE_WEBHOOK_SECRET environment variable is not set");
+    return NextResponse.json(
+      { error: "Webhook secret not configured" },
+      { status: 500 }
+    );
+  }
+
+  // Step 3: Validate signature exists
   if (!signature) {
     console.error("❌ No stripe-signature header");
     return NextResponse.json({ error: "No signature" }, { status: 400 });
   }
 
-  // Step 3: Verify webhook signature
+  // Step 4: Verify webhook signature
   let event: Stripe.Event;
   try {
     // This ensures the webhook came from Stripe, not a hacker
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    console.log("✅ Signature verified successfully");
   } catch (err: any) {
     console.error("❌ Webhook signature verification failed:", err.message);
+    console.error("   Signature:", signature.substring(0, 50) + "...");
+    console.error(
+      "   Secret starts with:",
+      webhookSecret.substring(0, 10) + "..."
+    );
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },
       { status: 400 }
@@ -198,4 +223,16 @@ export async function POST(request: Request) {
   // Always return 200 to acknowledge receipt
   // If you return an error, Stripe will retry the webhook
   return NextResponse.json({ received: true });
+}
+
+// ==========================================
+// GET HANDLER - For testing if endpoint is reachable
+// ==========================================
+export async function GET() {
+  return NextResponse.json({
+    status: "ok",
+    message: "Stripe webhook endpoint is active",
+    timestamp: new Date().toISOString(),
+    webhookSecretConfigured: !!process.env.STRIPE_WEBHOOK_SECRET,
+  });
 }
