@@ -28,7 +28,9 @@ if (!process.env.STRIPE_SECRET_KEY) {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 // Base URL for payment redirects - remove trailing slash if present
-const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || "https://travel-9jis.vercel.app").replace(/\/+$/, "");
+const BASE_URL = (
+  process.env.NEXT_PUBLIC_BASE_URL || "https://travel-9jis.vercel.app"
+).replace(/\/+$/, "");
 
 console.log("📍 BASE_URL configured as:", BASE_URL);
 
