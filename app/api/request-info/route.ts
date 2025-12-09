@@ -22,9 +22,10 @@ import Stripe from "stripe";
 export const runtime = "nodejs";
 
 // Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2025-10-29.clover",
-});
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.error("❌ STRIPE_SECRET_KEY is not set!");
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 // Base URL for payment redirects
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -52,12 +53,26 @@ async function createStripeCheckoutSession(
   customerEmail: string
 ): Promise<string | null> {
   // Skip if no Stripe key or amount is 0
-  if (!process.env.STRIPE_SECRET_KEY || advanceAmount <= 0) {
-    console.log("Skipping Stripe session: no key or zero amount");
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error(
+      "❌ STRIPE_SECRET_KEY is not set - cannot create Stripe session"
+    );
+    return null;
+  }
+
+  if (advanceAmount <= 0) {
+    console.log("Skipping Stripe session: zero amount");
     return null;
   }
 
   try {
+    console.log("Creating Stripe session for:", {
+      requestId,
+      tourName,
+      advanceAmount,
+      customerEmail,
+    });
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -83,6 +98,8 @@ async function createStripeCheckoutSession(
       cancel_url: `${BASE_URL}/payment/cancel?request_id=${requestId}`,
     });
 
+    console.log("✅ Stripe session created:", session.id, "URL:", session.url);
+
     // Update the request with Stripe session ID
     await prisma.requestInfo.update({
       where: { id: requestId },
@@ -90,8 +107,12 @@ async function createStripeCheckoutSession(
     });
 
     return session.url;
-  } catch (error) {
-    console.error("Failed to create Stripe checkout session:", error);
+  } catch (error: any) {
+    console.error(
+      "❌ Failed to create Stripe checkout session:",
+      error.message
+    );
+    console.error("Error details:", error);
     return null;
   }
 }
