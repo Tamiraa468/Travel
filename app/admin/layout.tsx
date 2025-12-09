@@ -22,6 +22,7 @@ export default function AdminLayout({
     { label: "Tours", href: "/admin/tours" },
     { label: "Bookings", href: "/admin/bookings" },
     { label: "Payments", href: "/admin/payments" },
+    { label: "💰 Bank Transfers", href: "/admin/bank-transfers" },
   ];
 
   return (

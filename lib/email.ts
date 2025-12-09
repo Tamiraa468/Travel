@@ -753,3 +753,557 @@ export async function sendPaymentReminderEmail({
     throw new Error("Failed to send payment reminder email");
   }
 }
+
+/**
+ * ==========================================
+ * SEND PAYMENT LINK EMAIL TO CUSTOMER
+ * ==========================================
+ *
+ * Sends a beautifully formatted email with the Stripe payment link
+ * to the customer after they request a tour booking.
+ *
+ * @param to - Customer email address
+ * @param customerName - Customer's full name
+ * @param tourName - Name of the tour
+ * @param totalPrice - Total tour price
+ * @param amountToPay - Amount to pay now (30% advance or full)
+ * @param paymentLink - Stripe checkout URL
+ * @param requestId - Booking request ID for reference
+ * @param preferredStartDate - Optional tour start date
+ */
+export async function sendPaymentLinkEmail({
+  to,
+  customerName,
+  tourName,
+  totalPrice,
+  amountToPay,
+  paymentLink,
+  requestId,
+  preferredStartDate,
+}: {
+  to: string;
+  customerName: string;
+  tourName: string;
+  totalPrice: number;
+  amountToPay: number;
+  paymentLink: string;
+  requestId: string;
+  preferredStartDate?: string | null;
+}): Promise<void> {
+  try {
+    const transporter = getTransporter();
+
+    // Format the date nicely
+    const startDateString = preferredStartDate
+      ? new Date(preferredStartDate).toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "To be confirmed";
+
+    // Calculate remaining amount
+    const remainingAmount = totalPrice - amountToPay;
+    const isAdvancePayment = amountToPay < totalPrice;
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <style>
+            body { 
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+              color: #333; 
+              margin: 0; 
+              padding: 0;
+              background-color: #f5f5f5;
+            }
+            .container { 
+              max-width: 600px; 
+              margin: 0 auto; 
+              padding: 20px; 
+            }
+            .header { 
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white; 
+              padding: 30px 20px; 
+              text-align: center;
+              border-radius: 12px 12px 0 0; 
+            }
+            .header h1 {
+              margin: 0;
+              font-size: 28px;
+            }
+            .header p {
+              margin: 10px 0 0 0;
+              opacity: 0.9;
+            }
+            .content { 
+              background-color: white; 
+              padding: 30px; 
+              border-radius: 0 0 12px 12px;
+              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            .booking-details {
+              background-color: #f8f9fa;
+              padding: 20px;
+              border-radius: 8px;
+              margin: 20px 0;
+              border-left: 4px solid #667eea;
+            }
+            .detail-row {
+              display: flex;
+              justify-content: space-between;
+              padding: 8px 0;
+              border-bottom: 1px solid #eee;
+            }
+            .detail-row:last-child {
+              border-bottom: none;
+            }
+            .detail-label {
+              color: #666;
+            }
+            .detail-value {
+              font-weight: bold;
+              text-align: right;
+            }
+            .price-box {
+              background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+              color: white;
+              padding: 20px;
+              border-radius: 8px;
+              text-align: center;
+              margin: 20px 0;
+            }
+            .price-box .label {
+              font-size: 14px;
+              opacity: 0.9;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            }
+            .price-box .amount {
+              font-size: 36px;
+              font-weight: bold;
+              margin: 10px 0;
+            }
+            .price-box .note {
+              font-size: 12px;
+              opacity: 0.8;
+            }
+            .payment-button {
+              display: block;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white !important;
+              text-decoration: none;
+              padding: 18px 30px;
+              border-radius: 8px;
+              text-align: center;
+              font-size: 18px;
+              font-weight: bold;
+              margin: 25px 0;
+              transition: transform 0.2s;
+            }
+            .payment-button:hover {
+              transform: scale(1.02);
+            }
+            .payment-methods {
+              text-align: center;
+              margin: 15px 0;
+              color: #666;
+              font-size: 14px;
+            }
+            .payment-icons {
+              margin-top: 8px;
+            }
+            .payment-icons span {
+              display: inline-block;
+              margin: 0 5px;
+              padding: 5px 10px;
+              background: #f0f0f0;
+              border-radius: 4px;
+              font-size: 12px;
+            }
+            .info-box {
+              background-color: #fff3cd;
+              border: 1px solid #ffc107;
+              padding: 15px;
+              border-radius: 8px;
+              margin: 20px 0;
+            }
+            .info-box h4 {
+              margin: 0 0 10px 0;
+              color: #856404;
+            }
+            .info-box p {
+              margin: 0;
+              color: #856404;
+              font-size: 14px;
+            }
+            .remaining-box {
+              background-color: #e8f4fd;
+              border: 1px solid #bee5eb;
+              padding: 15px;
+              border-radius: 8px;
+              margin: 20px 0;
+            }
+            .remaining-box p {
+              margin: 0;
+              color: #0c5460;
+            }
+            .footer { 
+              margin-top: 20px; 
+              text-align: center;
+              font-size: 12px; 
+              color: #6b7280; 
+              padding: 20px;
+            }
+            .reference {
+              background: #f0f0f0;
+              padding: 10px;
+              border-radius: 4px;
+              font-family: monospace;
+              text-align: center;
+              margin: 15px 0;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>🏔️ Your Mongolia Adventure Awaits!</h1>
+              <p>Complete your payment to confirm your booking</p>
+            </div>
+            
+            <div class="content">
+              <p style="font-size: 18px;">Dear <strong>${customerName}</strong>,</p>
+              
+              <p>Thank you for choosing UTravel Mongolia! We're excited to help you experience the beauty of Mongolia.</p>
+              
+              <p>Your booking request has been received. Please complete your payment to confirm your spot.</p>
+
+              <div class="booking-details">
+                <h3 style="margin-top: 0; color: #667eea;">📋 Booking Details</h3>
+                <div class="detail-row">
+                  <span class="detail-label">Tour</span>
+                  <span class="detail-value">${tourName}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Start Date</span>
+                  <span class="detail-value">${startDateString}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Total Price</span>
+                  <span class="detail-value">$${totalPrice.toLocaleString(
+                    "en-US",
+                    { minimumFractionDigits: 2 }
+                  )}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Reference</span>
+                  <span class="detail-value" style="font-family: monospace;">${requestId
+                    .slice(-8)
+                    .toUpperCase()}</span>
+                </div>
+              </div>
+
+              <div class="price-box">
+                <div class="label">${
+                  isAdvancePayment ? "30% Advance Payment" : "Total Payment"
+                }</div>
+                <div class="amount">$${amountToPay.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                })}</div>
+                ${
+                  isAdvancePayment
+                    ? `<div class="note">Remaining $${remainingAmount.toLocaleString(
+                        "en-US",
+                        { minimumFractionDigits: 2 }
+                      )} due before tour start</div>`
+                    : ""
+                }
+              </div>
+
+              <a href="${paymentLink}" class="payment-button">
+                💳 Pay Now - $${amountToPay.toLocaleString("en-US", {
+                  minimumFractionDigits: 2,
+                })}
+              </a>
+
+              <div class="payment-methods">
+                Secure payment powered by Stripe
+                <div class="payment-icons">
+                  <span>💳 Visa</span>
+                  <span>💳 Mastercard</span>
+                  <span>🍎 Apple Pay</span>
+                  <span>📱 Google Pay</span>
+                </div>
+              </div>
+
+              ${
+                isAdvancePayment
+                  ? `
+              <div class="remaining-box">
+                <p><strong>ℹ️ About Advance Payment:</strong> The 30% advance secures your booking. The remaining 70% ($${remainingAmount.toLocaleString(
+                  "en-US",
+                  { minimumFractionDigits: 2 }
+                )}) can be paid before your tour starts or upon arrival in Mongolia.</p>
+              </div>
+              `
+                  : ""
+              }
+
+              <div class="info-box">
+                <h4>⏰ Important</h4>
+                <p>This payment link will expire in 30 minutes. If it expires, please contact us for a new link.</p>
+              </div>
+
+              <p>If you have any questions, reply to this email or contact us at:</p>
+              <ul>
+                <li>Email: udelgombotamira@gmail.com</li>
+                <li>WhatsApp: +976 XXXX XXXX</li>
+              </ul>
+
+              <p>We look forward to welcoming you to Mongolia! 🇲🇳</p>
+              
+              <p>Best regards,<br/><strong>The UTravel Mongolia Team</strong></p>
+            </div>
+            
+            <div class="footer">
+              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>Your adventure partner in Mongolia</p>
+              <p style="color: #999; font-size: 10px;">
+                Booking Reference: ${requestId}
+              </p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await transporter.sendMail({
+      from: `"UTravel Mongolia" <${SMTP_USER}>`,
+      to,
+      subject: `💳 Complete Your Payment - ${tourName} | UTravel Mongolia`,
+      html: htmlContent,
+    });
+
+    console.log(`✓ Payment link email sent to ${to}`);
+  } catch (error) {
+    console.error("Failed to send payment link email:", error);
+    throw new Error("Failed to send payment link email");
+  }
+}
+
+/**
+ * ==========================================
+ * SEND PAYMENT CONFIRMATION EMAIL
+ * ==========================================
+ *
+ * Sent after successful Stripe payment (triggered by webhook)
+ */
+export async function sendPaymentConfirmationEmail({
+  to,
+  customerName,
+  tourName,
+  amountPaid,
+  totalPrice,
+  requestId,
+  preferredStartDate,
+}: {
+  to: string;
+  customerName: string;
+  tourName: string;
+  amountPaid: number;
+  totalPrice: number;
+  requestId: string;
+  preferredStartDate?: string | null;
+}): Promise<void> {
+  try {
+    const transporter = getTransporter();
+
+    const startDateString = preferredStartDate
+      ? new Date(preferredStartDate).toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "To be confirmed";
+
+    const remainingAmount = totalPrice - amountPaid;
+    const isFullyPaid = remainingAmount <= 0;
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8" />
+          <style>
+            body { 
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+              color: #333; 
+              margin: 0; 
+              padding: 0;
+              background-color: #f5f5f5;
+            }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { 
+              background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+              color: white; 
+              padding: 30px 20px; 
+              text-align: center;
+              border-radius: 12px 12px 0 0; 
+            }
+            .content { 
+              background-color: white; 
+              padding: 30px; 
+              border-radius: 0 0 12px 12px;
+              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            .success-icon {
+              font-size: 60px;
+              margin-bottom: 10px;
+            }
+            .booking-confirmed {
+              background-color: #d4edda;
+              border: 2px solid #28a745;
+              padding: 20px;
+              border-radius: 8px;
+              text-align: center;
+              margin: 20px 0;
+            }
+            .booking-confirmed h3 {
+              color: #155724;
+              margin: 0;
+            }
+            .details-table {
+              width: 100%;
+              border-collapse: collapse;
+              margin: 20px 0;
+            }
+            .details-table td {
+              padding: 12px;
+              border-bottom: 1px solid #eee;
+            }
+            .details-table td:first-child {
+              color: #666;
+            }
+            .details-table td:last-child {
+              font-weight: bold;
+              text-align: right;
+            }
+            .footer { 
+              text-align: center;
+              font-size: 12px; 
+              color: #6b7280; 
+              padding: 20px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <div class="success-icon">✅</div>
+              <h1>Payment Successful!</h1>
+              <p>Your Mongolia adventure is confirmed</p>
+            </div>
+            
+            <div class="content">
+              <p style="font-size: 18px;">Dear <strong>${customerName}</strong>,</p>
+              
+              <div class="booking-confirmed">
+                <h3>🎉 Your Booking is ${
+                  isFullyPaid ? "Fully Paid" : "Confirmed"
+                }!</h3>
+              </div>
+
+              <p>Great news! We have received your payment. ${
+                isFullyPaid
+                  ? "Your tour is fully paid!"
+                  : "Your booking is now secured."
+              }</p>
+
+              <table class="details-table">
+                <tr>
+                  <td>Tour</td>
+                  <td>${tourName}</td>
+                </tr>
+                <tr>
+                  <td>Start Date</td>
+                  <td>${startDateString}</td>
+                </tr>
+                <tr>
+                  <td>Amount Paid</td>
+                  <td style="color: #28a745;">$${amountPaid.toLocaleString(
+                    "en-US",
+                    { minimumFractionDigits: 2 }
+                  )}</td>
+                </tr>
+                ${
+                  !isFullyPaid
+                    ? `
+                <tr>
+                  <td>Remaining Balance</td>
+                  <td style="color: #dc3545;">$${remainingAmount.toLocaleString(
+                    "en-US",
+                    { minimumFractionDigits: 2 }
+                  )}</td>
+                </tr>
+                `
+                    : ""
+                }
+                <tr>
+                  <td>Reference</td>
+                  <td style="font-family: monospace;">${requestId
+                    .slice(-8)
+                    .toUpperCase()}</td>
+                </tr>
+              </table>
+
+              <h3>📋 What's Next?</h3>
+              <ul>
+                <li>Our team will contact you within 24 hours with detailed tour information</li>
+                <li>You'll receive a complete itinerary and packing list</li>
+                <li>We'll arrange airport pickup and all logistics</li>
+                ${
+                  !isFullyPaid
+                    ? `<li>Remaining balance of $${remainingAmount.toLocaleString(
+                        "en-US",
+                        { minimumFractionDigits: 2 }
+                      )} is due before tour start</li>`
+                    : ""
+                }
+              </ul>
+
+              <p>If you have any questions, don't hesitate to reach out!</p>
+              
+              <p>See you in Mongolia! 🇲🇳🏔️</p>
+              
+              <p>Best regards,<br/><strong>The UTravel Mongolia Team</strong></p>
+            </div>
+            
+            <div class="footer">
+              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>Booking Reference: ${requestId}</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await transporter.sendMail({
+      from: `"UTravel Mongolia" <${SMTP_USER}>`,
+      to,
+      subject: `✅ Payment Confirmed - ${tourName} | UTravel Mongolia`,
+      html: htmlContent,
+    });
+
+    console.log(`✓ Payment confirmation email sent to ${to}`);
+  } catch (error) {
+    console.error("Failed to send payment confirmation email:", error);
+    throw new Error("Failed to send payment confirmation email");
+  }
+}

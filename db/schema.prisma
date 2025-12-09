@@ -104,7 +104,15 @@ model RequestInfo {
   bookingStatus      RequestBookingStatus @default(UNCONFIRMED)
   stripeSessionId    String?           // Stripe checkout session ID
   paypalOrderId      String?           // PayPal order ID
-  paymentMethod      String?           // "stripe", "paypal", "bank"
+  paymentMethod      String?           // "stripe", "paypal", "bank_transfer"
+  
+  // Bank Transfer fields
+  bankTransferRef    String?           // Unique reference for bank transfer
+  bankTransferDate   DateTime?         // Date customer made the transfer
+  bankTransferNote   String?           // Customer's note about transfer
+  bankVerifiedAt     DateTime?         // When admin verified the payment
+  bankVerifiedBy     String?           // Admin who verified
+  
   marketingConsent   Boolean           @default(false)
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
@@ -113,6 +121,7 @@ model RequestInfo {
   @@index([createdAt])
   @@index([stripeSessionId])
   @@index([paypalOrderId])
+  @@index([bankTransferRef])
 }
 
 enum RequestPaymentStatus {
