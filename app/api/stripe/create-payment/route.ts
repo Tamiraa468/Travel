@@ -38,7 +38,8 @@ if (!process.env.STRIPE_SECRET_KEY) {
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 // Base URL for redirects (changes between dev and production)
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+// Remove trailing slash if present to avoid URL issues
+const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "https://travel-9jis.vercel.app").replace(/\/+$/, "");
 
 // ==========================================
 // API HANDLER
