@@ -441,7 +441,7 @@ export default function PaymentRequestForm({
         <button
           type="submit"
           disabled={loading || !formData.totalPrice}
-          onClick={() => setFormData(prev => ({ ...prev, directPay: true }))}
+          onClick={() => setFormData((prev) => ({ ...prev, directPay: true }))}
           className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
         >
           {loading ? (
@@ -463,7 +463,7 @@ export default function PaymentRequestForm({
         <button
           type="submit"
           disabled={loading || !formData.totalPrice}
-          onClick={() => setFormData(prev => ({ ...prev, directPay: false }))}
+          onClick={() => setFormData((prev) => ({ ...prev, directPay: false }))}
           className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition flex items-center justify-center"
         >
           {loading ? (

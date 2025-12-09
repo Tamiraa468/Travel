@@ -32,7 +32,10 @@ import {
 // STRIPE CONFIGURATION
 // ==========================================
 // Initialize Stripe with your secret key (server-side only!)
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+if (!process.env.STRIPE_SECRET_KEY) {
+  console.error("❌ STRIPE_SECRET_KEY is not set!");
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 // Base URL for redirects (changes between dev and production)
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -263,10 +266,30 @@ export async function POST(request: Request) {
     });
   } catch (error: any) {
     console.error("❌ Error creating payment:", error);
+    console.error("Error stack:", error.stack);
+    console.error("Error name:", error.name);
+    console.error("Error type:", error.type);
 
     // Handle Stripe-specific errors
     if (error.type === "StripeCardError") {
       return NextResponse.json({ error: "Card was declined" }, { status: 400 });
+    }
+
+    // Handle Stripe API errors
+    if (error.type === "StripeInvalidRequestError") {
+      return NextResponse.json(
+        { error: "Invalid payment request: " + error.message },
+        { status: 400 }
+      );
+    }
+
+    // Handle Prisma errors
+    if (error.code?.startsWith("P")) {
+      console.error("Prisma error code:", error.code);
+      return NextResponse.json(
+        { error: "Database error. Please try again." },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(
