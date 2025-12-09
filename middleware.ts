@@ -5,6 +5,26 @@ const requestCounts = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX = 10; // Max 10 requests per minute
 
+// Security headers to prevent XSS, clickjacking, and other attacks
+const securityHeaders = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "X-XSS-Protection": "1; mode=block",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  // Content Security Policy - adjust as needed for your app
+  "Content-Security-Policy":
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data: https: blob:; " +
+    "font-src 'self' data:; " +
+    "connect-src 'self' https://api.stripe.com https://maps.googleapis.com; " +
+    "frame-src 'self' https://js.stripe.com https://hooks.stripe.com; " +
+    "object-src 'none'; " +
+    "base-uri 'self';",
+};
+
 /**
  * Get client IP address from request
  */
@@ -71,11 +91,35 @@ export async function middleware(request: NextRequest) {
     if (!sessionCookie) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }
+
+    // Verify session signature format (basic check)
+    // Full verification happens in getSession()
+    const parts = sessionCookie.split(".");
+    if (parts.length !== 2 || parts[1].length !== 64) {
+      // Invalid session format - likely tampering attempt
+      const response = NextResponse.redirect(
+        new URL("/admin/login", request.url)
+      );
+      response.cookies.delete("admin_session");
+      return response;
+    }
   }
 
-  return NextResponse.next();
+  // Add security headers to all responses
+  const response = NextResponse.next();
+
+  for (const [key, value] of Object.entries(securityHeaders)) {
+    response.headers.set(key, value);
+  }
+
+  return response;
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/request-info"],
+  matcher: [
+    "/admin/:path*",
+    "/api/request-info",
+    "/api/stripe/:path*",
+    "/payment/:path*",
+  ],
 };

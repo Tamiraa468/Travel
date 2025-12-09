@@ -20,6 +20,13 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import prisma from "@/lib/prisma";
 import { sendPaymentLinkEmail } from "@/lib/email";
+import {
+  sanitizeString,
+  sanitizeEmail,
+  sanitizePhone,
+  checkRateLimit,
+  getClientIp,
+} from "@/lib/security";
 
 // ==========================================
 // STRIPE CONFIGURATION
@@ -37,6 +44,17 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 // ==========================================
 export async function POST(request: Request) {
   try {
+    // Security: Rate limiting
+    const clientIp = getClientIp(request);
+    const rateLimit = checkRateLimit(`stripe-payment:${clientIp}`, 5, 60000); // 5 requests per minute
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { error: "Too many payment requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     // Step 1: Parse the request body
     const body = await request.json();
 
@@ -55,18 +73,38 @@ export async function POST(request: Request) {
     } = body;
 
     // ==========================================
+    // SECURITY: SANITIZE INPUTS
+    // ==========================================
+    const sanitizedFullName = sanitizeString(fullName || "");
+    const sanitizedEmail = sanitizeEmail(email || "");
+    const sanitizedPhone = sanitizePhone(phone || "");
+    const sanitizedTourName = sanitizeString(tourName || "");
+    const sanitizedMessage = sanitizeString(message || "");
+
+    // ==========================================
     // VALIDATION
     // ==========================================
-    if (!fullName || !email || !totalPrice) {
+    if (!sanitizedFullName || !sanitizedEmail || !totalPrice) {
       return NextResponse.json(
         { error: "Missing required fields: fullName, email, totalPrice" },
         { status: 400 }
       );
     }
 
-    if (totalPrice <= 0) {
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(sanitizedEmail)) {
       return NextResponse.json(
-        { error: "Total price must be greater than 0" },
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
+    }
+
+    // Validate totalPrice is a positive number
+    const sanitizedTotalPrice = Math.abs(Number(totalPrice) || 0);
+    if (sanitizedTotalPrice <= 0 || sanitizedTotalPrice > 100000) {
+      return NextResponse.json(
+        { error: "Invalid price. Must be between $1 and $100,000" },
         { status: 400 }
       );
     }
@@ -78,8 +116,8 @@ export async function POST(request: Request) {
     // Option 2: Pay full amount
     const advancePercentage = 0.3; // 30% advance
     const amountToPay = payAdvanceOnly
-      ? Math.round(totalPrice * advancePercentage)
-      : totalPrice;
+      ? Math.round(sanitizedTotalPrice * advancePercentage)
+      : sanitizedTotalPrice;
 
     // Stripe requires amount in cents (smallest currency unit)
     const amountInCents = Math.round(amountToPay * 100);
@@ -90,23 +128,23 @@ export async function POST(request: Request) {
     // Create a booking request in the database BEFORE creating payment
     const requestInfo = await prisma.requestInfo.create({
       data: {
-        fullName,
-        email,
-        phone: phone || null,
+        fullName: sanitizedFullName,
+        email: sanitizedEmail,
+        phone: sanitizedPhone || null,
         tourId: tourId || null,
-        tourName: tourName || "Custom Tour",
-        tourPrice: totalPrice,
-        advanceRequired: Math.round(totalPrice * advancePercentage),
+        tourName: sanitizedTourName || "Custom Tour",
+        tourPrice: sanitizedTotalPrice,
+        advanceRequired: Math.round(sanitizedTotalPrice * advancePercentage),
         amountPaid: 0, // Will be updated after payment
         paymentStatus: "PENDING",
         bookingStatus: "UNCONFIRMED",
         paymentMethod: "stripe",
-        adults,
-        children,
+        adults: Math.min(Math.max(1, Number(adults) || 1), 50), // Sanitize: 1-50 adults
+        children: Math.min(Math.max(0, Number(children) || 0), 50), // Sanitize: 0-50 children
         preferredStartDate: preferredStartDate
           ? new Date(preferredStartDate)
           : null,
-        message: message || null,
+        message: sanitizedMessage || null,
       },
     });
 
@@ -133,7 +171,7 @@ export async function POST(request: Request) {
           price_data: {
             currency: "usd", // US Dollars
             product_data: {
-              name: tourName || "Mongolia Tour Booking",
+              name: sanitizedTourName || "Mongolia Tour Booking",
               description: payAdvanceOnly
                 ? `30% Advance Payment (${adults} adults${
                     children > 0 ? `, ${children} children` : ""
