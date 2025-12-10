@@ -1,5 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
 
 export async function GET() {
   try {
@@ -7,8 +8,7 @@ export async function GET() {
       include: { dates: true },
       orderBy: { createdAt: "desc" },
     });
-    console.log("API GET /tours: Found", tours.length, "tours");
-    return NextResponse.json(tours); // Return array directly for easier client consumption
+    return NextResponse.json(tours);
   } catch (error) {
     console.error("GET /api/tours error", error);
     return NextResponse.json(
@@ -18,8 +18,17 @@ export async function GET() {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    // Auth check - only admins can create tours
+    const session = await getSession();
+    if (!session?.isAdmin) {
+      return NextResponse.json(
+        { ok: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const { title, slug, description, price, duration, images = [] } = body;
     const tour = await prisma.tour.create({

@@ -2,9 +2,19 @@ import { cookies } from "next/headers";
 import crypto from "crypto";
 
 const SESSION_NAME = "admin_session";
+
+// IMPORTANT: Always set SESSION_SECRET in production environment variables!
+// Use a development fallback only for local development
 const SESSION_SECRET =
   process.env.SESSION_SECRET ||
-  "change-this-in-production-to-a-secure-random-string";
+  (process.env.NODE_ENV === "production"
+    ? ""
+    : "dev-only-secret-change-in-production");
+
+// Fail-safe check for session secret in production
+if (!process.env.SESSION_SECRET && process.env.NODE_ENV === "production") {
+  console.error("🚨 CRITICAL: SESSION_SECRET is not set in production!");
+}
 
 export type SessionData = {
   isAdmin: boolean;
@@ -16,6 +26,9 @@ export type SessionData = {
  * Prevents session tampering (React2Shell mitigation)
  */
 function signSession(data: string): string {
+  if (!SESSION_SECRET) {
+    throw new Error("SESSION_SECRET is not configured");
+  }
   const hmac = crypto.createHmac("sha256", SESSION_SECRET);
   hmac.update(data);
   return hmac.digest("hex");
@@ -98,12 +111,22 @@ export async function deleteSession() {
 
 /**
  * Verify admin credentials
+ * IMPORTANT: Set ADMIN_EMAIL and ADMIN_PASSWORD in environment variables
  */
 export function verifyAdminCredentials(
   email: string,
   password: string
 ): boolean {
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com";
-  const adminPassword = process.env.ADMIN_PASSWORD || "password";
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  // Fail-safe: require environment variables in production
+  if (!adminEmail || !adminPassword) {
+    console.error(
+      "⚠️ ADMIN_EMAIL or ADMIN_PASSWORD not set in environment variables!"
+    );
+    return false;
+  }
+
   return email === adminEmail && password === adminPassword;
 }
