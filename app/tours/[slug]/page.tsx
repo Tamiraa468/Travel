@@ -326,7 +326,7 @@ export default async function TourPage({ params }: Props) {
                 </a>
                 <div className="mt-4 pt-4 border-t border-slate-700 text-center">
                   <p className="text-slate-400 text-xs">Or call us at</p>
-                  <p className="text-white font-semibold">+1 (555) 123-4567</p>
+                  <p className="text-white font-semibold">+976 8947-5188</p>
                 </div>
               </div>
             </div>

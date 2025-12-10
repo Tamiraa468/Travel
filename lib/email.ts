@@ -82,13 +82,25 @@ export async function sendUserConfirmationEmail({
         <head>
           <meta charset="UTF-8" />
           <style>
-            body { font-family: Arial, sans-serif; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background-color: #2563eb; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-            .content { background-color: #f9fafb; padding: 20px; border-radius: 0 0 8px 8px; }
-            .info-block { margin: 15px 0; }
-            .label { font-weight: bold; color: #1f2937; }
-            .footer { margin-top: 20px; font-size: 12px; color: #6b7280; }
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 40px 30px; text-align: center; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 0.5px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 40px 30px; }
+            .greeting { font-size: 18px; color: #1e293b; margin-bottom: 20px; }
+            .info-card { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-left: 4px solid #d4a574; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+            .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(212, 165, 116, 0.2); }
+            .info-row:last-child { border-bottom: none; }
+            .info-label { color: #64748b; font-size: 14px; }
+            .info-value { color: #1e293b; font-weight: 600; }
+            .message-text { color: #475569; line-height: 1.7; }
+            .signature { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+            .signature-name { color: #1e293b; font-weight: 600; }
+            .signature-title { color: #d4a574; font-size: 14px; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 25px 30px; text-align: center; font-size: 12px; }
+            .footer a { color: #d4a574; text-decoration: none; }
           </style>
         </head>
         <body>
@@ -96,29 +108,40 @@ export async function sendUserConfirmationEmail({
             <div class="header">
               <h1>Request Received</h1>
             </div>
+            <div class="gold-bar"></div>
             <div class="content">
-              <p>Hi ${name},</p>
-              <p>Thank you for requesting information about our tours! We've received your inquiry and will get back to you shortly.</p>
+              <p class="greeting">Dear ${name},</p>
+              <p class="message-text">Thank you for your interest in exploring Mongolia with us. We have received your inquiry and our travel specialists are reviewing your request.</p>
               
-              <div class="info-block">
-                <p><span class="label">Tour:</span> ${
-                  tourName || "General Inquiry"
-                }</p>
-                <p><span class="label">Travelers:</span> ${
-                  adults || 1
-                } adult(s), ${children || 0} child(ren)</p>
-                <p><span class="label">Preferred Start Date:</span> ${startDateString}</p>
+              <div class="info-card">
+                <div class="info-row">
+                  <span class="info-label">Tour</span>
+                  <span class="info-value">${
+                    tourName || "General Inquiry"
+                  }</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Travelers</span>
+                  <span class="info-value">${adults || 1} adult(s), ${
+      children || 0
+    } child(ren)</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Preferred Date</span>
+                  <span class="info-value">${startDateString}</span>
+                </div>
               </div>
 
-              <p>Our team will review your request and send you personalized recommendations and pricing within 24 hours.</p>
+              <p class="message-text">Our team will send you personalized recommendations and pricing within 24 hours. If you have any urgent questions, please don't hesitate to contact us.</p>
               
-              <p>If you have any urgent questions, feel free to contact us directly.</p>
-              
-              <p>Best regards,<br/>The Tourism Team</p>
-              
-              <div class="footer">
-                <p>© 2025 Tourism Platform. All rights reserved.</p>
+              <div class="signature">
+                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-title">Your Gateway to Mongolia</p>
               </div>
+            </div>
+            <div class="footer">
+              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p><a href="mailto:udelgombotamira@gmail.com">udelgombotamira@gmail.com</a></p>
             </div>
           </div>
         </body>
@@ -189,27 +212,39 @@ export async function sendInternalNotificationEmail({
         <head>
           <meta charset="UTF-8" />
           <style>
-            body { font-family: Arial, sans-serif; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background-color: #dc2626; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-            .content { background-color: #fef2f2; padding: 20px; border: 1px solid #fee2e2; border-radius: 0 0 8px 8px; }
-            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-            th { text-align: left; background-color: #fecaca; padding: 10px; border: 1px solid #fca5a5; font-weight: bold; }
-            td { padding: 10px; border: 1px solid #fca5a5; }
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 40px 30px; text-align: center; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 24px; font-weight: 600; }
+            .header .badge { display: inline-block; background: linear-gradient(135deg, #d4a574, #f5c478); color: #1e293b; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-top: 15px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 30px; }
+            .alert-text { color: #1e293b; font-weight: 600; margin-bottom: 20px; font-size: 15px; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th { text-align: left; background: linear-gradient(135deg, #1e293b, #334155); color: #d4a574; padding: 12px 15px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+            td { padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #475569; }
+            tr:hover { background-color: #fefce8; }
+            .message-box { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-left: 4px solid #d4a574; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+            .message-box strong { color: #1e293b; }
+            .footer-note { margin-top: 25px; padding: 15px; background-color: #f1f5f9; border-radius: 8px; font-size: 12px; color: #64748b; text-align: center; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 20px 30px; text-align: center; font-size: 12px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1>New Tour Information Request</h1>
+              <h1>New Tour Request</h1>
+              <div class="badge">Action Required</div>
             </div>
+            <div class="gold-bar"></div>
             <div class="content">
-              <p><strong>A new request has been received. Please review and follow up:</strong></p>
+              <p class="alert-text">A new booking inquiry has been received. Please review and respond promptly.</p>
               
               <table>
                 <tr>
                   <th>Field</th>
-                  <th>Value</th>
+                  <th>Details</th>
                 </tr>
                 <tr>
                   <td><strong>Full Name</strong></td>
@@ -217,7 +252,7 @@ export async function sendInternalNotificationEmail({
                 </tr>
                 <tr>
                   <td><strong>Email</strong></td>
-                  <td><a href="mailto:${email}">${email}</a></td>
+                  <td><a href="mailto:${email}" style="color: #d4a574;">${email}</a></td>
                 </tr>
                 <tr>
                   <td><strong>Phone</strong></td>
@@ -236,7 +271,7 @@ export async function sendInternalNotificationEmail({
                   <td>${children || 0}</td>
                 </tr>
                 <tr>
-                  <td><strong>Preferred Start Date</strong></td>
+                  <td><strong>Preferred Date</strong></td>
                   <td>${startDateString}</td>
                 </tr>
                 <tr>
@@ -247,16 +282,19 @@ export async function sendInternalNotificationEmail({
 
               ${
                 message
-                  ? `<div style="background-color: white; padding: 10px; border-left: 4px solid #dc2626;"><strong>Message:</strong><p>${message.replace(
+                  ? `<div class="message-box"><strong>Customer Message:</strong><p style="margin: 10px 0 0 0; color: #475569;">${message.replace(
                       /\n/g,
                       "<br>"
                     )}</p></div>`
                   : ""
               }
 
-              <p style="margin-top: 20px; font-size: 12px; color: #6b7280;">
-                This is an automated notification. Please respond to the user within 24 hours.
-              </p>
+              <div class="footer-note">
+                Please respond to this inquiry within 24 hours.
+              </div>
+            </div>
+            <div class="footer">
+              <p>UTravel Admin Notification System</p>
             </div>
           </div>
         </body>
@@ -326,41 +364,56 @@ export async function sendPaymentInfoEmail({
         <head>
           <meta charset="UTF-8" />
           <style>
-            body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; padding: 30px; border-radius: 12px 12px 0 0; text-align: center; }
-            .header h1 { margin: 0; font-size: 24px; }
-            .content { background-color: #ffffff; padding: 30px; border: 1px solid #e5e7eb; }
-            .price-box { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 2px solid #22c55e; border-radius: 12px; padding: 25px; margin: 20px 0; text-align: center; }
-            .price-box .total { font-size: 36px; font-weight: bold; color: #15803d; }
-            .price-box .label { font-size: 14px; color: #166534; text-transform: uppercase; letter-spacing: 1px; }
-            .advance-box { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 12px; padding: 25px; margin: 20px 0; text-align: center; }
-            .advance-box .amount { font-size: 32px; font-weight: bold; color: #b45309; }
-            .advance-box .note { font-size: 14px; color: #92400e; margin-top: 10px; }
-            .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-            .info-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
-            .info-table td:first-child { font-weight: bold; color: #374151; width: 40%; }
-            .payment-buttons { margin: 30px 0; text-align: center; }
-            .btn { display: inline-block; padding: 15px 40px; margin: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; }
-            .btn-stripe { background: #635bff; color: white !important; }
-            .btn-paypal { background: #003087; color: white !important; }
-            .btn-bank { background: #059669; color: white !important; }
-            .bank-info { background-color: #f3f4f6; border-radius: 8px; padding: 20px; margin: 20px 0; }
-            .bank-info h3 { margin-top: 0; color: #1f2937; }
-            .bank-info p { margin: 5px 0; font-size: 14px; }
-            .footer { background-color: #f9fafb; padding: 20px; border-radius: 0 0 12px 12px; text-align: center; font-size: 12px; color: #6b7280; }
-            .highlight { background-color: #fef3c7; padding: 2px 6px; border-radius: 4px; }
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 40px 30px; text-align: center; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 26px; font-weight: 600; }
+            .header p { margin: 10px 0 0 0; opacity: 0.8; font-size: 14px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 35px 30px; }
+            .greeting { font-size: 17px; color: #1e293b; margin-bottom: 15px; }
+            .message-text { color: #475569; line-height: 1.7; margin-bottom: 25px; }
+            .info-table { width: 100%; margin: 25px 0; border-collapse: collapse; }
+            .info-table td { padding: 14px 0; border-bottom: 1px solid #e2e8f0; }
+            .info-table td:first-child { color: #64748b; font-size: 14px; width: 40%; }
+            .info-table td:last-child { color: #1e293b; font-weight: 600; text-align: right; }
+            .price-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 25px; margin: 25px 0; text-align: center; }
+            .price-card .label { color: #d4a574; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+            .price-card .amount { color: #ffffff; font-size: 38px; font-weight: 700; font-family: 'Playfair Display', Georgia, serif; }
+            .advance-card { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 2px solid #d4a574; border-radius: 12px; padding: 25px; margin: 25px 0; text-align: center; }
+            .advance-card .label { color: #92400e; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+            .advance-card .amount { color: #1e293b; font-size: 34px; font-weight: 700; font-family: 'Playfair Display', Georgia, serif; }
+            .advance-card .note { color: #78716c; font-size: 13px; margin-top: 10px; }
+            .cta-text { text-align: center; font-size: 16px; color: #1e293b; font-weight: 500; margin: 30px 0 20px 0; }
+            .btn { display: inline-block; padding: 16px 40px; margin: 8px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 15px; transition: transform 0.2s; }
+            .btn-primary { background: linear-gradient(135deg, #d4a574, #f5c478); color: #1e293b !important; }
+            .btn-secondary { background: linear-gradient(135deg, #1e293b, #334155); color: #ffffff !important; }
+            .payment-buttons { margin: 25px 0; text-align: center; }
+            .bank-section { background-color: #f8fafc; border-radius: 12px; padding: 25px; margin: 25px 0; border: 1px solid #e2e8f0; }
+            .bank-section h3 { color: #1e293b; font-size: 16px; margin: 0 0 15px 0; font-family: 'Playfair Display', Georgia, serif; }
+            .bank-section p { margin: 6px 0; font-size: 14px; color: #475569; }
+            .bank-section .ref { display: inline-block; background: linear-gradient(135deg, #fefce8, #fef9c3); padding: 4px 12px; border-radius: 4px; font-family: monospace; color: #1e293b; font-weight: 600; }
+            .bank-section .important { margin-top: 15px; padding: 12px; background-color: #fef2f2; border-left: 3px solid #d4a574; font-size: 13px; color: #78350f; }
+            .next-steps { background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-left: 4px solid #d4a574; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+            .next-steps strong { color: #1e293b; }
+            .next-steps p { color: #475569; margin: 8px 0 0 0; font-size: 14px; line-height: 1.6; }
+            .signature { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+            .signature-name { color: #1e293b; font-weight: 600; }
+            .signature-title { color: #d4a574; font-size: 14px; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 25px 30px; text-align: center; font-size: 12px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1>🎉 Tour Booking Request Received!</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">Booking Reference: ${requestId}</p>
+              <h1>Your Booking Request</h1>
+              <p>Reference: ${requestId}</p>
             </div>
+            <div class="gold-bar"></div>
             <div class="content">
-              <p>Dear ${name},</p>
-              <p>Thank you for your interest in booking <strong>${tourName}</strong>! We're excited to help you plan your adventure.</p>
+              <p class="greeting">Dear ${name},</p>
+              <p class="message-text">Thank you for choosing <strong>${tourName}</strong>. We're delighted to help you plan your Mongolian adventure.</p>
               
               <table class="info-table">
                 <tr>
@@ -371,7 +424,7 @@ export async function sendPaymentInfoEmail({
                   <td>Travelers</td>
                   <td>${adults} adult(s)${
       children > 0 ? `, ${children} child(ren)` : ""
-    } (${totalTravelers} total)</td>
+    }</td>
                 </tr>
                 <tr>
                   <td>Preferred Date</td>
@@ -379,15 +432,15 @@ export async function sendPaymentInfoEmail({
                 </tr>
               </table>
 
-              <div class="price-box">
+              <div class="price-card">
                 <div class="label">Total Tour Price</div>
-                <div class="total">$${tourPrice.toLocaleString("en-US", {
+                <div class="amount">$${tourPrice.toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                 })}</div>
               </div>
 
-              <div class="advance-box">
-                <div class="label">⚡ 30% Advance Payment Required</div>
+              <div class="advance-card">
+                <div class="label">30% Advance Payment</div>
                 <div class="amount">$${advanceAmount.toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                 })}</div>
@@ -397,44 +450,45 @@ export async function sendPaymentInfoEmail({
                 )} due before tour start</div>
               </div>
 
-              <p style="text-align: center; font-size: 18px; margin: 25px 0;">
-                <strong>To confirm your booking, please pay the 30% advance:</strong>
-              </p>
+              <p class="cta-text">To confirm your booking, please complete your advance payment:</p>
 
               <div class="payment-buttons">
                 ${
                   stripePaymentUrl
-                    ? `<a href="${stripePaymentUrl}" class="btn btn-stripe">💳 Pay with Card (Stripe)</a>`
+                    ? `<a href="${stripePaymentUrl}" class="btn btn-primary">Pay with Card</a>`
                     : ""
                 }
                 ${
                   paypalPaymentUrl
-                    ? `<a href="${paypalPaymentUrl}" class="btn btn-paypal">🅿️ Pay with PayPal</a>`
+                    ? `<a href="${paypalPaymentUrl}" class="btn btn-secondary">Pay with PayPal</a>`
                     : ""
                 }
               </div>
 
-              <div class="bank-info">
-                <h3>🏦 Bank Transfer Option</h3>
+              <div class="bank-section">
+                <h3>Bank Transfer Option</h3>
                 <p><strong>Bank:</strong> Khan Bank</p>
                 <p><strong>Account Name:</strong> UTravel LLC</p>
                 <p><strong>Account Number:</strong> 5012345678</p>
-                <p><strong>Reference:</strong> <span class="highlight">${requestId}</span></p>
-                <p style="margin-top: 15px; color: #dc2626;"><strong>Important:</strong> Please include your booking reference in the transfer description.</p>
+                <p><strong>Reference:</strong> <span class="ref">${requestId}</span></p>
+                <div class="important"><strong>Important:</strong> Please include your booking reference in the transfer description.</div>
               </div>
 
-              <p style="background-color: #eff6ff; padding: 15px; border-radius: 8px; border-left: 4px solid #2563eb;">
-                <strong>📌 What happens next?</strong><br/>
-                Once we receive your 30% advance payment, we'll send you a confirmation email with your tour details and itinerary. The remaining balance is due 14 days before your tour start date.
-              </p>
+              <div class="next-steps">
+                <strong>What happens next?</strong>
+                <p>Once we receive your 30% advance payment, we'll send you a confirmation email with your complete tour details and itinerary. The remaining balance is due 14 days before your tour start date.</p>
+              </div>
 
-              <p>If you have any questions, feel free to reply to this email or contact us directly.</p>
+              <p class="message-text">If you have any questions, please don't hesitate to reply to this email.</p>
               
-              <p>Best regards,<br/><strong>The UTravel Team</strong></p>
+              <div class="signature">
+                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-title">Your Gateway to Mongolia</p>
+              </div>
             </div>
             <div class="footer">
-              <p>© 2025 UTravel. All rights reserved.</p>
-              <p>This email was sent regarding booking request ${requestId}</p>
+              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>Booking Reference: ${requestId}</p>
             </div>
           </div>
         </body>
@@ -501,53 +555,67 @@ export async function sendBookingConfirmationEmail({
         <head>
           <meta charset="UTF-8" />
           <style>
-            body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 30px; border-radius: 12px 12px 0 0; text-align: center; }
-            .header h1 { margin: 0; font-size: 28px; }
-            .header .checkmark { font-size: 60px; margin-bottom: 10px; }
-            .content { background-color: #ffffff; padding: 30px; border: 1px solid #e5e7eb; }
-            .confirmed-badge { background: linear-gradient(135deg, #dcfce7, #bbf7d0); border: 2px solid #22c55e; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; }
-            .confirmed-badge .status { font-size: 24px; font-weight: bold; color: #15803d; }
-            .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-            .info-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
-            .info-table td:first-child { font-weight: bold; color: #374151; width: 40%; }
-            .payment-summary { background-color: #f0fdf4; border-radius: 8px; padding: 20px; margin: 20px 0; }
-            .payment-summary h3 { margin-top: 0; color: #15803d; }
-            .payment-row { display: flex; justify-content: space-between; margin: 10px 0; }
-            .next-steps { background-color: #eff6ff; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid #2563eb; }
-            .next-steps h3 { margin-top: 0; color: #1d4ed8; }
-            .next-steps ul { margin: 0; padding-left: 20px; }
-            .next-steps li { margin: 8px 0; }
-            .footer { background-color: #f9fafb; padding: 20px; border-radius: 0 0 12px 12px; text-align: center; font-size: 12px; color: #6b7280; }
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 40px 30px; text-align: center; }
+            .header .icon { font-size: 50px; margin-bottom: 15px; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 28px; font-weight: 600; }
+            .header p { margin: 10px 0 0 0; opacity: 0.8; font-size: 14px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 35px 30px; }
+            .greeting { font-size: 17px; color: #1e293b; margin-bottom: 15px; }
+            .message-text { color: #475569; line-height: 1.7; }
+            .confirmed-badge { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 2px solid #d4a574; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center; }
+            .confirmed-badge .status { font-size: 20px; font-weight: 700; color: #1e293b; font-family: 'Playfair Display', Georgia, serif; }
+            .confirmed-badge .method { font-size: 13px; color: #78716c; margin-top: 5px; }
+            .info-table { width: 100%; margin: 25px 0; border-collapse: collapse; }
+            .info-table td { padding: 14px 0; border-bottom: 1px solid #e2e8f0; }
+            .info-table td:first-child { color: #64748b; font-size: 14px; width: 40%; }
+            .info-table td:last-child { color: #1e293b; font-weight: 600; text-align: right; }
+            .payment-summary { background-color: #f8fafc; border-radius: 12px; padding: 25px; margin: 25px 0; border: 1px solid #e2e8f0; }
+            .payment-summary h3 { color: #1e293b; font-size: 16px; margin: 0 0 15px 0; font-family: 'Playfair Display', Georgia, serif; }
+            .payment-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+            .payment-row:last-child { border-bottom: none; }
+            .payment-row.paid { color: #166534; font-weight: 600; }
+            .payment-row.remaining { color: #d4a574; }
+            .next-steps { background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-left: 4px solid #d4a574; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+            .next-steps h3 { color: #1e293b; font-size: 16px; margin: 0 0 12px 0; }
+            .next-steps ul { margin: 0; padding-left: 20px; color: #475569; }
+            .next-steps li { margin: 8px 0; line-height: 1.5; }
+            .signature { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+            .signature-name { color: #1e293b; font-weight: 600; }
+            .signature-title { color: #d4a574; font-size: 14px; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 25px 30px; text-align: center; font-size: 12px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <div class="checkmark">✅</div>
-              <h1>Booking Confirmed!</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">Reference: ${requestId}</p>
+              <div class="icon">✓</div>
+              <h1>Booking Confirmed</h1>
+              <p>Reference: ${requestId}</p>
             </div>
+            <div class="gold-bar"></div>
             <div class="content">
-              <p>Dear ${name},</p>
-              <p>Great news! Your booking for <strong>${tourName}</strong> has been <strong>confirmed</strong>!</p>
+              <p class="greeting">Dear ${name},</p>
+              <p class="message-text">Wonderful news! Your booking for <strong>${tourName}</strong> has been confirmed.</p>
               
               <div class="confirmed-badge">
-                <div class="status">🎉 BOOKING CONFIRMED</div>
-                <p style="margin: 10px 0 0 0; color: #166534;">Payment received via ${
+                <div class="status">BOOKING CONFIRMED</div>
+                <div class="method">Payment received via ${
                   paymentMethod || "Online Payment"
-                }</p>
+                }</div>
               </div>
 
               <table class="info-table">
                 <tr>
                   <td>Tour</td>
-                  <td><strong>${tourName}</strong></td>
+                  <td>${tourName}</td>
                 </tr>
                 <tr>
-                  <td>Booking Reference</td>
-                  <td><strong>${requestId}</strong></td>
+                  <td>Reference</td>
+                  <td>${requestId}</td>
                 </tr>
                 <tr>
                   <td>Travelers</td>
@@ -562,43 +630,41 @@ export async function sendBookingConfirmationEmail({
               </table>
 
               <div class="payment-summary">
-                <h3>💳 Payment Summary</h3>
-                <div style="margin: 10px 0;">
-                  <div style="display: flex; justify-content: space-between;">
-                    <span>Total Tour Price:</span>
-                    <span>$${tourPrice.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                    })}</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; color: #22c55e; font-weight: bold;">
-                    <span>Amount Paid (${paymentPercentage}%):</span>
-                    <span>$${amountPaid.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                    })}</span>
-                  </div>
-                  ${
-                    remainingAmount > 0
-                      ? `
-                  <div style="display: flex; justify-content: space-between; color: #f59e0b; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #d1d5db;">
-                    <span>Remaining Balance:</span>
-                    <span>$${remainingAmount.toLocaleString("en-US", {
-                      minimumFractionDigits: 2,
-                    })}</span>
-                  </div>
-                  <p style="font-size: 12px; color: #6b7280; margin-top: 5px;">Due 14 days before tour start date</p>
-                  `
-                      : `
-                  <div style="display: flex; justify-content: space-between; color: #22c55e; font-weight: bold; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #d1d5db;">
-                    <span>✓ Fully Paid</span>
-                    <span>$0.00 remaining</span>
-                  </div>
-                  `
-                  }
+                <h3>Payment Summary</h3>
+                <div class="payment-row">
+                  <span>Total Tour Price</span>
+                  <span>$${tourPrice.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                  })}</span>
                 </div>
+                <div class="payment-row paid">
+                  <span>Amount Paid (${paymentPercentage}%)</span>
+                  <span>$${amountPaid.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                  })}</span>
+                </div>
+                ${
+                  remainingAmount > 0
+                    ? `
+                <div class="payment-row remaining">
+                  <span>Remaining Balance</span>
+                  <span>$${remainingAmount.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                  })}</span>
+                </div>
+                <p style="font-size: 12px; color: #64748b; margin: 10px 0 0 0;">Due 14 days before tour start</p>
+                `
+                    : `
+                <div class="payment-row paid">
+                  <span>Status</span>
+                  <span>Fully Paid</span>
+                </div>
+                `
+                }
               </div>
 
               <div class="next-steps">
-                <h3>📋 What's Next?</h3>
+                <h3>What's Next?</h3>
                 <ul>
                   <li>We'll send your detailed itinerary within 48 hours</li>
                   <li>Our team will contact you to confirm final arrangements</li>
@@ -607,18 +673,19 @@ export async function sendBookingConfirmationEmail({
                       ? `<li>Please pay the remaining balance 14 days before the tour</li>`
                       : ""
                   }
-                  <li>Pack your bags and get ready for an amazing adventure!</li>
+                  <li>Get ready for an unforgettable Mongolian adventure!</li>
                 </ul>
               </div>
 
-              <p>If you have any questions or need to make changes to your booking, please reply to this email or contact us.</p>
+              <p class="message-text">If you have any questions or need to make changes, please reply to this email.</p>
               
-              <p>We can't wait to host you!</p>
-              
-              <p>Best regards,<br/><strong>The UTravel Team</strong></p>
+              <div class="signature">
+                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-title">Your Gateway to Mongolia</p>
+              </div>
             </div>
             <div class="footer">
-              <p>© 2025 UTravel. All rights reserved.</p>
+              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
               <p>Booking Reference: ${requestId}</p>
             </div>
           </div>
@@ -676,39 +743,52 @@ export async function sendPaymentReminderEmail({
         <head>
           <meta charset="UTF-8" />
           <style>
-            body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 30px; border-radius: 12px 12px 0 0; text-align: center; }
-            .header h1 { margin: 0; font-size: 24px; }
-            .content { background-color: #ffffff; padding: 30px; border: 1px solid #e5e7eb; }
-            .reminder-box { background: linear-gradient(135deg, #fef3c7, #fde68a); border: 2px solid #f59e0b; border-radius: 12px; padding: 25px; margin: 20px 0; text-align: center; }
-            .reminder-box .amount { font-size: 32px; font-weight: bold; color: #b45309; }
-            .payment-buttons { margin: 30px 0; text-align: center; }
-            .btn { display: inline-block; padding: 15px 40px; margin: 10px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px; }
-            .btn-stripe { background: #635bff; color: white !important; }
-            .btn-paypal { background: #003087; color: white !important; }
-            .footer { background-color: #f9fafb; padding: 20px; border-radius: 0 0 12px 12px; text-align: center; font-size: 12px; color: #6b7280; }
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 40px 30px; text-align: center; }
+            .header .icon { font-size: 40px; margin-bottom: 15px; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 24px; font-weight: 600; }
+            .header p { margin: 10px 0 0 0; opacity: 0.8; font-size: 14px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 35px 30px; }
+            .greeting { font-size: 17px; color: #1e293b; margin-bottom: 15px; }
+            .message-text { color: #475569; line-height: 1.7; }
+            .reminder-card { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 2px solid #d4a574; border-radius: 12px; padding: 25px; margin: 25px 0; text-align: center; }
+            .reminder-card .label { color: #92400e; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+            .reminder-card .amount { color: #1e293b; font-size: 34px; font-weight: 700; font-family: 'Playfair Display', Georgia, serif; }
+            .btn { display: inline-block; padding: 16px 40px; margin: 8px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 15px; }
+            .btn-primary { background: linear-gradient(135deg, #d4a574, #f5c478); color: #1e293b !important; }
+            .btn-secondary { background: linear-gradient(135deg, #1e293b, #334155); color: #ffffff !important; }
+            .payment-buttons { margin: 25px 0; text-align: center; }
+            .signature { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+            .signature-name { color: #1e293b; font-weight: 600; }
+            .signature-title { color: #d4a574; font-size: 14px; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 25px 30px; text-align: center; font-size: 12px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1>⏰ Payment Reminder</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">Booking Reference: ${requestId}</p>
+              <div class="icon">⏰</div>
+              <h1>Payment Reminder</h1>
+              <p>Reference: ${requestId}</p>
             </div>
+            <div class="gold-bar"></div>
             <div class="content">
-              <p>Dear ${name},</p>
-              <p>We noticed that your booking for <strong>${tourName}</strong> is not yet confirmed.</p>
+              <p class="greeting">Dear ${name},</p>
+              <p class="message-text">We noticed that your booking for <strong>${tourName}</strong> is not yet confirmed.</p>
               
-              <p>You've paid <strong>$${amountPaid.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-              })}</strong> (${paidPercentage}% of total), but we need at least 30% ($${advanceRequired.toLocaleString(
+              <p class="message-text">You've paid <strong>$${amountPaid.toLocaleString(
+                "en-US",
+                { minimumFractionDigits: 2 }
+              )}</strong> (${paidPercentage}% of total), but we need at least 30% ($${advanceRequired.toLocaleString(
       "en-US",
       { minimumFractionDigits: 2 }
-    )}) to confirm your booking.</p>
+    )}) to secure your spot.</p>
 
-              <div class="reminder-box">
-                <div style="font-size: 14px; color: #92400e; text-transform: uppercase; letter-spacing: 1px;">Amount Needed to Confirm</div>
+              <div class="reminder-card">
+                <div class="label">Amount Needed to Confirm</div>
                 <div class="amount">$${remainingAdvance.toLocaleString(
                   "en-US",
                   { minimumFractionDigits: 2 }
@@ -718,22 +798,25 @@ export async function sendPaymentReminderEmail({
               <div class="payment-buttons">
                 ${
                   stripePaymentUrl
-                    ? `<a href="${stripePaymentUrl}" class="btn btn-stripe">💳 Complete Payment</a>`
+                    ? `<a href="${stripePaymentUrl}" class="btn btn-primary">Complete Payment</a>`
                     : ""
                 }
                 ${
                   paypalPaymentUrl
-                    ? `<a href="${paypalPaymentUrl}" class="btn btn-paypal">🅿️ Pay with PayPal</a>`
+                    ? `<a href="${paypalPaymentUrl}" class="btn btn-secondary">Pay with PayPal</a>`
                     : ""
                 }
               </div>
 
-              <p>Please complete your payment soon to secure your spot. Tour availability is limited!</p>
+              <p class="message-text">Please complete your payment soon to secure your spot. Tour availability is limited!</p>
               
-              <p>Best regards,<br/><strong>The UTravel Team</strong></p>
+              <div class="signature">
+                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-title">Your Gateway to Mongolia</p>
+              </div>
             </div>
             <div class="footer">
-              <p>© 2025 UTravel. All rights reserved.</p>
+              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
             </div>
           </div>
         </body>
@@ -814,178 +897,64 @@ export async function sendPaymentLinkEmail({
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <style>
-            body { 
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-              color: #333; 
-              margin: 0; 
-              padding: 0;
-              background-color: #f5f5f5;
-            }
-            .container { 
-              max-width: 600px; 
-              margin: 0 auto; 
-              padding: 20px; 
-            }
-            .header { 
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white; 
-              padding: 30px 20px; 
-              text-align: center;
-              border-radius: 12px 12px 0 0; 
-            }
-            .header h1 {
-              margin: 0;
-              font-size: 28px;
-            }
-            .header p {
-              margin: 10px 0 0 0;
-              opacity: 0.9;
-            }
-            .content { 
-              background-color: white; 
-              padding: 30px; 
-              border-radius: 0 0 12px 12px;
-              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-            .booking-details {
-              background-color: #f8f9fa;
-              padding: 20px;
-              border-radius: 8px;
-              margin: 20px 0;
-              border-left: 4px solid #667eea;
-            }
-            .detail-row {
-              display: flex;
-              justify-content: space-between;
-              padding: 8px 0;
-              border-bottom: 1px solid #eee;
-            }
-            .detail-row:last-child {
-              border-bottom: none;
-            }
-            .detail-label {
-              color: #666;
-            }
-            .detail-value {
-              font-weight: bold;
-              text-align: right;
-            }
-            .price-box {
-              background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-              color: white;
-              padding: 20px;
-              border-radius: 8px;
-              text-align: center;
-              margin: 20px 0;
-            }
-            .price-box .label {
-              font-size: 14px;
-              opacity: 0.9;
-              text-transform: uppercase;
-              letter-spacing: 1px;
-            }
-            .price-box .amount {
-              font-size: 36px;
-              font-weight: bold;
-              margin: 10px 0;
-            }
-            .price-box .note {
-              font-size: 12px;
-              opacity: 0.8;
-            }
-            .payment-button {
-              display: block;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white !important;
-              text-decoration: none;
-              padding: 18px 30px;
-              border-radius: 8px;
-              text-align: center;
-              font-size: 18px;
-              font-weight: bold;
-              margin: 25px 0;
-              transition: transform 0.2s;
-            }
-            .payment-button:hover {
-              transform: scale(1.02);
-            }
-            .payment-methods {
-              text-align: center;
-              margin: 15px 0;
-              color: #666;
-              font-size: 14px;
-            }
-            .payment-icons {
-              margin-top: 8px;
-            }
-            .payment-icons span {
-              display: inline-block;
-              margin: 0 5px;
-              padding: 5px 10px;
-              background: #f0f0f0;
-              border-radius: 4px;
-              font-size: 12px;
-            }
-            .info-box {
-              background-color: #fff3cd;
-              border: 1px solid #ffc107;
-              padding: 15px;
-              border-radius: 8px;
-              margin: 20px 0;
-            }
-            .info-box h4 {
-              margin: 0 0 10px 0;
-              color: #856404;
-            }
-            .info-box p {
-              margin: 0;
-              color: #856404;
-              font-size: 14px;
-            }
-            .remaining-box {
-              background-color: #e8f4fd;
-              border: 1px solid #bee5eb;
-              padding: 15px;
-              border-radius: 8px;
-              margin: 20px 0;
-            }
-            .remaining-box p {
-              margin: 0;
-              color: #0c5460;
-            }
-            .footer { 
-              margin-top: 20px; 
-              text-align: center;
-              font-size: 12px; 
-              color: #6b7280; 
-              padding: 20px;
-            }
-            .reference {
-              background: #f0f0f0;
-              padding: 10px;
-              border-radius: 4px;
-              font-family: monospace;
-              text-align: center;
-              margin: 15px 0;
-            }
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 50px 30px; text-align: center; }
+            .header .icon { font-size: 40px; margin-bottom: 15px; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 28px; font-weight: 600; letter-spacing: 0.5px; }
+            .header p { margin: 12px 0 0 0; opacity: 0.8; font-size: 15px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 40px 30px; }
+            .greeting { font-size: 18px; color: #1e293b; margin-bottom: 20px; }
+            .message-text { color: #475569; line-height: 1.8; margin-bottom: 25px; }
+            .booking-card { background-color: #f8fafc; border-radius: 12px; padding: 25px; margin: 30px 0; border: 1px solid #e2e8f0; }
+            .booking-card h3 { color: #1e293b; font-size: 16px; margin: 0 0 20px 0; font-family: 'Playfair Display', Georgia, serif; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; }
+            .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+            .detail-row:last-child { border-bottom: none; }
+            .detail-label { color: #64748b; font-size: 14px; }
+            .detail-value { color: #1e293b; font-weight: 600; text-align: right; }
+            .detail-value.ref { font-family: monospace; background: linear-gradient(135deg, #fefce8, #fef9c3); padding: 4px 10px; border-radius: 4px; }
+            .price-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 30px; margin: 30px 0; text-align: center; }
+            .price-card .label { color: #d4a574; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+            .price-card .amount { color: #ffffff; font-size: 42px; font-weight: 700; font-family: 'Playfair Display', Georgia, serif; }
+            .price-card .note { color: #94a3b8; font-size: 13px; margin-top: 12px; }
+            .btn-pay { display: block; background: linear-gradient(135deg, #d4a574, #f5c478); color: #1e293b !important; text-decoration: none; padding: 18px 30px; border-radius: 8px; text-align: center; font-size: 17px; font-weight: 600; margin: 30px 0; transition: transform 0.2s; }
+            .btn-pay:hover { transform: scale(1.02); }
+            .payment-icons { text-align: center; margin: 20px 0; color: #64748b; font-size: 13px; }
+            .payment-icons span { display: inline-block; margin: 0 8px; padding: 6px 12px; background: #f1f5f9; border-radius: 6px; font-size: 12px; }
+            .info-box { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-left: 4px solid #d4a574; padding: 18px 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+            .info-box h4 { color: #1e293b; margin: 0 0 8px 0; font-size: 14px; }
+            .info-box p { color: #78716c; margin: 0; font-size: 13px; line-height: 1.6; }
+            .remaining-info { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 18px 20px; border-radius: 8px; margin: 25px 0; }
+            .remaining-info p { color: #475569; margin: 0; font-size: 14px; line-height: 1.6; }
+            .contact-section { margin: 30px 0; }
+            .contact-section p { color: #475569; margin: 5px 0; font-size: 14px; }
+            .contact-section a { color: #d4a574; text-decoration: none; }
+            .signature { margin-top: 35px; padding-top: 25px; border-top: 1px solid #e2e8f0; }
+            .signature-name { color: #1e293b; font-weight: 600; font-size: 16px; }
+            .signature-title { color: #d4a574; font-size: 14px; margin-top: 4px; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 30px; text-align: center; font-size: 12px; }
+            .footer p { margin: 5px 0; }
+            .footer .ref { color: #64748b; font-size: 11px; margin-top: 15px; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <h1>🏔️ Your Mongolia Adventure Awaits!</h1>
+              <div class="icon">🏔️</div>
+              <h1>Your Adventure Awaits</h1>
               <p>Complete your payment to confirm your booking</p>
             </div>
+            <div class="gold-bar"></div>
             
             <div class="content">
-              <p style="font-size: 18px;">Dear <strong>${customerName}</strong>,</p>
+              <p class="greeting">Dear <strong>${customerName}</strong>,</p>
               
-              <p>Thank you for choosing UTravel Mongolia! We're excited to help you experience the beauty of Mongolia.</p>
-              
-              <p>Your booking request has been received. Please complete your payment to confirm your spot.</p>
+              <p class="message-text">Thank you for choosing UTravel Mongolia. We're honored to be part of your journey to discover the beauty of Mongolia.</p>
 
-              <div class="booking-details">
-                <h3 style="margin-top: 0; color: #667eea;">📋 Booking Details</h3>
+              <div class="booking-card">
+                <h3>Booking Details</h3>
                 <div class="detail-row">
                   <span class="detail-label">Tour</span>
                   <span class="detail-value">${tourName}</span>
@@ -1003,13 +972,13 @@ export async function sendPaymentLinkEmail({
                 </div>
                 <div class="detail-row">
                   <span class="detail-label">Reference</span>
-                  <span class="detail-value" style="font-family: monospace;">${requestId
+                  <span class="detail-value ref">${requestId
                     .slice(-8)
                     .toUpperCase()}</span>
                 </div>
               </div>
 
-              <div class="price-box">
+              <div class="price-card">
                 <div class="label">${
                   isAdvancePayment ? "30% Advance Payment" : "Total Payment"
                 }</div>
@@ -1026,57 +995,54 @@ export async function sendPaymentLinkEmail({
                 }
               </div>
 
-              <a href="${paymentLink}" class="payment-button">
-                💳 Pay Now - $${amountToPay.toLocaleString("en-US", {
+              <a href="${paymentLink}" class="btn-pay">
+                Pay Now — $${amountToPay.toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                 })}
               </a>
 
-              <div class="payment-methods">
+              <div class="payment-icons">
                 Secure payment powered by Stripe
-                <div class="payment-icons">
-                  <span>💳 Visa</span>
-                  <span>💳 Mastercard</span>
-                  <span>🍎 Apple Pay</span>
-                  <span>📱 Google Pay</span>
+                <div style="margin-top: 10px;">
+                  <span>Visa</span>
+                  <span>Mastercard</span>
+                  <span>Apple Pay</span>
+                  <span>Google Pay</span>
                 </div>
               </div>
 
               ${
                 isAdvancePayment
                   ? `
-              <div class="remaining-box">
-                <p><strong>ℹ️ About Advance Payment:</strong> The 30% advance secures your booking. The remaining 70% ($${remainingAmount.toLocaleString(
-                  "en-US",
-                  { minimumFractionDigits: 2 }
-                )}) can be paid before your tour starts or upon arrival in Mongolia.</p>
+              <div class="remaining-info">
+                <p><strong>About Advance Payment:</strong> The 30% advance secures your booking. The remaining 70% can be paid before your tour starts or upon arrival in Mongolia.</p>
               </div>
               `
                   : ""
               }
 
               <div class="info-box">
-                <h4>⏰ Important</h4>
+                <h4>Important</h4>
                 <p>This payment link will expire in 30 minutes. If it expires, please contact us for a new link.</p>
               </div>
 
-              <p>If you have any questions, reply to this email or contact us at:</p>
-              <ul>
-                <li>Email: udelgombotamira@gmail.com</li>
-                <li>WhatsApp: +976 XXXX XXXX</li>
-              </ul>
+              <div class="contact-section">
+                <p>Questions? We're here to help:</p>
+                <p>Email: <a href="mailto:udelgombotamira@gmail.com">udelgombotamira@gmail.com</a></p>
+              </div>
 
-              <p>We look forward to welcoming you to Mongolia! 🇲🇳</p>
+              <p class="message-text">We look forward to welcoming you to Mongolia!</p>
               
-              <p>Best regards,<br/><strong>The UTravel Mongolia Team</strong></p>
+              <div class="signature">
+                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-title">Your Gateway to Mongolia</p>
+              </div>
             </div>
             
             <div class="footer">
               <p>© 2025 UTravel Mongolia. All rights reserved.</p>
-              <p>Your adventure partner in Mongolia</p>
-              <p style="color: #999; font-size: 10px;">
-                Booking Reference: ${requestId}
-              </p>
+              <p>Your trusted partner for authentic Mongolia adventures</p>
+              <p class="ref">Booking Reference: ${requestId}</p>
             </div>
           </div>
         </body>
@@ -1142,87 +1108,58 @@ export async function sendPaymentConfirmationEmail({
         <head>
           <meta charset="UTF-8" />
           <style>
-            body { 
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-              color: #333; 
-              margin: 0; 
-              padding: 0;
-              background-color: #f5f5f5;
-            }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { 
-              background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-              color: white; 
-              padding: 30px 20px; 
-              text-align: center;
-              border-radius: 12px 12px 0 0; 
-            }
-            .content { 
-              background-color: white; 
-              padding: 30px; 
-              border-radius: 0 0 12px 12px;
-              box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            }
-            .success-icon {
-              font-size: 60px;
-              margin-bottom: 10px;
-            }
-            .booking-confirmed {
-              background-color: #d4edda;
-              border: 2px solid #28a745;
-              padding: 20px;
-              border-radius: 8px;
-              text-align: center;
-              margin: 20px 0;
-            }
-            .booking-confirmed h3 {
-              color: #155724;
-              margin: 0;
-            }
-            .details-table {
-              width: 100%;
-              border-collapse: collapse;
-              margin: 20px 0;
-            }
-            .details-table td {
-              padding: 12px;
-              border-bottom: 1px solid #eee;
-            }
-            .details-table td:first-child {
-              color: #666;
-            }
-            .details-table td:last-child {
-              font-weight: bold;
-              text-align: right;
-            }
-            .footer { 
-              text-align: center;
-              font-size: 12px; 
-              color: #6b7280; 
-              padding: 20px;
-            }
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 50px 30px; text-align: center; }
+            .header .icon { font-size: 50px; margin-bottom: 15px; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 28px; font-weight: 600; }
+            .header p { margin: 12px 0 0 0; opacity: 0.8; font-size: 15px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 40px 30px; }
+            .greeting { font-size: 18px; color: #1e293b; margin-bottom: 20px; }
+            .message-text { color: #475569; line-height: 1.8; }
+            .confirmed-badge { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 2px solid #d4a574; border-radius: 12px; padding: 25px; margin: 30px 0; text-align: center; }
+            .confirmed-badge h3 { color: #1e293b; margin: 0; font-size: 20px; font-family: 'Playfair Display', Georgia, serif; }
+            .details-table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+            .details-table td { padding: 14px 0; border-bottom: 1px solid #e2e8f0; }
+            .details-table td:first-child { color: #64748b; width: 40%; }
+            .details-table td:last-child { font-weight: 600; color: #1e293b; text-align: right; }
+            .details-table .paid { color: #166534; }
+            .details-table .remaining { color: #d4a574; }
+            .details-table .ref { font-family: monospace; background: linear-gradient(135deg, #fefce8, #fef9c3); padding: 4px 10px; border-radius: 4px; }
+            .next-steps { background-color: #f8fafc; border-left: 4px solid #d4a574; padding: 25px; margin: 30px 0; border-radius: 0 8px 8px 0; }
+            .next-steps h3 { color: #1e293b; font-size: 16px; margin: 0 0 15px 0; font-family: 'Playfair Display', Georgia, serif; }
+            .next-steps ul { margin: 0; padding-left: 20px; color: #475569; }
+            .next-steps li { margin: 10px 0; line-height: 1.5; }
+            .signature { margin-top: 35px; padding-top: 25px; border-top: 1px solid #e2e8f0; }
+            .signature-name { color: #1e293b; font-weight: 600; font-size: 16px; }
+            .signature-title { color: #d4a574; font-size: 14px; margin-top: 4px; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 30px; text-align: center; font-size: 12px; }
+            .footer p { margin: 5px 0; }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <div class="success-icon">✅</div>
-              <h1>Payment Successful!</h1>
+              <div class="icon">✓</div>
+              <h1>Payment Successful</h1>
               <p>Your Mongolia adventure is confirmed</p>
             </div>
+            <div class="gold-bar"></div>
             
             <div class="content">
-              <p style="font-size: 18px;">Dear <strong>${customerName}</strong>,</p>
+              <p class="greeting">Dear <strong>${customerName}</strong>,</p>
               
-              <div class="booking-confirmed">
-                <h3>🎉 Your Booking is ${
-                  isFullyPaid ? "Fully Paid" : "Confirmed"
-                }!</h3>
+              <div class="confirmed-badge">
+                <h3>${
+                  isFullyPaid ? "Your Tour is Fully Paid" : "Booking Confirmed"
+                }</h3>
               </div>
 
-              <p>Great news! We have received your payment. ${
+              <p class="message-text">Wonderful news! We have received your payment. ${
                 isFullyPaid
-                  ? "Your tour is fully paid!"
+                  ? "Your tour is fully paid and ready to go!"
                   : "Your booking is now secured."
               }</p>
 
@@ -1237,17 +1174,16 @@ export async function sendPaymentConfirmationEmail({
                 </tr>
                 <tr>
                   <td>Amount Paid</td>
-                  <td style="color: #28a745;">$${amountPaid.toLocaleString(
-                    "en-US",
-                    { minimumFractionDigits: 2 }
-                  )}</td>
+                  <td class="paid">$${amountPaid.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                  })}</td>
                 </tr>
                 ${
                   !isFullyPaid
                     ? `
                 <tr>
                   <td>Remaining Balance</td>
-                  <td style="color: #dc3545;">$${remainingAmount.toLocaleString(
+                  <td class="remaining">$${remainingAmount.toLocaleString(
                     "en-US",
                     { minimumFractionDigits: 2 }
                   )}</td>
@@ -1257,32 +1193,37 @@ export async function sendPaymentConfirmationEmail({
                 }
                 <tr>
                   <td>Reference</td>
-                  <td style="font-family: monospace;">${requestId
+                  <td><span class="ref">${requestId
                     .slice(-8)
-                    .toUpperCase()}</td>
+                    .toUpperCase()}</span></td>
                 </tr>
               </table>
 
-              <h3>📋 What's Next?</h3>
-              <ul>
-                <li>Our team will contact you within 24 hours with detailed tour information</li>
-                <li>You'll receive a complete itinerary and packing list</li>
-                <li>We'll arrange airport pickup and all logistics</li>
-                ${
-                  !isFullyPaid
-                    ? `<li>Remaining balance of $${remainingAmount.toLocaleString(
-                        "en-US",
-                        { minimumFractionDigits: 2 }
-                      )} is due before tour start</li>`
-                    : ""
-                }
-              </ul>
+              <div class="next-steps">
+                <h3>What's Next?</h3>
+                <ul>
+                  <li>Our team will contact you within 24 hours with detailed tour information</li>
+                  <li>You'll receive a complete itinerary and packing list</li>
+                  <li>We'll arrange airport pickup and all logistics</li>
+                  ${
+                    !isFullyPaid
+                      ? `<li>Remaining balance of $${remainingAmount.toLocaleString(
+                          "en-US",
+                          { minimumFractionDigits: 2 }
+                        )} is due before tour start</li>`
+                      : ""
+                  }
+                </ul>
+              </div>
 
-              <p>If you have any questions, don't hesitate to reach out!</p>
+              <p class="message-text">If you have any questions, don't hesitate to reach out. We're here to make your journey unforgettable.</p>
               
-              <p>See you in Mongolia! 🇲🇳🏔️</p>
+              <p class="message-text">See you in Mongolia!</p>
               
-              <p>Best regards,<br/><strong>The UTravel Mongolia Team</strong></p>
+              <div class="signature">
+                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-title">Your Gateway to Mongolia</p>
+              </div>
             </div>
             
             <div class="footer">

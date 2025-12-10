@@ -133,7 +133,7 @@ export default function PaymentRequestPage() {
                 <div className="flex items-center gap-2">
                   <span>💬</span>
                   <span className="text-gray-600">
-                    WhatsApp: +976 XXXX XXXX
+                    WhatsApp: +976 8947-5188
                   </span>
                 </div>
               </div>

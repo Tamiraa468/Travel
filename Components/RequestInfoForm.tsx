@@ -282,7 +282,7 @@ export default function RequestInfoForm({
             name="phone"
             value={formData.phone}
             onChange={handleInputChange}
-            placeholder="+1 (555) 123-4567"
+            placeholder="+976 8947-5188"
             className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
           />
         </div>

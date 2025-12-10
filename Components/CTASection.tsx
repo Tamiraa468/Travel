@@ -153,7 +153,7 @@ const CTASection = () => {
               </div>
               <div className="text-left">
                 <div className="text-xs text-slate-400">Call Us</div>
-                <div className="font-medium">+1 (555) 123-4567</div>
+                <div className="font-medium">+976 8947-5188</div>
               </div>
             </div>
             <div className="flex items-center gap-2">

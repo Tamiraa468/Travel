@@ -65,11 +65,11 @@ const Navbar: React.FC = () => {
             }`}
           >
             <a
-              href="tel:+97699998888"
+              href="tel:+97689475188"
               className="flex items-center gap-2 hover:text-amber-400 transition"
             >
               <Phone size={14} />
-              +976 9999-8888
+              +976 8947-5188
             </a>
             <span>|</span>
             <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
@@ -278,11 +278,11 @@ const Navbar: React.FC = () => {
               Request Info
             </Link>
             <a
-              href="tel:+97699998888"
+              href="tel:+97689475188"
               className="block mt-4 py-3 text-center text-slate-600 hover:text-amber-600 transition-colors"
             >
               <Phone size={16} className="inline mr-2" />
-              +976 9999-8888
+              +976 8947-5188
             </a>
           </div>
         </div>

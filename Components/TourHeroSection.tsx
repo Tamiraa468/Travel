@@ -121,7 +121,9 @@ export default function TourHeroSection({
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl leading-tight"
         >
-          {title}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-amber-200">
+            {title}
+          </span>
         </motion.h1>
 
         {/* Rating + Location */}

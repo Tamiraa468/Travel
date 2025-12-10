@@ -91,10 +91,6 @@ export default function AdminLogin() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-
-        <p className="text-center text-gray-600 text-sm mt-4">
-          Demo: admin@example.com / password
-        </p>
       </div>
     </div>
   );
