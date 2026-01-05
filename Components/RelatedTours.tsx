@@ -24,6 +24,11 @@ export default function RelatedTours({
   title = "Related Tours",
   currentTourId,
 }: Props) {
+  // Guard against undefined/null tours
+  if (!tours || tours.length === 0) {
+    return null;
+  }
+
   // Filter out current tour and limit to 3
   const filteredTours = tours
     .filter((tour) => tour.id !== currentTourId)

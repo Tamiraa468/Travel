@@ -11,13 +11,15 @@ type Tour = {
   slug?: string;
   title: string;
   description?: string;
-  price: number;
+  price?: number;
   priceFrom?: number;
   days?: number;
-  images?: string[];
+  mainImage?: string | null;
+  image?: string | null; // Context uses 'image' instead of 'mainImage'
   rating?: number;
   reviewCount?: number;
   location?: string;
+  duration?: string;
 };
 
 type Props = {
@@ -30,6 +32,7 @@ type Props = {
   days?: number;
   images?: string[];
   index?: number;
+  currentTourId?: string;
 };
 
 export default function TourCard({
@@ -50,8 +53,12 @@ export default function TourCard({
   const finalDescription = tour?.description || description || "";
   const finalPrice = tour?.priceFrom ?? tour?.price ?? price ?? 0;
   const finalSlug = tour?.slug || slug || tour?.id || id || "#";
-  const finalDays = tour?.days || days || 7;
-  const finalImages = tour?.images || images || [];
+  // Parse days from duration string like "8 days" if days not available
+  const parseDays = tour?.duration ? parseInt(tour.duration) : undefined;
+  const finalDays = tour?.days || days || parseDays || 7;
+  // Check both mainImage and image (context uses 'image')
+  const finalMainImage =
+    tour?.mainImage || tour?.image || (images && images[0]) || null;
   const finalRating = tour?.rating || 4.8;
   const finalReviewCount = tour?.reviewCount || 24;
   const finalLocation = tour?.location || "Mongolia";
@@ -72,16 +79,15 @@ export default function TourCard({
     >
       {/* Image Container */}
       <div className="relative h-64 overflow-hidden">
-        {finalImages.length > 0 ? (
-          <Image
-            src={finalImages[0]}
+        {finalMainImage ? (
+          <img
+            src={finalMainImage}
             alt={finalTitle}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-forest-500/20 to-forest-700/30 flex items-center justify-center">
-            <MapPin className="w-12 h-12 text-forest-500" />
+          <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">
+            <span className="text-ivory/70 text-lg">No Image</span>
           </div>
         )}
 
