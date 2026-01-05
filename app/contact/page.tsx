@@ -101,23 +101,23 @@ const Contact = () => {
   ];
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50">
+    <div className="flex min-h-screen flex-col bg-sand">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-gradient-to-br from-forest-900 via-forest-700 to-forest-900 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-400 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gold-500 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gold-300 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
         </div>
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300" />
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-300 text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gold-500/20 border border-gold-500/30 rounded-full text-gold-300 text-sm font-medium mb-6"
           >
             <Sparkles className="w-4 h-4" />
             We&apos;d Love to Hear From You
@@ -138,7 +138,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-slate-300 text-lg max-w-2xl mx-auto"
+            className="text-stone text-lg max-w-2xl mx-auto"
           >
             Have questions about our tours? We&apos;re here to help you plan
             your perfect adventure.
@@ -157,25 +157,25 @@ const Contact = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow"
+                  className="bg-ivory rounded-2xl p-6 shadow-sm border border-sand hover:shadow-md hover:border-gold-300 transition-all"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-br from-gold-300 to-gold-500 rounded-xl flex items-center justify-center shrink-0">
                       <item.icon className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-800 mb-1">
+                      <h3 className="font-semibold text-forest-900 mb-1">
                         {item.title}
                       </h3>
                       {item.link ? (
                         <a
                           href={item.link}
-                          className="text-amber-600 hover:text-amber-700 transition-colors"
+                          className="text-gold-700 hover:text-gold-500 transition-colors"
                         >
                           {item.value}
                         </a>
                       ) : (
-                        <p className="text-slate-600">{item.value}</p>
+                        <p className="text-charcoal">{item.value}</p>
                       )}
                     </div>
                   </div>
@@ -187,10 +187,10 @@ const Contact = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white"
+                className="bg-gradient-to-br from-forest-700 to-forest-900 rounded-2xl p-6 text-white"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <Globe className="w-5 h-5 text-amber-400" />
+                  <Globe className="w-5 h-5 text-gold-300" />
                   <h3 className="font-semibold">Follow Us</h3>
                 </div>
                 <div className="flex gap-3">
@@ -198,7 +198,7 @@ const Contact = () => {
                     <a
                       key={social}
                       href="#"
-                      className="w-10 h-10 bg-white/10 hover:bg-amber-500 rounded-lg flex items-center justify-center transition-colors"
+                      className="w-10 h-10 bg-white/10 hover:bg-gold-500 rounded-lg flex items-center justify-center transition-colors"
                     >
                       <span className="text-xs uppercase font-bold">
                         {social[0]}
@@ -214,17 +214,17 @@ const Contact = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+              className="lg:col-span-2 bg-ivory rounded-2xl shadow-sm border border-sand overflow-hidden"
             >
               {/* Form Header */}
-              <div className="bg-gradient-to-r from-slate-800 to-slate-900 px-8 py-6">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400" />
+              <div className="bg-gradient-to-r from-forest-700 to-forest-900 px-8 py-6">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300" />
                 <h2 className="text-2xl font-serif font-bold">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-amber-200">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
                     Send us a Message
                   </span>
                 </h2>
-                <p className="text-slate-400 mt-1">
+                <p className="text-gold-300/70 mt-1">
                   We typically respond within 24 hours
                 </p>
               </div>
@@ -268,9 +268,9 @@ const Contact = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="name"
-                      className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+                      className="flex items-center gap-2 text-sm font-semibold text-forest-900"
                     >
-                      <User className="w-4 h-4 text-amber-500" />
+                      <User className="w-4 h-4 text-gold-500" />
                       Your Name
                     </label>
                     <input
@@ -281,7 +281,7 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       placeholder="John Doe"
-                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+                      className="w-full px-4 py-3 border-2 border-sand rounded-xl focus:ring-2 focus:ring-forest-500 focus:border-gold-300 transition-all placeholder:text-stone bg-white"
                     />
                   </div>
 
@@ -289,9 +289,9 @@ const Contact = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="email"
-                      className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+                      className="flex items-center gap-2 text-sm font-semibold text-forest-900"
                     >
-                      <Mail className="w-4 h-4 text-amber-500" />
+                      <Mail className="w-4 h-4 text-gold-500" />
                       Email Address
                     </label>
                     <input
@@ -302,7 +302,7 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       placeholder="john@example.com"
-                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+                      className="w-full px-4 py-3 border-2 border-sand rounded-xl focus:ring-2 focus:ring-forest-500 focus:border-gold-300 transition-all placeholder:text-stone bg-white"
                     />
                   </div>
 
@@ -310,9 +310,9 @@ const Contact = () => {
                   <div className="space-y-2">
                     <label
                       htmlFor="message"
-                      className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+                      className="flex items-center gap-2 text-sm font-semibold text-forest-900"
                     >
-                      <MessageSquare className="w-4 h-4 text-amber-500" />
+                      <MessageSquare className="w-4 h-4 text-gold-500" />
                       Your Message
                     </label>
                     <textarea
@@ -323,7 +323,7 @@ const Contact = () => {
                       required
                       rows={5}
                       placeholder="Tell us about your travel plans or ask any questions..."
-                      className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400 resize-none"
+                      className="w-full px-4 py-3 border-2 border-sand rounded-xl focus:ring-2 focus:ring-forest-500 focus:border-gold-300 transition-all placeholder:text-stone resize-none bg-white"
                     />
                   </div>
 
@@ -331,7 +331,7 @@ const Contact = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 shadow-lg shadow-amber-500/30 hover:shadow-xl hover:shadow-amber-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full py-4 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-forest-700 to-forest-900 hover:from-forest-900 hover:to-forest-900 shadow-lg shadow-forest-900/30 hover:shadow-xl hover:shadow-forest-900/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <>

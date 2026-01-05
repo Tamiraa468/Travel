@@ -80,13 +80,13 @@ export default function TourCard({
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">
-            <MapPin className="w-12 h-12 text-slate-400" />
+          <div className="w-full h-full bg-gradient-to-br from-forest-500/20 to-forest-700/30 flex items-center justify-center">
+            <MapPin className="w-12 h-12 text-forest-500" />
           </div>
         )}
 
         {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-900/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
         {/* Wishlist Button */}
         <button
@@ -94,7 +94,7 @@ export default function TourCard({
           className={`absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
             isWishlisted
               ? "bg-red-500 text-white"
-              : "bg-white/20 backdrop-blur-sm text-white hover:bg-white hover:text-slate-900"
+              : "bg-white/20 backdrop-blur-sm text-white hover:bg-white hover:text-forest-900"
           }`}
         >
           <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
@@ -103,17 +103,17 @@ export default function TourCard({
         {/* Price Tag */}
         <div className="absolute bottom-4 left-4">
           <div className="px-4 py-2 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg">
-            <div className="text-xs text-slate-500 uppercase tracking-wider">
+            <div className="text-xs text-stone uppercase tracking-wider">
               From
             </div>
-            <div className="text-xl font-bold text-slate-900">
+            <div className="text-xl font-bold text-forest-900">
               ${finalPrice.toLocaleString()}
             </div>
           </div>
         </div>
 
         {/* Duration Badge */}
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 text-white text-sm font-medium rounded-full">
+        <div className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 bg-gold-500 text-forest-900 text-sm font-medium rounded-full">
           <Clock size={14} />
           {finalDays} Days
         </div>
@@ -122,18 +122,18 @@ export default function TourCard({
       {/* Content */}
       <div className="p-6">
         {/* Location */}
-        <div className="flex items-center gap-1.5 text-sm text-slate-500 mb-2">
-          <MapPin size={14} className="text-amber-500" />
+        <div className="flex items-center gap-1.5 text-sm text-stone mb-2">
+          <MapPin size={14} className="text-gold-500" />
           {finalLocation}
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-serif font-semibold text-slate-800 mb-2 line-clamp-2 group-hover:text-amber-600 transition-colors duration-300">
+        <h3 className="text-xl font-serif font-semibold text-forest-900 mb-2 line-clamp-2 group-hover:text-gold-500 transition-colors duration-300">
           <Link href={`/tours/${finalSlug}`}>{finalTitle}</Link>
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-slate-600 mb-4 line-clamp-2">
+        <p className="text-sm text-stone mb-4 line-clamp-2">
           {finalDescription}
         </p>
 
@@ -146,35 +146,35 @@ export default function TourCard({
                 size={14}
                 className={
                   i < Math.floor(finalRating)
-                    ? "text-amber-400 fill-amber-400"
-                    : "text-slate-300"
+                    ? "text-gold-500 fill-gold-500"
+                    : "text-sand"
                 }
               />
             ))}
           </div>
-          <span className="text-sm font-medium text-slate-700">
+          <span className="text-sm font-medium text-forest-700">
             {finalRating}
           </span>
-          <span className="text-sm text-slate-400">
+          <span className="text-sm text-stone">
             ({finalReviewCount} reviews)
           </span>
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-slate-100 mb-4" />
+        <div className="h-px bg-sand mb-4" />
 
         {/* CTA */}
         <Link
           href={`/tours/${finalSlug}`}
           className="flex items-center justify-between group/btn"
         >
-          <span className="text-sm font-semibold text-amber-600 group-hover/btn:text-amber-700 transition-colors">
+          <span className="text-sm font-semibold text-forest-700 group-hover/btn:text-gold-500 transition-colors">
             View Details
           </span>
-          <div className="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center group-hover/btn:bg-amber-500 transition-all duration-300">
+          <div className="w-8 h-8 rounded-full bg-forest-500/10 flex items-center justify-center group-hover/btn:bg-gold-500 transition-all duration-300">
             <ArrowRight
               size={16}
-              className="text-amber-600 group-hover/btn:text-white transition-colors"
+              className="text-forest-700 group-hover/btn:text-white transition-colors"
             />
           </div>
         </Link>

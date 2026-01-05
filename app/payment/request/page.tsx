@@ -19,7 +19,7 @@ export default function PaymentRequestPage() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-purple-700">
-            🏔️ UTravel Mongolia
+            🏔️ Maralgoo Dreamland
           </Link>
           <Link
             href="/tours"
@@ -103,7 +103,7 @@ export default function PaymentRequestPage() {
                 <span className="text-sm font-medium">SSL Secured</span>
               </div>
               <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
-                <span className="text-blue-600">💳</span>
+                <span className="text-forest-700">💳</span>
                 <span className="text-sm font-medium">Powered by Stripe</span>
               </div>
               <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
@@ -151,7 +151,7 @@ export default function PaymentRequestPage() {
       <footer className="bg-gray-900 text-white py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-gray-400">
-            © 2025 UTravel Mongolia. Secure payments powered by Stripe.
+            © 2025 Maralgoo Dreamland. Secure payments powered by Stripe.
           </p>
         </div>
       </footer>

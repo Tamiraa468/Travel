@@ -51,14 +51,14 @@ export default async function BlogPage({ searchParams }: Props) {
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 py-20">
+        <section className="bg-gradient-to-b from-forest-900 via-forest-700 to-forest-900 py-20">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-amber-200">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
                 Travel News & Stories
               </span>
             </h1>
-            <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            <p className="text-xl text-stone max-w-2xl mx-auto">
               Discover Mongolia through our travel guides, festival updates, and
               adventure stories
             </p>
@@ -72,8 +72,8 @@ export default async function BlogPage({ searchParams }: Props) {
               href="/blog"
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 !category
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-forest-900 text-white"
+                  : "bg-sand text-charcoal hover:bg-gold-300/30"
               }`}
             >
               All Posts ({total})
@@ -84,8 +84,8 @@ export default async function BlogPage({ searchParams }: Props) {
                 href={`/blog?category=${cat.category}`}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   category === cat.category
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    ? "bg-forest-900 text-white"
+                    : "bg-sand text-charcoal hover:bg-gold-300/30"
                 }`}
               >
                 {categoryLabels[cat.category] || cat.category} ({cat._count})
@@ -116,8 +116,8 @@ export default async function BlogPage({ searchParams }: Props) {
                         }page=${pageNum}`}
                         className={`w-10 h-10 flex items-center justify-center rounded-lg transition-colors ${
                           page === pageNum
-                            ? "bg-blue-600 text-white"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                            ? "bg-forest-900 text-white"
+                            : "bg-sand text-charcoal hover:bg-gold-300/30"
                         }`}
                       >
                         {pageNum}
@@ -129,10 +129,10 @@ export default async function BlogPage({ searchParams }: Props) {
             </>
           ) : (
             <div className="text-center py-16">
-              <p className="text-gray-500 text-lg">No blog posts found.</p>
+              <p className="text-charcoal text-lg">No blog posts found.</p>
               <Link
                 href="/blog"
-                className="inline-block mt-4 text-blue-600 hover:underline"
+                className="inline-block mt-4 text-forest-700 hover:underline"
               >
                 View all posts
               </Link>

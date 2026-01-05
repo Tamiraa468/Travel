@@ -84,7 +84,7 @@ export default function PaymentSuccessPage() {
           </p>
           <Link
             href="/"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            className="inline-block bg-forest-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-forest-700 transition"
           >
             Return Home
           </Link>
@@ -195,9 +195,9 @@ export default function PaymentSuccessPage() {
         </div>
 
         {/* Next Steps */}
-        <div className="bg-blue-50 rounded-xl p-4 mb-6">
+        <div className="bg-gold-500/10 rounded-xl p-4 mb-6">
           <h2 className="font-semibold text-blue-800 mb-2">What's Next?</h2>
-          <ul className="text-sm text-blue-700 space-y-1">
+          <ul className="text-sm text-gold-700 space-y-1">
             <li>✓ Check your email for confirmation details</li>
             <li>✓ Our team will contact you within 24 hours</li>
             {data.remainingAmount > 0 && (
@@ -216,7 +216,7 @@ export default function PaymentSuccessPage() {
           </Link>
           <Link
             href="/tours"
-            className="flex-1 text-center bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            className="flex-1 text-center bg-forest-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-forest-700 transition"
           >
             Browse Tours
           </Link>

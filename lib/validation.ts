@@ -36,7 +36,7 @@ export type CreateTourInput = z.infer<typeof createTourSchema>;
 export type UpdateTourInput = z.infer<typeof updateTourSchema>;
 export type TourDateInput = z.infer<typeof tourDateSchema>;
 
-// RequestInfo validation schema
+// RequestInfo validation schema (Legacy - kept for backward compatibility)
 export const requestInfoSchema = z.object({
   fullName: z
     .string()
@@ -63,3 +63,72 @@ export const requestInfoSchema = z.object({
 });
 
 export type RequestInfoInput = z.infer<typeof requestInfoSchema>;
+
+// ============================================
+// INQUIRY SCHEMA (New Inquiry-First Sales Model)
+// ============================================
+// This schema validates lead/inquiry submissions.
+// NO payment or booking is created - just a qualified lead.
+// Human agents follow up to close deals personally.
+// ============================================
+export const inquirySchema = z.object({
+  // Required fields
+  fullName: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name is too long"),
+  email: z.string().email("Please enter a valid email address"),
+
+  // Optional contact/preference fields
+  phone: z.string().max(30).optional().or(z.literal("")),
+  country: z.string().max(100).optional().or(z.literal("")),
+  travelMonth: z.string().max(50).optional().or(z.literal("")),
+  groupSize: z.string().max(50).optional().or(z.literal("")),
+  budgetRange: z.string().max(100).optional().or(z.literal("")),
+  message: z.string().max(2000).optional().or(z.literal("")),
+
+  // Tour reference (optional)
+  tourId: z.string().optional().or(z.literal("")),
+  tourName: z.string().optional().or(z.literal("")),
+
+  // Consent & tracking
+  marketingConsent: z.boolean().default(false),
+  source: z.string().optional().or(z.literal("")),
+
+  // Honeypot (anti-bot)
+  hp: z.string().optional().or(z.literal("")),
+});
+
+export type InquiryInput = z.infer<typeof inquirySchema>;
+
+// Admin: Send Payment Link schema
+export const sendPaymentLinkSchema = z.object({
+  inquiryId: z.string().min(1, "Inquiry ID is required"),
+  amount: z.number().positive("Amount must be positive"),
+  currency: z.string().default("USD"),
+  description: z.string().optional(),
+  paymentMethod: z.enum(["stripe", "bank_transfer"]),
+});
+
+export type SendPaymentLinkInput = z.infer<typeof sendPaymentLinkSchema>;
+
+// Admin: Update Inquiry Status schema
+export const updateInquiryStatusSchema = z.object({
+  inquiryId: z.string().min(1, "Inquiry ID is required"),
+  leadStatus: z.enum([
+    "NEW",
+    "CONTACTED",
+    "QUOTED",
+    "NEGOTIATING",
+    "WON",
+    "LOST",
+    "ON_HOLD",
+  ]),
+  internalNotes: z.string().optional(),
+  quotedPrice: z.number().optional(),
+  assignedTo: z.string().optional(),
+});
+
+export type UpdateInquiryStatusInput = z.infer<
+  typeof updateInquiryStatusSchema
+>;

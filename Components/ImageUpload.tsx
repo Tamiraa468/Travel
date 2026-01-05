@@ -83,7 +83,7 @@ export default function ImageUpload({
 
       {/* File Upload */}
       <div className="mb-3">
-        <label className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:bg-blue-600 transition w-fit">
+        <label className="flex items-center gap-2 px-4 py-2 bg-forest-700 text-white rounded-lg cursor-pointer hover:bg-forest-900 transition w-fit">
           <span>{uploading ? "Uploading..." : "📁 Choose Image"}</span>
           <input
             type="file"

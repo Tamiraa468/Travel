@@ -15,15 +15,15 @@ export default async function AboutPage() {
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+        <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center bg-gradient-to-b from-forest-900 via-forest-700 to-forest-900">
           <div className="absolute inset-0 bg-[url('/images/about-hero.jpg')] bg-cover bg-center opacity-20" />
           <div className="relative z-10 text-center px-4">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-amber-200">
-                About UTravel
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
+                About Maralgoo Dreamland
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-stone max-w-3xl mx-auto">
               Your trusted partner for authentic Mongolia adventures since 2020
             </p>
           </div>
@@ -35,16 +35,16 @@ export default async function AboutPage() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                  <Building2 className="w-8 h-8 text-blue-600" />
+                  <Building2 className="w-8 h-8 text-forest-700" />
                   Our Story
                 </h2>
-                <div className="space-y-4 text-gray-600 leading-relaxed">
+                <div className="space-y-4 text-charcoal leading-relaxed">
                   <p>
-                    Founded in Ulaanbaatar, UTravel Mongolia is led by a
+                    Founded in Ulaanbaatar, Maralgoo Dreamland is led by a
                     passionate team of Mongolian travel professionals. Our
                     founders and staff bring years of expertise in the tourism
                     industry, having worked extensively in this field before
-                    establishing UTravel.
+                    establishing Maralgoo Dreamland.
                   </p>
                   <p>
                     With a team of tour managers, expert tour guides, chefs,
@@ -64,13 +64,13 @@ export default async function AboutPage() {
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                   <img
                     src="/images/about-team.jpg"
-                    alt="UTravel Team"
+                    alt="Maralgoo Dreamland Team"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-6 rounded-xl shadow-lg">
+                <div className="absolute -bottom-6 -right-6 bg-forest-900 text-white p-6 rounded-xl shadow-lg">
                   <div className="text-4xl font-bold">5+</div>
-                  <div className="text-blue-100">Years of Experience</div>
+                  <div className="text-gold-300">Years of Experience</div>
                 </div>
               </div>
             </div>
@@ -78,15 +78,17 @@ export default async function AboutPage() {
         </section>
 
         {/* Mission & Values */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-sand">
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-xl shadow-sm">
-                <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-                  <Target className="w-7 h-7 text-blue-600" />
+              <div className="bg-ivory p-8 rounded-xl shadow-sm">
+                <div className="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center mb-4">
+                  <Target className="w-7 h-7 text-forest-700" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Our Mission</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-3 text-forest-900">
+                  Our Mission
+                </h3>
+                <p className="text-charcoal">
                   To provide authentic, immersive travel experiences that
                   connect visitors with Mongolia's stunning landscapes, rich
                   culture, and warm-hearted people while supporting local
@@ -94,24 +96,28 @@ export default async function AboutPage() {
                 </p>
               </div>
 
-              <div className="bg-white p-8 rounded-xl shadow-sm">
-                <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-                  <Heart className="w-7 h-7 text-green-600" />
+              <div className="bg-ivory p-8 rounded-xl shadow-sm">
+                <div className="w-14 h-14 bg-forest-500/10 rounded-xl flex items-center justify-center mb-4">
+                  <Heart className="w-7 h-7 text-forest-700" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Our Values</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-3 text-forest-900">
+                  Our Values
+                </h3>
+                <p className="text-charcoal">
                   We believe in responsible tourism that empowers communities
                   and protects the environment. Every journey we craft respects
                   and preserves Mongolia's natural beauty and cultural heritage.
                 </p>
               </div>
 
-              <div className="bg-white p-8 rounded-xl shadow-sm">
-                <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-                  <Award className="w-7 h-7 text-purple-600" />
+              <div className="bg-ivory p-8 rounded-xl shadow-sm">
+                <div className="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center mb-4">
+                  <Award className="w-7 h-7 text-gold-700" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Our Promise</h3>
-                <p className="text-gray-600">
+                <h3 className="text-xl font-bold mb-3 text-forest-900">
+                  Our Promise
+                </h3>
+                <p className="text-charcoal">
                   24/7 support throughout your journey, expertly crafted
                   itineraries, and authentic connections with Mongolian people
                   and their culture. Your satisfaction is our highest priority.
@@ -122,10 +128,10 @@ export default async function AboutPage() {
         </section>
 
         {/* Why Choose Us */}
-        <section className="py-16">
+        <section className="py-16 bg-ivory">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">
-              Why Choose UTravel?
+            <h2 className="text-3xl font-bold text-center mb-12 text-forest-900">
+              Why Choose Maralgoo Dreamland?
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
@@ -152,13 +158,15 @@ export default async function AboutPage() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="text-center p-6 border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all"
+                  className="text-center p-6 border border-sand bg-white rounded-xl hover:border-gold-300 hover:shadow-md transition-all"
                 >
-                  <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                  <div className="w-12 h-12 bg-forest-900 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                     {index + 1}
                   </div>
-                  <h3 className="font-semibold mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.description}</p>
+                  <h3 className="font-semibold mb-2 text-forest-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-charcoal text-sm">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -169,19 +177,19 @@ export default async function AboutPage() {
         {teamMembers.length > 0 && <TeamSection members={teamMembers} />}
 
         {/* CTA Section */}
-        <section className="py-16 bg-blue-600">
+        <section className="py-16 bg-forest-900">
           <div className="max-w-4xl mx-auto px-4 text-center text-white">
             <h2 className="text-3xl font-bold mb-4">
               Ready to Explore Mongolia?
             </h2>
-            <p className="text-xl text-blue-100 mb-8">
+            <p className="text-xl text-gold-300 mb-8">
               Let us help you plan your perfect adventure in the Land of the
               Blue Sky
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
                 href="/tours"
-                className="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="px-8 py-3 bg-white text-forest-700 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 View Tours
               </a>

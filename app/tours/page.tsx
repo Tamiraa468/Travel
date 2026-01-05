@@ -11,7 +11,7 @@ const ToursPage = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-grow bg-gray-50">
+      <main className="flex-grow bg-sand">
         <ToursSection />
       </main>
       <Footer />

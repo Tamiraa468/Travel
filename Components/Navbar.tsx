@@ -5,12 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTravelAgencyContext } from "../context/TravelAgencyContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { assets } from "../assets/assets";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar: React.FC = () => {
   const router = useRouter();
   const { bookingRequests } = useTravelAgencyContext();
+  const { t } = useLanguage();
   const bookingCount = bookingRequests.length;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,19 +30,19 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/tours", label: "Tours" },
+    { href: "/", label: t.common.home },
+    { href: "/tours", label: t.common.tours },
     {
       href: "/about",
-      label: "About",
+      label: t.common.about,
       dropdown: [
-        { href: "/about", label: "About Us" },
-        { href: "/why-mongolia", label: "Why Mongolia" },
-        { href: "/travel-guide", label: "Travel Guide" },
+        { href: "/about", label: t.common.aboutUs },
+        { href: "/why-mongolia", label: t.common.whyMongolia },
+        { href: "/travel-guide", label: t.common.travelGuide },
       ],
     },
-    { href: "/blog", label: "Blog" },
-    { href: "/contact", label: "Contact" },
+    { href: "/blog", label: t.common.blog },
+    { href: "/contact", label: t.common.contact },
   ];
 
   return (
@@ -61,12 +64,12 @@ const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div
             className={`flex items-center gap-6 text-sm ${
-              isScrolled ? "text-gray-600" : "text-white/80"
+              isScrolled ? "text-stone" : "text-ivory/80"
             }`}
           >
             <a
               href="tel:+97689475188"
-              className="flex items-center gap-2 hover:text-amber-400 transition"
+              className="flex items-center gap-2 hover:text-gold-300 transition"
             >
               <Phone size={14} />
               +976 8947-5188
@@ -76,16 +79,18 @@ const Navbar: React.FC = () => {
           </div>
           <div
             className={`flex items-center gap-4 text-sm ${
-              isScrolled ? "text-gray-600" : "text-white/80"
+              isScrolled ? "text-stone" : "text-ivory/80"
             }`}
           >
-            <Link href="/faq" className="hover:text-amber-400 transition">
-              FAQ
+            <Link href="/faq" className="hover:text-gold-300 transition">
+              {t.common.faq}
             </Link>
             <span>|</span>
-            <Link href="/wishlist" className="hover:text-amber-400 transition">
-              Wishlist
+            <Link href="/wishlist" className="hover:text-gold-300 transition">
+              {t.common.wishlist}
             </Link>
+            <span>|</span>
+            <LanguageSwitcher variant="compact" isScrolled={isScrolled} />
           </div>
         </div>
       </div>
@@ -102,21 +107,21 @@ const Navbar: React.FC = () => {
               alt="Mongolia Travel"
               width={50}
               height={50}
-              className="rounded-full ring-2 ring-amber-500/30 group-hover:ring-amber-500 transition-all duration-300"
+              className="rounded-full ring-2 ring-gold-500/30 group-hover:ring-gold-500 transition-all duration-300"
             />
-            <div className="absolute -inset-1 bg-amber-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute -inset-1 bg-gold-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
           <div className="flex flex-col">
             <span
-              className={`font-serif text-xl font-semibold tracking-wide transition-colors duration-300 ${
-                isScrolled ? "text-slate-800" : "text-white"
+              className={`font-playfair text-xl font-semibold tracking-wide transition-colors duration-300 ${
+                isScrolled ? "text-forest-900" : "text-ivory"
               }`}
             >
-              Mongolia
+              Maralgoo Dreamland
             </span>
             <span
               className={`text-xs tracking-[0.2em] uppercase ${
-                isScrolled ? "text-amber-600" : "text-amber-400"
+                isScrolled ? "text-gold-500" : "text-gold-300"
               }`}
             >
               Travel
@@ -139,8 +144,8 @@ const Navbar: React.FC = () => {
                 href={link.href}
                 className={`relative px-5 py-2 text-sm font-medium tracking-wide transition-all duration-300 flex items-center gap-1 ${
                   isScrolled
-                    ? "text-slate-700 hover:text-amber-600"
-                    : "text-white/90 hover:text-amber-400"
+                    ? "text-forest-700 hover:text-gold-500"
+                    : "text-ivory/90 hover:text-gold-300"
                 }`}
               >
                 {link.label}
@@ -152,18 +157,18 @@ const Navbar: React.FC = () => {
                     }`}
                   />
                 )}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gold-500 transition-all duration-300 group-hover:w-full" />
               </Link>
 
               {/* Dropdown */}
               {link.dropdown && activeDropdown === link.label && (
                 <div className="absolute top-full left-0 pt-2 min-w-[200px]">
-                  <div className="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
+                  <div className="bg-white rounded-xl shadow-xl border border-sand overflow-hidden">
                     {link.dropdown.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="block px-5 py-3 text-sm text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                        className="block px-5 py-3 text-sm text-charcoal hover:bg-gold-500/10 hover:text-gold-700 transition-colors"
                       >
                         {item.label}
                       </Link>
@@ -181,11 +186,11 @@ const Navbar: React.FC = () => {
             <Link
               href="/bookings"
               className={`hidden md:flex items-center gap-2 text-sm font-medium transition-colors ${
-                isScrolled ? "text-slate-700" : "text-white"
+                isScrolled ? "text-forest-700" : "text-ivory"
               }`}
             >
               Bookings
-              <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">
+              <span className="bg-gold-500 text-forest-900 text-xs px-2 py-0.5 rounded-full">
                 {bookingCount}
               </span>
             </Link>
@@ -195,20 +200,25 @@ const Navbar: React.FC = () => {
             href="/request-info"
             className={`hidden md:inline-flex items-center px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 ${
               isScrolled
-                ? "bg-amber-500 text-white hover:bg-amber-600 shadow-lg hover:shadow-amber-500/30"
-                : "bg-white/10 backdrop-blur-sm text-white border border-white/30 hover:bg-white hover:text-slate-800"
+                ? "bg-gold-500 text-forest-900 hover:bg-gold-300 shadow-lg hover:shadow-gold-500/30"
+                : "bg-ivory/10 backdrop-blur-sm text-ivory border border-ivory/30 hover:bg-ivory hover:text-forest-900"
             }`}
           >
-            Request Info
+            {t.tours.requestInfo}
           </Link>
+
+          {/* Language Switcher - visible when scrolled on desktop */}
+          <div className={`hidden lg:block ${isScrolled ? "" : "lg:hidden"}`}>
+            <LanguageSwitcher variant="compact" isScrolled={isScrolled} />
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden p-2 rounded-lg transition-colors ${
               isScrolled
-                ? "text-slate-700 hover:bg-gray-100"
-                : "text-white hover:bg-white/10"
+                ? "text-forest-700 hover:bg-sand"
+                : "text-ivory hover:bg-ivory/10"
             }`}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -225,11 +235,11 @@ const Navbar: React.FC = () => {
         <div className="flex flex-col h-full">
           <div className="flex-1 overflow-y-auto py-6 px-6">
             {navLinks.map((link, index) => (
-              <div key={link.href} className="border-b border-gray-100">
+              <div key={link.href} className="border-b border-sand">
                 <Link
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-4 text-lg font-medium text-slate-800 hover:text-amber-600 transition-colors"
+                  className="block py-4 text-lg font-medium text-forest-900 hover:text-gold-500 transition-colors"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {link.label}
@@ -241,7 +251,7 @@ const Navbar: React.FC = () => {
                         key={item.href}
                         href={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="block py-2 text-sm text-gray-600 hover:text-amber-600 transition-colors"
+                        className="block py-2 text-sm text-stone hover:text-gold-500 transition-colors"
                       >
                         {item.label}
                       </Link>
@@ -255,31 +265,36 @@ const Navbar: React.FC = () => {
               <Link
                 href="/faq"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 text-center text-slate-600 hover:text-amber-600 transition-colors"
+                className="block py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
               >
-                FAQ
+                {t.common.faq}
               </Link>
               <Link
                 href="/wishlist"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 text-center text-slate-600 hover:text-amber-600 transition-colors"
+                className="block py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
               >
-                Wishlist
+                {t.common.wishlist}
               </Link>
+
+              {/* Language Switcher in Mobile Menu */}
+              <div className="flex justify-center pt-4 border-t border-sand">
+                <LanguageSwitcher variant="default" isScrolled={true} />
+              </div>
             </div>
           </div>
 
-          <div className="p-6 border-t border-gray-100">
+          <div className="p-6 border-t border-sand">
             <Link
               href="/request-info"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block w-full py-4 bg-amber-500 text-white text-center rounded-xl font-semibold hover:bg-amber-600 transition-colors"
+              className="block w-full py-4 bg-gold-500 text-forest-900 text-center rounded-xl font-semibold hover:bg-gold-300 transition-colors"
             >
-              Request Info
+              {t.tours.requestInfo}
             </Link>
             <a
               href="tel:+97689475188"
-              className="block mt-4 py-3 text-center text-slate-600 hover:text-amber-600 transition-colors"
+              className="block mt-4 py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
             >
               <Phone size={16} className="inline mr-2" />
               +976 8947-5188

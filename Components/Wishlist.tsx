@@ -37,7 +37,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem("utravel_wishlist");
+    const stored = localStorage.getItem("maralgoo_wishlist");
     if (stored) {
       try {
         setWishlist(JSON.parse(stored));
@@ -51,7 +51,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   // Save to localStorage on change
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem("utravel_wishlist", JSON.stringify(wishlist));
+      localStorage.setItem("maralgoo_wishlist", JSON.stringify(wishlist));
     }
   }, [wishlist, isLoaded]);
 

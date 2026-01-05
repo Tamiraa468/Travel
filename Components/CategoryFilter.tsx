@@ -26,8 +26,8 @@ export default function CategoryFilter({
         onClick={() => onCategoryChange(null)}
         className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
           selectedCategory === null
-            ? "bg-blue-600 text-white"
-            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            ? "bg-forest-700 text-ivory"
+            : "bg-sand text-forest-700 hover:bg-gold-500/10"
         }`}
       >
         All Tours
@@ -38,8 +38,8 @@ export default function CategoryFilter({
           onClick={() => onCategoryChange(category.id)}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
             selectedCategory === category.id
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              ? "bg-forest-700 text-ivory"
+              : "bg-sand text-forest-700 hover:bg-gold-500/10"
           }`}
         >
           {category.name}

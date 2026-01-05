@@ -135,12 +135,12 @@ export async function sendUserConfirmationEmail({
               <p class="message-text">Our team will send you personalized recommendations and pricing within 24 hours. If you have any urgent questions, please don't hesitate to contact us.</p>
               
               <div class="signature">
-                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-name">The Maralgoo Dreamland Team</p>
                 <p class="signature-title">Your Gateway to Mongolia</p>
               </div>
             </div>
             <div class="footer">
-              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>© 2025 Maralgoo Dreamland. All rights reserved.</p>
               <p><a href="mailto:udelgombotamira@gmail.com">udelgombotamira@gmail.com</a></p>
             </div>
           </div>
@@ -294,7 +294,7 @@ export async function sendInternalNotificationEmail({
               </div>
             </div>
             <div class="footer">
-              <p>UTravel Admin Notification System</p>
+              <p>Maralgoo Dreamland Admin Notification System</p>
             </div>
           </div>
         </body>
@@ -468,7 +468,7 @@ export async function sendPaymentInfoEmail({
               <div class="bank-section">
                 <h3>Bank Transfer Option</h3>
                 <p><strong>Bank:</strong> Khan Bank</p>
-                <p><strong>Account Name:</strong> UTravel LLC</p>
+                <p><strong>Account Name:</strong> Maralgoo Dreamland LLC</p>
                 <p><strong>Account Number:</strong> 5012345678</p>
                 <p><strong>Reference:</strong> <span class="ref">${requestId}</span></p>
                 <div class="important"><strong>Important:</strong> Please include your booking reference in the transfer description.</div>
@@ -482,12 +482,12 @@ export async function sendPaymentInfoEmail({
               <p class="message-text">If you have any questions, please don't hesitate to reply to this email.</p>
               
               <div class="signature">
-                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-name">The Maralgoo Dreamland Team</p>
                 <p class="signature-title">Your Gateway to Mongolia</p>
               </div>
             </div>
             <div class="footer">
-              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>© 2025 Maralgoo Dreamland. All rights reserved.</p>
               <p>Booking Reference: ${requestId}</p>
             </div>
           </div>
@@ -680,12 +680,12 @@ export async function sendBookingConfirmationEmail({
               <p class="message-text">If you have any questions or need to make changes, please reply to this email.</p>
               
               <div class="signature">
-                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-name">The Maralgoo Dreamland Team</p>
                 <p class="signature-title">Your Gateway to Mongolia</p>
               </div>
             </div>
             <div class="footer">
-              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>© 2025 Maralgoo Dreamland. All rights reserved.</p>
               <p>Booking Reference: ${requestId}</p>
             </div>
           </div>
@@ -811,12 +811,12 @@ export async function sendPaymentReminderEmail({
               <p class="message-text">Please complete your payment soon to secure your spot. Tour availability is limited!</p>
               
               <div class="signature">
-                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-name">The Maralgoo Dreamland Team</p>
                 <p class="signature-title">Your Gateway to Mongolia</p>
               </div>
             </div>
             <div class="footer">
-              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>© 2025 Maralgoo Dreamland. All rights reserved.</p>
             </div>
           </div>
         </body>
@@ -951,7 +951,7 @@ export async function sendPaymentLinkEmail({
             <div class="content">
               <p class="greeting">Dear <strong>${customerName}</strong>,</p>
               
-              <p class="message-text">Thank you for choosing UTravel Mongolia. We're honored to be part of your journey to discover the beauty of Mongolia.</p>
+              <p class="message-text">Thank you for choosing Maralgoo Dreamland. We're honored to be part of your journey to discover the beauty of Mongolia.</p>
 
               <div class="booking-card">
                 <h3>Booking Details</h3>
@@ -1034,13 +1034,13 @@ export async function sendPaymentLinkEmail({
               <p class="message-text">We look forward to welcoming you to Mongolia!</p>
               
               <div class="signature">
-                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-name">The Maralgoo Dreamland Team</p>
                 <p class="signature-title">Your Gateway to Mongolia</p>
               </div>
             </div>
             
             <div class="footer">
-              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>© 2025 Maralgoo Dreamland. All rights reserved.</p>
               <p>Your trusted partner for authentic Mongolia adventures</p>
               <p class="ref">Booking Reference: ${requestId}</p>
             </div>
@@ -1050,9 +1050,9 @@ export async function sendPaymentLinkEmail({
     `;
 
     await transporter.sendMail({
-      from: `"UTravel Mongolia" <${SMTP_USER}>`,
+      from: `"Maralgoo Dreamland" <${SMTP_USER}>`,
       to,
-      subject: `💳 Complete Your Payment - ${tourName} | UTravel Mongolia`,
+      subject: `💳 Complete Your Payment - ${tourName} | Maralgoo Dreamland`,
       html: htmlContent,
     });
 
@@ -1221,13 +1221,13 @@ export async function sendPaymentConfirmationEmail({
               <p class="message-text">See you in Mongolia!</p>
               
               <div class="signature">
-                <p class="signature-name">The UTravel Team</p>
+                <p class="signature-name">The Maralgoo Dreamland Team</p>
                 <p class="signature-title">Your Gateway to Mongolia</p>
               </div>
             </div>
             
             <div class="footer">
-              <p>© 2025 UTravel Mongolia. All rights reserved.</p>
+              <p>© 2025 Maralgoo Dreamland. All rights reserved.</p>
               <p>Booking Reference: ${requestId}</p>
             </div>
           </div>
@@ -1236,9 +1236,9 @@ export async function sendPaymentConfirmationEmail({
     `;
 
     await transporter.sendMail({
-      from: `"UTravel Mongolia" <${SMTP_USER}>`,
+      from: `"Maralgoo Dreamland" <${SMTP_USER}>`,
       to,
-      subject: `✅ Payment Confirmed - ${tourName} | UTravel Mongolia`,
+      subject: `✅ Payment Confirmed - ${tourName} | Maralgoo Dreamland`,
       html: htmlContent,
     });
 
@@ -1246,5 +1246,454 @@ export async function sendPaymentConfirmationEmail({
   } catch (error) {
     console.error("Failed to send payment confirmation email:", error);
     throw new Error("Failed to send payment confirmation email");
+  }
+}
+
+// ============================================
+// INQUIRY-FIRST SALES MODEL EMAIL FUNCTIONS
+// ============================================
+// These emails support the human-closed sales process.
+// NO payment links in auto-reply - just warm communication.
+// Payment links are only sent manually by admin.
+// ============================================
+
+/**
+ * Send auto-reply email when customer submits an inquiry
+ * This email has NO payment links - just a warm thank you
+ * Human agents will follow up personally
+ */
+export async function sendInquiryAutoReplyEmail({
+  name,
+  email,
+  tourName,
+  inquiryId,
+}: {
+  name: string;
+  email: string;
+  tourName?: string;
+  inquiryId: string;
+}): Promise<void> {
+  try {
+    const transporter = getTransporter();
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8" />
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+            body { font-family: 'Inter', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 50px 30px; text-align: center; }
+            .header h1 { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-size: 28px; font-weight: 600; }
+            .header .emoji { font-size: 48px; margin-bottom: 15px; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 40px 30px; }
+            .greeting { font-size: 20px; color: #1e293b; margin-bottom: 20px; font-family: 'Playfair Display', Georgia, serif; }
+            .message-text { color: #475569; line-height: 1.8; font-size: 15px; margin-bottom: 20px; }
+            .highlight-box { background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-left: 4px solid #22c55e; padding: 20px; margin: 25px 0; border-radius: 0 12px 12px 0; }
+            .highlight-box h3 { color: #166534; margin: 0 0 12px 0; font-size: 16px; }
+            .highlight-box ul { margin: 0; padding-left: 20px; color: #15803d; }
+            .highlight-box li { margin: 8px 0; }
+            .whatsapp-btn { display: inline-block; background: #25D366; color: white !important; padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 600; margin: 20px 0; }
+            .trust-badges { display: flex; justify-content: center; gap: 30px; margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 12px; }
+            .badge { text-align: center; }
+            .badge-icon { font-size: 24px; margin-bottom: 5px; }
+            .badge-text { font-size: 12px; color: #64748b; }
+            .no-payment-note { background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border: 2px dashed #d4a574; padding: 20px; margin: 25px 0; border-radius: 12px; text-align: center; }
+            .no-payment-note strong { color: #92400e; font-size: 16px; }
+            .no-payment-note p { color: #78716c; margin: 10px 0 0 0; font-size: 14px; }
+            .signature { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+            .signature-name { color: #1e293b; font-weight: 600; margin: 0; }
+            .signature-title { color: #d4a574; font-size: 14px; margin: 5px 0 0 0; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 25px 30px; text-align: center; font-size: 12px; }
+            .footer a { color: #d4a574; text-decoration: none; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <div class="emoji">🇲🇳</div>
+              <h1>We Received Your Mongolia Travel Request!</h1>
+            </div>
+            <div class="gold-bar"></div>
+            <div class="content">
+              <p class="greeting">Sain baina uu, ${name}!</p>
+              
+              <p class="message-text">
+                Thank you for your interest in exploring Mongolia with us${
+                  tourName
+                    ? ` – especially the <strong>${tourName}</strong>`
+                    : ""
+                }! 
+                We're thrilled to help you create an unforgettable adventure.
+              </p>
+
+              <div class="highlight-box">
+                <h3>✨ What Happens Next?</h3>
+                <ul>
+                  <li>A <strong>local Mongolian travel expert</strong> will personally review your request</li>
+                  <li>You'll receive a <strong>customized itinerary</strong> within 24 hours</li>
+                  <li>We'll answer all your questions and tailor everything to your preferences</li>
+                  <li>Your trip, your pace – <strong>100% flexible</strong></li>
+                </ul>
+              </div>
+
+              <div class="no-payment-note">
+                <strong>💳 No Payment Required</strong>
+                <p>This is just the beginning of our conversation. We'll discuss everything before any commitment.</p>
+              </div>
+
+              <p class="message-text" style="text-align: center;">
+                <strong>Have urgent questions?</strong> Chat with us directly:
+              </p>
+              
+              <p style="text-align: center;">
+                <a href="https://wa.me/97689475188" class="whatsapp-btn">💬 WhatsApp Us</a>
+              </p>
+
+              <div class="trust-badges">
+                <div class="badge">
+                  <div class="badge-icon">🏆</div>
+                  <div class="badge-text">Local Experts</div>
+                </div>
+                <div class="badge">
+                  <div class="badge-icon">⭐</div>
+                  <div class="badge-text">5-Star Reviews</div>
+                </div>
+                <div class="badge">
+                  <div class="badge-icon">🛡️</div>
+                  <div class="badge-text">Safe & Secure</div>
+                </div>
+              </div>
+              
+              <div class="signature">
+                <p class="signature-name">The Maralgoo Dreamland Team</p>
+                <p class="signature-title">Your Gateway to Mongolia</p>
+              </div>
+            </div>
+            <div class="footer">
+              <p>© 2026 Maralgoo Dreamland. All rights reserved.</p>
+              <p><a href="mailto:udelgombotamira@gmail.com">udelgombotamira@gmail.com</a> | <a href="https://wa.me/97689475188">+976 8947-5188</a></p>
+              <p style="margin-top: 10px; font-size: 11px; color: #64748b;">Reference: ${inquiryId
+                .slice(-8)
+                .toUpperCase()}</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await transporter.sendMail({
+      from: `"Maralgoo Dreamland" <${SMTP_USER}>`,
+      to: email,
+      subject: `We received your Mongolia travel request 🇲🇳`,
+      html: htmlContent,
+    });
+
+    console.log(`✓ Inquiry auto-reply sent to ${email}`);
+  } catch (error) {
+    console.error("Failed to send inquiry auto-reply:", error);
+    throw new Error("Failed to send inquiry auto-reply email");
+  }
+}
+
+/**
+ * Send internal notification to admin when new inquiry is received
+ * Includes quick reply links for fast response
+ */
+export async function sendInquiryNotificationToAdmin({
+  inquiryId,
+  name,
+  email,
+  phone,
+  country,
+  travelMonth,
+  groupSize,
+  budgetRange,
+  message,
+  tourName,
+}: {
+  inquiryId: string;
+  name: string;
+  email: string;
+  phone?: string;
+  country?: string;
+  travelMonth?: string;
+  groupSize?: string;
+  budgetRange?: string;
+  message?: string;
+  tourName?: string;
+}): Promise<void> {
+  try {
+    const transporter = getTransporter();
+    const adminUrl =
+      process.env.NEXT_PUBLIC_BASE_URL || "https://travel-9jis.vercel.app";
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8" />
+          <style>
+            body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; margin: 0; padding: 0; background-color: #f1f5f9; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 30px; text-align: center; }
+            .header h1 { margin: 0; font-size: 22px; }
+            .header .badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 15px; font-size: 12px; margin-top: 10px; }
+            .content { background-color: #ffffff; padding: 30px; }
+            .lead-score { display: inline-block; padding: 8px 16px; background: #fef3c7; color: #92400e; border-radius: 20px; font-weight: 600; font-size: 14px; margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th { text-align: left; background: #f8fafc; color: #64748b; padding: 10px 15px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+            td { padding: 12px 15px; border-bottom: 1px solid #e2e8f0; }
+            .message-box { background: #f8fafc; border-left: 4px solid #3b82f6; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+            .quick-actions { background: #f0fdf4; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center; }
+            .quick-actions h3 { margin: 0 0 15px 0; color: #166534; font-size: 16px; }
+            .btn { display: inline-block; padding: 12px 24px; margin: 5px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
+            .btn-email { background: #3b82f6; color: white !important; }
+            .btn-whatsapp { background: #25D366; color: white !important; }
+            .btn-admin { background: #1e293b; color: white !important; }
+            .footer { background: #1e293b; color: #94a3b8; padding: 20px; text-align: center; font-size: 12px; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>🔔 New Inquiry Received!</h1>
+              <div class="badge">Action Required</div>
+            </div>
+            <div class="content">
+              <div class="lead-score">🎯 Hot Lead - ${
+                tourName ? "Tour Interest" : "General Inquiry"
+              }</div>
+              
+              <table>
+                <tr><th colspan="2">Contact Information</th></tr>
+                <tr><td><strong>Name</strong></td><td>${name}</td></tr>
+                <tr><td><strong>Email</strong></td><td><a href="mailto:${email}">${email}</a></td></tr>
+                <tr><td><strong>Phone</strong></td><td>${
+                  phone || "Not provided"
+                }</td></tr>
+                <tr><td><strong>Country</strong></td><td>${
+                  country || "Not specified"
+                }</td></tr>
+              </table>
+
+              <table>
+                <tr><th colspan="2">Trip Preferences</th></tr>
+                ${
+                  tourName
+                    ? `<tr><td><strong>Interested In</strong></td><td><strong style="color: #059669;">${tourName}</strong></td></tr>`
+                    : ""
+                }
+                <tr><td><strong>Travel Month</strong></td><td>${
+                  travelMonth || "Flexible"
+                }</td></tr>
+                <tr><td><strong>Group Size</strong></td><td>${
+                  groupSize || "Not specified"
+                }</td></tr>
+                <tr><td><strong>Budget Range</strong></td><td>${
+                  budgetRange || "Not specified"
+                }</td></tr>
+              </table>
+
+              ${
+                message
+                  ? `
+                <div class="message-box">
+                  <strong>Customer Message:</strong>
+                  <p style="margin: 10px 0 0 0; white-space: pre-wrap;">${message}</p>
+                </div>
+              `
+                  : ""
+              }
+
+              <div class="quick-actions">
+                <h3>⚡ Quick Actions</h3>
+                <a href="mailto:${email}?subject=Re: Your Mongolia Travel Inquiry&body=Hi ${
+      name.split(" ")[0]
+    },%0D%0A%0D%0AThank you for your interest in traveling to Mongolia!" class="btn btn-email">📧 Reply by Email</a>
+                ${
+                  phone
+                    ? `<a href="https://wa.me/${phone.replace(
+                        /[^0-9]/g,
+                        ""
+                      )}" class="btn btn-whatsapp">💬 WhatsApp</a>`
+                    : ""
+                }
+                <br><br>
+                <a href="${adminUrl}/admin/inquiries?id=${inquiryId}" class="btn btn-admin">📋 View in Admin Panel</a>
+              </div>
+
+              <p style="text-align: center; color: #64748b; font-size: 13px;">
+                ⏰ Best practice: Respond within 2 hours for highest conversion
+              </p>
+            </div>
+            <div class="footer">
+              <p>Maralgoo Dreamland CRM • Inquiry ID: ${inquiryId
+                .slice(-8)
+                .toUpperCase()}</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await transporter.sendMail({
+      from: SMTP_USER,
+      to: INTERNAL_EMAIL,
+      subject: `🔔 [NEW LEAD] ${name} - ${tourName || "General Inquiry"}`,
+      html: htmlContent,
+    });
+
+    console.log(`✓ Admin notification sent for inquiry ${inquiryId}`);
+  } catch (error) {
+    console.error("Failed to send admin notification:", error);
+    throw new Error("Failed to send admin notification email");
+  }
+}
+
+/**
+ * Send payment link email to customer (Inquiry-First Flow)
+ * This is triggered MANUALLY by admin after quotation is agreed
+ */
+export async function sendInquiryPaymentLinkEmail({
+  name,
+  email,
+  tourName,
+  amount,
+  currency,
+  paymentMethod,
+  stripePaymentUrl,
+  bankTransferRef,
+  inquiryId,
+}: {
+  name: string;
+  email: string;
+  tourName: string;
+  amount: number;
+  currency: string;
+  paymentMethod: "stripe" | "bank_transfer";
+  stripePaymentUrl?: string;
+  bankTransferRef?: string;
+  inquiryId: string;
+}): Promise<void> {
+  try {
+    const transporter = getTransporter();
+
+    const formattedAmount = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currency,
+    }).format(amount);
+
+    const paymentContent =
+      paymentMethod === "stripe"
+        ? `
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${stripePaymentUrl}" style="display: inline-block; background: linear-gradient(135deg, #d4a574, #f5c478); color: #1e293b !important; padding: 18px 50px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 18px;">
+          💳 Pay ${formattedAmount} Securely
+        </a>
+        <p style="margin-top: 15px; color: #64748b; font-size: 13px;">Powered by Stripe • 256-bit SSL encryption</p>
+      </div>
+    `
+        : `
+      <div style="background: #f8fafc; border-radius: 12px; padding: 25px; margin: 25px 0; border: 2px solid #e2e8f0;">
+        <h3 style="color: #1e293b; margin: 0 0 15px 0;">🏦 Bank Transfer Details</h3>
+        <table style="width: 100%;">
+          <tr><td style="padding: 8px 0; color: #64748b;">Bank Name:</td><td style="padding: 8px 0; font-weight: 600;">Khan Bank</td></tr>
+          <tr><td style="padding: 8px 0; color: #64748b;">Account Name:</td><td style="padding: 8px 0; font-weight: 600;">Maralgoo Dreamland LLC</td></tr>
+          <tr><td style="padding: 8px 0; color: #64748b;">Account Number:</td><td style="padding: 8px 0; font-weight: 600;">5012345678</td></tr>
+          <tr><td style="padding: 8px 0; color: #64748b;">SWIFT Code:</td><td style="padding: 8px 0; font-weight: 600;">KABORMNX</td></tr>
+          <tr><td style="padding: 8px 0; color: #64748b;">Amount:</td><td style="padding: 8px 0; font-weight: 600; color: #059669;">${formattedAmount}</td></tr>
+          <tr><td style="padding: 8px 0; color: #64748b;">Reference:</td><td style="padding: 8px 0;"><code style="background: #fef3c7; padding: 4px 10px; border-radius: 4px; font-weight: 600;">${bankTransferRef}</code></td></tr>
+        </table>
+        <p style="margin-top: 15px; padding: 12px; background: #fef2f2; border-radius: 8px; color: #991b1b; font-size: 13px;">
+          ⚠️ Important: Please include the reference code in your transfer description
+        </p>
+      </div>
+    `;
+
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="UTF-8" />
+          <style>
+            body { font-family: 'Segoe UI', Arial, sans-serif; color: #334155; margin: 0; padding: 0; background-color: #f8fafc; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 40px 30px; text-align: center; }
+            .header h1 { margin: 0; font-size: 26px; font-family: Georgia, serif; }
+            .gold-bar { height: 4px; background: linear-gradient(90deg, #d4a574, #f5c478, #d4a574); }
+            .content { background-color: #ffffff; padding: 35px 30px; }
+            .greeting { font-size: 18px; color: #1e293b; margin-bottom: 20px; }
+            .message-text { color: #475569; line-height: 1.7; }
+            .price-box { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #22c55e; border-radius: 12px; padding: 25px; margin: 25px 0; text-align: center; }
+            .price-box .label { color: #166534; font-size: 14px; margin-bottom: 5px; }
+            .price-box .amount { color: #15803d; font-size: 36px; font-weight: 700; }
+            .tour-name { background: linear-gradient(135deg, #fefce8, #fef9c3); padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; }
+            .tour-name strong { color: #1e293b; font-size: 18px; }
+            .footer { background-color: #1e293b; color: #94a3b8; padding: 25px 30px; text-align: center; font-size: 12px; }
+            .footer a { color: #d4a574; text-decoration: none; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Your Mongolia Adventure Awaits! 🇲🇳</h1>
+            </div>
+            <div class="gold-bar"></div>
+            <div class="content">
+              <p class="greeting">Hi ${name},</p>
+              
+              <p class="message-text">
+                Great news! Your custom itinerary is ready and we're excited to finalize your booking.
+              </p>
+
+              <div class="tour-name">
+                <strong>${tourName}</strong>
+              </div>
+
+              <div class="price-box">
+                <div class="label">Total Amount Due</div>
+                <div class="amount">${formattedAmount}</div>
+              </div>
+
+              ${paymentContent}
+
+              <p class="message-text">
+                Once payment is received, we'll send you:
+              </p>
+              <ul style="color: #475569; line-height: 2;">
+                <li>✅ Detailed day-by-day itinerary</li>
+                <li>✅ Packing list for Mongolia</li>
+                <li>✅ Airport pickup confirmation</li>
+                <li>✅ Emergency contact numbers</li>
+              </ul>
+
+              <p class="message-text">
+                Questions? Reply to this email or WhatsApp us at <a href="https://wa.me/97689475188" style="color: #d4a574;">+976 8947-5188</a>
+              </p>
+            </div>
+            <div class="footer">
+              <p>© 2026 Maralgoo Dreamland</p>
+              <p>Reference: ${inquiryId.slice(-8).toUpperCase()}</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await transporter.sendMail({
+      from: `"Maralgoo Dreamland" <${SMTP_USER}>`,
+      to: email,
+      subject: `💳 Complete Your Booking - ${tourName}`,
+      html: htmlContent,
+    });
+
+    console.log(`✓ Payment link email sent to ${email}`);
+  } catch (error) {
+    console.error("Failed to send payment link email:", error);
+    throw new Error("Failed to send payment link email");
   }
 }

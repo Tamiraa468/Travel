@@ -12,14 +12,16 @@ export default function WishlistPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-grow bg-gray-50">
+      <main className="flex-grow bg-sand">
         <div className="max-w-7xl mx-auto px-4 py-12">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
               <Heart className="w-8 h-8 text-red-500 fill-red-500" />
-              <h1 className="text-3xl font-bold">My Wishlist</h1>
-              <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">
+              <h1 className="text-3xl font-bold text-forest-900">
+                My Wishlist
+              </h1>
+              <span className="bg-sand text-charcoal px-3 py-1 rounded-full text-sm border border-sand">
                 {wishlist.length} tours
               </span>
             </div>
@@ -39,7 +41,7 @@ export default function WishlistPage() {
               {wishlist.map((tour) => (
                 <div
                   key={tour.id}
-                  className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-ivory rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-sand"
                 >
                   {/* Image */}
                   <Link href={`/tours/${tour.slug}`} className="block">
@@ -51,8 +53,10 @@ export default function WishlistPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                          <span className="text-white/70 text-lg">UTravel</span>
+                        <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">
+                          <span className="text-white/70 text-lg">
+                            Maralgoo Dreamland
+                          </span>
                         </div>
                       )}
                       <div className="absolute top-3 right-3 bg-white/90 px-2 py-1 rounded text-sm">
@@ -64,15 +68,15 @@ export default function WishlistPage() {
                   {/* Content */}
                   <div className="p-4">
                     <Link href={`/tours/${tour.slug}`}>
-                      <h3 className="font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                      <h3 className="font-semibold text-forest-900 mb-2 hover:text-forest-700 transition-colors">
                         {tour.title}
                       </h3>
                     </Link>
 
                     <div className="flex items-center justify-between">
                       <div>
-                        <span className="text-xs text-gray-500">From</span>
-                        <span className="ml-1 font-bold text-blue-600">
+                        <span className="text-xs text-charcoal">From</span>
+                        <span className="ml-1 font-bold text-forest-700">
                           ${tour.priceFrom.toLocaleString()}
                         </span>
                       </div>
@@ -88,7 +92,7 @@ export default function WishlistPage() {
 
                     <Link
                       href={`/tours/${tour.slug}`}
-                      className="mt-3 w-full block text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      className="mt-3 w-full block text-center px-4 py-2 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition-colors"
                     >
                       View Tour
                     </Link>
@@ -97,17 +101,17 @@ export default function WishlistPage() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 bg-white rounded-xl">
-              <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">
+            <div className="text-center py-16 bg-ivory rounded-xl border border-sand">
+              <ShoppingBag className="w-16 h-16 text-stone mx-auto mb-4" />
+              <h2 className="text-xl font-semibold text-forest-900 mb-2">
                 Your wishlist is empty
               </h2>
-              <p className="text-gray-500 mb-6">
+              <p className="text-charcoal mb-6">
                 Start exploring our tours and save your favorites!
               </p>
               <Link
                 href="/tours"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition-colors"
               >
                 Browse Tours <ArrowRight className="w-4 h-4" />
               </Link>

@@ -49,19 +49,19 @@ export default async function TravelGuidePage() {
         {/* Hero Section */}
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center">
           <div className="absolute inset-0 bg-[url('/images/travel-guide-hero.jpg')] bg-cover bg-center" />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-600/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-forest-900/80 to-forest-700/60" />
           <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
               Travel Guide
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100">
+            <p className="text-xl md:text-2xl text-gold-300">
               Everything you need to know before and during your Mongolia trip
             </p>
           </div>
         </section>
 
         {/* Quick Links */}
-        <section className="py-8 bg-white border-b">
+        <section className="py-8 bg-ivory border-b border-sand">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-4">
               {[
@@ -73,7 +73,7 @@ export default async function TravelGuidePage() {
                 <a
                   key={index}
                   href={link.href}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full hover:bg-blue-100 hover:text-blue-700 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-sand rounded-full hover:bg-gold-500/10 hover:text-gold-700 transition-colors"
                 >
                   <link.icon className="w-4 h-4" />
                   {link.label}
@@ -84,10 +84,10 @@ export default async function TravelGuidePage() {
         </section>
 
         {/* Before You Visit */}
-        <section id="before" className="py-16">
+        <section id="before" className="py-16 bg-sand">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-              <span className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg">
+            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3 text-forest-900">
+              <span className="w-10 h-10 bg-forest-900 text-white rounded-full flex items-center justify-center text-lg">
                 1
               </span>
               Before You Visit Mongolia
@@ -101,16 +101,16 @@ export default async function TravelGuidePage() {
                     <Link
                       key={page.id}
                       href={`/travel-guide/${page.slug}`}
-                      className="group bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all"
+                      className="group bg-ivory p-6 rounded-xl border border-sand hover:border-gold-300 hover:shadow-md transition-all"
                     >
-                      <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-100 transition-colors">
-                        <IconComponent className="w-6 h-6 text-blue-600" />
+                      <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-gold-500/10 transition-colors">
+                        <IconComponent className="w-6 h-6 text-forest-700" />
                       </div>
-                      <h3 className="font-semibold text-lg mb-2 group-hover:text-blue-600 transition-colors">
+                      <h3 className="font-semibold text-lg mb-2 group-hover:text-forest-700 transition-colors">
                         {page.title}
                       </h3>
                       {page.excerpt && (
-                        <p className="text-gray-600 text-sm line-clamp-2">
+                        <p className="text-charcoal text-sm line-clamp-2">
                           {page.excerpt}
                         </p>
                       )}
@@ -157,18 +157,18 @@ export default async function TravelGuidePage() {
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className="bg-white p-6 rounded-xl border border-gray-200"
+                      className="bg-ivory p-6 rounded-xl border border-sand"
                     >
-                      <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
-                        <item.icon className="w-6 h-6 text-blue-600" />
+                      <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center mb-4">
+                        <item.icon className="w-6 h-6 text-forest-700" />
                       </div>
                       <h3 className="font-semibold text-lg mb-2">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600 text-sm">
+                      <p className="text-charcoal text-sm">
                         {item.description}
                       </p>
-                      <span className="text-xs text-gray-400 mt-2 block">
+                      <span className="text-xs text-stone mt-2 block">
                         Content coming soon
                       </span>
                     </div>
@@ -180,10 +180,10 @@ export default async function TravelGuidePage() {
         </section>
 
         {/* While in Mongolia */}
-        <section id="during" className="py-16 bg-gray-50">
+        <section id="during" className="py-16 bg-ivory">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-              <span className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center text-lg">
+            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3 text-forest-900">
+              <span className="w-10 h-10 bg-forest-700 text-white rounded-full flex items-center justify-center text-lg">
                 2
               </span>
               While You're in Mongolia
@@ -210,13 +210,15 @@ export default async function TravelGuidePage() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                  className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-sand"
                 >
-                  <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mb-4">
-                    <item.icon className="w-6 h-6 text-green-600" />
+                  <div className="w-12 h-12 bg-forest-500/10 rounded-xl flex items-center justify-center mb-4">
+                    <item.icon className="w-6 h-6 text-forest-700" />
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.description}</p>
+                  <h3 className="font-semibold text-lg mb-2 text-forest-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-charcoal text-sm">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -224,10 +226,10 @@ export default async function TravelGuidePage() {
         </section>
 
         {/* Things to Do */}
-        <section id="activities" className="py-16">
+        <section id="activities" className="py-16 bg-sand">
           <div className="max-w-7xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-              <span className="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center text-lg">
+            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3 text-forest-900">
+              <span className="w-10 h-10 bg-gold-500 text-white rounded-full flex items-center justify-center text-lg">
                 3
               </span>
               Things to Do in Mongolia
@@ -246,9 +248,9 @@ export default async function TravelGuidePage() {
               ].map((activity, index) => (
                 <div
                   key={index}
-                  className="bg-gradient-to-br from-purple-50 to-blue-50 p-4 rounded-xl text-center hover:shadow-md transition-shadow"
+                  className="bg-gradient-to-br from-gold-500/5 to-forest-500/5 p-4 rounded-xl text-center hover:shadow-md transition-shadow border border-sand"
                 >
-                  <span className="text-lg font-medium text-gray-800">
+                  <span className="text-lg font-medium text-forest-900">
                     {activity}
                   </span>
                 </div>
@@ -258,17 +260,17 @@ export default async function TravelGuidePage() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 bg-blue-600">
+        <section className="py-16 bg-forest-900">
           <div className="max-w-4xl mx-auto px-4 text-center text-white">
             <h2 className="text-3xl font-bold mb-4">Need Help Planning?</h2>
-            <p className="text-xl text-blue-100 mb-8">
+            <p className="text-xl text-gold-300 mb-8">
               Our travel experts are ready to help you plan your perfect
               Mongolia adventure
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="px-8 py-3 bg-white text-forest-700 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 Contact Us
               </Link>

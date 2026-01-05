@@ -53,11 +53,11 @@ const RecommendedTours: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 bg-slate-50 overflow-hidden"
+      className="relative py-24 bg-ivory overflow-hidden"
     >
       {/* Background Decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-100/50 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gold-300/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-forest-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -68,19 +68,19 @@ const RecommendedTours: React.FC = () => {
           className="text-center mb-16"
         >
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full mb-6">
-            <Compass size={18} className="text-amber-600" />
-            <span className="text-sm font-medium text-amber-700 tracking-wide uppercase">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold-500/10 rounded-full mb-6">
+            <Compass size={18} className="text-gold-500" />
+            <span className="text-sm font-medium text-gold-700 tracking-wide uppercase">
               Featured Destinations
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-800 mb-6">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-forest-900 mb-6">
             Explore the Beauty of{" "}
-            <span className="text-amber-600">Mongolia</span>
+            <span className="text-gold-500">Mongolia</span>
           </h2>
 
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-stone max-w-2xl mx-auto leading-relaxed">
             Discover vast steppes, pristine lakes, and rich nomadic culture.
             Choose from our carefully curated tours to experience the true
             spirit of Mongolia.
@@ -88,9 +88,9 @@ const RecommendedTours: React.FC = () => {
 
           {/* Decorative Line */}
           <div className="flex items-center justify-center gap-3 mt-8">
-            <div className="w-12 h-px bg-slate-300" />
-            <div className="w-3 h-3 bg-amber-500 rounded-full" />
-            <div className="w-12 h-px bg-slate-300" />
+            <div className="w-12 h-px bg-sand" />
+            <div className="w-3 h-3 bg-gold-500 rounded-full" />
+            <div className="w-12 h-px bg-sand" />
           </div>
         </motion.div>
 
@@ -101,13 +101,13 @@ const RecommendedTours: React.FC = () => {
             <>
               <button
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-amber-600 hover:shadow-xl transition-all duration-300 hidden lg:flex"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-forest-700 hover:text-gold-500 hover:shadow-xl transition-all duration-300 hidden lg:flex"
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-amber-600 hover:shadow-xl transition-all duration-300 hidden lg:flex"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-forest-700 hover:text-gold-500 hover:shadow-xl transition-all duration-300 hidden lg:flex"
               >
                 <ChevronRight size={24} />
               </button>
@@ -142,8 +142,8 @@ const RecommendedTours: React.FC = () => {
                   onClick={() => setCurrentSlide(index)}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     currentSlide === index
-                      ? "w-8 bg-amber-500"
-                      : "w-2 bg-slate-300 hover:bg-slate-400"
+                      ? "w-8 bg-gold-500"
+                      : "w-2 bg-sand hover:bg-stone"
                   }`}
                 />
               ))}
@@ -160,7 +160,7 @@ const RecommendedTours: React.FC = () => {
         >
           <Link
             href="/tours"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-slate-800 text-white font-semibold rounded-full hover:bg-slate-900 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-forest-900 text-ivory font-semibold rounded-full hover:bg-forest-700 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             View All Tours
             <ChevronRight size={18} />

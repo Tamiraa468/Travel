@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 
+// Increase body size limit for this route
+export const maxDuration = 60;
+
 export async function GET() {
   try {
     const tours = await prisma.tour.findMany({

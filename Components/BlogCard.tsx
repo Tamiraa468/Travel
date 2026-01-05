@@ -20,12 +20,12 @@ type Props = {
 };
 
 const categoryColors: Record<string, string> = {
-  NEWS: "bg-blue-100 text-blue-700",
-  FESTIVAL: "bg-purple-100 text-purple-700",
-  TRAVEL_GUIDE: "bg-green-100 text-green-700",
-  CULTURE: "bg-orange-100 text-orange-700",
-  ADVENTURE: "bg-red-100 text-red-700",
-  TIPS: "bg-yellow-100 text-yellow-700",
+  NEWS: "bg-forest-500/10 text-forest-700",
+  FESTIVAL: "bg-gold-500/20 text-gold-700",
+  TRAVEL_GUIDE: "bg-forest-500/10 text-forest-700",
+  CULTURE: "bg-gold-500/20 text-gold-700",
+  ADVENTURE: "bg-forest-700/10 text-forest-900",
+  TIPS: "bg-gold-300/30 text-gold-700",
 };
 
 export default function BlogCard({ post }: Props) {
@@ -41,7 +41,7 @@ export default function BlogCard({ post }: Props) {
   const categoryLabel = post.category.replace(/_/g, " ");
 
   return (
-    <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
+    <article className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-sand">
       {/* Image */}
       <Link
         href={`/blog/${post.slug}`}
@@ -54,15 +54,15 @@ export default function BlogCard({ post }: Props) {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center">
-            <span className="text-white/70 text-lg font-medium">UTravel</span>
+          <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">
+            <span className="text-white/70 text-lg font-medium">Maralgoo</span>
           </div>
         )}
 
         {/* Category Badge */}
         <span
           className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-medium ${
-            categoryColors[post.category] || "bg-gray-100 text-gray-700"
+            categoryColors[post.category] || "bg-sand text-charcoal"
           }`}
         >
           {categoryLabel}
@@ -72,7 +72,7 @@ export default function BlogCard({ post }: Props) {
       {/* Content */}
       <div className="p-5">
         {/* Meta */}
-        <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+        <div className="flex items-center gap-4 text-xs text-stone mb-3">
           {post.publishedAt && (
             <span className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5" />
@@ -87,22 +87,20 @@ export default function BlogCard({ post }: Props) {
 
         {/* Title */}
         <Link href={`/blog/${post.slug}`}>
-          <h2 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h2 className="text-lg font-semibold text-forest-900 mb-2 line-clamp-2 group-hover:text-gold-500 transition-colors">
             {post.title}
           </h2>
         </Link>
 
         {/* Excerpt */}
         {post.excerpt && (
-          <p className="text-gray-600 text-sm line-clamp-2 mb-4">
-            {post.excerpt}
-          </p>
+          <p className="text-stone text-sm line-clamp-2 mb-4">{post.excerpt}</p>
         )}
 
         {/* Read More */}
         <Link
           href={`/blog/${post.slug}`}
-          className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-medium text-forest-700 hover:text-gold-500 transition-colors"
         >
           Read More
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

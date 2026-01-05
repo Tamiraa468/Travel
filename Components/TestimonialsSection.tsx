@@ -22,7 +22,7 @@ const testimonials = [
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
     rating: 5,
-    text: "From the private villa to the exclusive dining experiences, everything exceeded our expectations. UTravel transformed our dream vacation into reality with impeccable service.",
+    text: "From the private villa to the exclusive dining experiences, everything exceeded our expectations. Maralgoo Dreamland transformed our dream vacation into reality with impeccable service.",
     tour: "Bali Paradise Journey",
   },
   {
@@ -42,7 +42,7 @@ const testimonials = [
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
     rating: 5,
-    text: "UTravel redefined what a vacation could be. The seamless coordination, stunning accommodations, and thoughtful touches made this the trip of a lifetime.",
+    text: "Maralgoo Dreamland redefined what a vacation could be. The seamless coordination, stunning accommodations, and thoughtful touches made this the trip of a lifetime.",
     tour: "Santorini Sunset Experience",
   },
 ];
@@ -61,10 +61,10 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-24 bg-slate-50 relative overflow-hidden">
+    <section className="py-24 bg-sand relative overflow-hidden">
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-amber-100/50 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-slate-200/50 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-gold-300/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-forest-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
@@ -75,13 +75,13 @@ const TestimonialsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-medium tracking-wide mb-4">
+          <span className="inline-block px-4 py-2 bg-gold-500/20 text-gold-700 rounded-full text-sm font-medium tracking-wide mb-4">
             Client Stories
           </span>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-800 mb-4">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-forest-900 mb-4">
             What Our Travelers Say
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto rounded-full" />
+          <div className="w-24 h-1 bg-gradient-to-r from-gold-500 to-gold-700 mx-auto rounded-full" />
         </motion.div>
 
         {/* Testimonial Card */}
@@ -127,10 +127,10 @@ const TestimonialsSection = () => {
                       </svg>
                     </div>
                   </div>
-                  <h4 className="font-serif font-bold text-slate-800 mt-4 text-lg">
+                  <h4 className="font-serif font-bold text-forest-900 mt-4 text-lg">
                     {testimonials[currentIndex].name}
                   </h4>
-                  <p className="text-slate-500 text-sm">
+                  <p className="text-stone text-sm">
                     {testimonials[currentIndex].location}
                   </p>
                   {/* Rating */}
@@ -139,7 +139,7 @@ const TestimonialsSection = () => {
                       (_, i) => (
                         <Star
                           key={i}
-                          className="w-4 h-4 text-amber-400 fill-amber-400"
+                          className="w-4 h-4 text-gold-500 fill-gold-500"
                         />
                       )
                     )}
@@ -148,12 +148,12 @@ const TestimonialsSection = () => {
 
                 {/* Content */}
                 <div className="flex-1">
-                  <p className="text-slate-600 text-lg leading-relaxed italic mb-6">
+                  <p className="text-charcoal text-lg leading-relaxed italic mb-6">
                     &quot;{testimonials[currentIndex].text}&quot;
                   </p>
                   <div className="flex items-center gap-2 text-sm">
-                    <span className="text-slate-400">Tour:</span>
-                    <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full font-medium">
+                    <span className="text-stone">Tour:</span>
+                    <span className="px-3 py-1 bg-forest-500/10 text-forest-700 rounded-full font-medium">
                       {testimonials[currentIndex].tour}
                     </span>
                   </div>
@@ -166,7 +166,7 @@ const TestimonialsSection = () => {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={prevTestimonial}
-              className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-600 hover:text-amber-600 hover:shadow-xl transition-all"
+              className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-forest-700 hover:text-gold-500 hover:shadow-xl transition-all"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -179,8 +179,8 @@ const TestimonialsSection = () => {
                   onClick={() => setCurrentIndex(index)}
                   className={`w-3 h-3 rounded-full transition-all ${
                     index === currentIndex
-                      ? "bg-amber-500 w-8"
-                      : "bg-slate-300 hover:bg-slate-400"
+                      ? "bg-gold-500 w-8"
+                      : "bg-stone/30 hover:bg-stone/50"
                   }`}
                 />
               ))}
@@ -188,7 +188,7 @@ const TestimonialsSection = () => {
 
             <button
               onClick={nextTestimonial}
-              className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-slate-600 hover:text-amber-600 hover:shadow-xl transition-all"
+              className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center text-forest-700 hover:text-gold-500 hover:shadow-xl transition-all"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -201,34 +201,34 @@ const TestimonialsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center items-center gap-8 mt-16 pt-16 border-t border-slate-200"
+          className="flex flex-wrap justify-center items-center gap-8 mt-16 pt-16 border-t border-forest-500/10"
         >
           <div className="text-center">
-            <div className="text-3xl font-serif font-bold text-slate-800">
+            <div className="text-3xl font-serif font-bold text-forest-900">
               4.9/5
             </div>
-            <div className="text-slate-500 text-sm">Average Rating</div>
+            <div className="text-stone text-sm">Average Rating</div>
           </div>
-          <div className="w-px h-12 bg-slate-200 hidden md:block" />
+          <div className="w-px h-12 bg-forest-500/10 hidden md:block" />
           <div className="text-center">
-            <div className="text-3xl font-serif font-bold text-slate-800">
+            <div className="text-3xl font-serif font-bold text-forest-900">
               2,500+
             </div>
-            <div className="text-slate-500 text-sm">Happy Travelers</div>
+            <div className="text-stone text-sm">Happy Travelers</div>
           </div>
-          <div className="w-px h-12 bg-slate-200 hidden md:block" />
+          <div className="w-px h-12 bg-forest-500/10 hidden md:block" />
           <div className="text-center">
-            <div className="text-3xl font-serif font-bold text-slate-800">
+            <div className="text-3xl font-serif font-bold text-forest-900">
               98%
             </div>
-            <div className="text-slate-500 text-sm">Satisfaction Rate</div>
+            <div className="text-stone text-sm">Satisfaction Rate</div>
           </div>
-          <div className="w-px h-12 bg-slate-200 hidden md:block" />
+          <div className="w-px h-12 bg-sand hidden md:block" />
           <div className="text-center">
-            <div className="text-3xl font-serif font-bold text-slate-800">
+            <div className="text-3xl font-serif font-bold text-forest-900">
               50+
             </div>
-            <div className="text-slate-500 text-sm">Destinations</div>
+            <div className="text-stone text-sm">Destinations</div>
           </div>
         </motion.div>
       </div>

@@ -6,23 +6,26 @@ const AboutUs = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-grow bg-gray-50">
+      <main className="flex-grow bg-sand">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold text-center mb-12">About Us</h1>
+            <h1 className="text-4xl font-bold text-center mb-12 text-forest-900">
+              About Us
+            </h1>
 
             {/* Company Introduction */}
             <div className="mb-12">
-              <h2 className="text-2xl font-semibold mb-4">
-                Welcome to UTravel
+              <h2 className="text-2xl font-semibold mb-4 text-forest-900">
+                Welcome to{" "}
+                <span className="font-playfair">Maralgoo Dreamland</span>
               </h2>
-              <p className="text-gray-600 mb-4">
-                Founded in 2023, UTravel has been at the forefront of providing
-                exceptional travel experiences in Mongolia. We specialize in
-                creating unforgettable journeys that showcase the beauty,
-                culture, and traditions of our country.
+              <p className="text-charcoal mb-4">
+                Founded in Ulaanbaatar, Maralgoo Dreamland has been at the
+                forefront of providing exceptional luxury travel experiences in
+                Mongolia. We specialize in creating unforgettable journeys that
+                showcase the beauty, culture, and traditions of our country.
               </p>
-              <p className="text-gray-600">
+              <p className="text-charcoal">
                 Our team of experienced travel professionals is dedicated to
                 ensuring that every aspect of your journey is carefully planned
                 and executed to perfection.
@@ -31,8 +34,10 @@ const AboutUs = () => {
 
             {/* Our Mission */}
             <div className="mb-12">
-              <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-              <p className="text-gray-600">
+              <h2 className="text-2xl font-semibold mb-4 text-forest-900">
+                Our Mission
+              </h2>
+              <p className="text-charcoal">
                 Our mission is to provide authentic, sustainable, and memorable
                 travel experiences that connect visitors with the true spirit of
                 Mongolia while supporting local communities and preserving our
@@ -42,40 +47,42 @@ const AboutUs = () => {
 
             {/* Why Choose Us */}
             <div className="mb-12">
-              <h2 className="text-2xl font-semibold mb-4">Why Choose Us</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-forest-900">
+                Why Choose Us
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                  <h3 className="text-xl font-semibold mb-2">
+                <div className="p-4 bg-ivory rounded-lg shadow-md hover:shadow-lg hover:border-gold-300 border border-sand transition-all duration-200">
+                  <h3 className="text-xl font-semibold mb-2 text-forest-900">
                     Local Expertise
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-charcoal">
                     Our deep knowledge of Mongolia ensures you experience the
                     best our country has to offer.
                   </p>
                 </div>
-                <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                  <h3 className="text-xl font-semibold mb-2">
+                <div className="p-4 bg-ivory rounded-lg shadow-md hover:shadow-lg hover:border-gold-300 border border-sand transition-all duration-200">
+                  <h3 className="text-xl font-semibold mb-2 text-forest-900">
                     Personalized Service
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-charcoal">
                     We tailor each journey to meet your specific interests and
                     preferences.
                   </p>
                 </div>
-                <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                  <h3 className="text-xl font-semibold mb-2">
+                <div className="p-4 bg-ivory rounded-lg shadow-md hover:shadow-lg hover:border-gold-300 border border-sand transition-all duration-200">
+                  <h3 className="text-xl font-semibold mb-2 text-forest-900">
                     Quality Assurance
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-charcoal">
                     We maintain high standards in all our services, from
                     accommodation to transportation.
                   </p>
                 </div>
-                <div className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-                  <h3 className="text-xl font-semibold mb-2">
+                <div className="p-4 bg-ivory rounded-lg shadow-md hover:shadow-lg hover:border-gold-300 border border-sand transition-all duration-200">
+                  <h3 className="text-xl font-semibold mb-2 text-forest-900">
                     Sustainable Tourism
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-charcoal">
                     We prioritize eco-friendly practices and support local
                     communities.
                   </p>
@@ -85,8 +92,10 @@ const AboutUs = () => {
 
             {/* Our Team */}
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Our Team</h2>
-              <p className="text-gray-600 mb-6">
+              <h2 className="text-2xl font-semibold mb-4 text-forest-900">
+                Our Team
+              </h2>
+              <p className="text-charcoal mb-6">
                 Our team consists of passionate travel enthusiasts with
                 extensive experience in the tourism industry. Each member brings
                 unique expertise and dedication to creating exceptional travel

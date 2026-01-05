@@ -60,7 +60,7 @@ export default function TeamSection({ members }: Props) {
                 <h3 className="font-semibold text-gray-900 text-lg">
                   {member.name}
                 </h3>
-                <p className="text-blue-600 text-sm mb-3">{member.role}</p>
+                <p className="text-forest-700 text-sm mb-3">{member.role}</p>
 
                 {member.bio && (
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
@@ -73,7 +73,7 @@ export default function TeamSection({ members }: Props) {
                   {member.email && (
                     <a
                       href={`mailto:${member.email}`}
-                      className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
+                      className="flex items-center gap-2 text-gray-600 hover:text-forest-700 transition-colors"
                     >
                       <Mail className="w-4 h-4" />
                       <span className="truncate">{member.email}</span>
@@ -82,7 +82,7 @@ export default function TeamSection({ members }: Props) {
                   {member.phone && (
                     <a
                       href={`tel:${member.phone}`}
-                      className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
+                      className="flex items-center gap-2 text-gray-600 hover:text-forest-700 transition-colors"
                     >
                       <Phone className="w-4 h-4" />
                       <span>{member.phone}</span>

@@ -47,8 +47,8 @@ export default function SocialMediaLinks({
       name: "Facebook",
       url: links.facebookUrl,
       icon: Facebook,
-      color: "hover:bg-blue-600",
-      hoverColor: "group-hover:text-blue-600",
+      color: "hover:bg-forest-700",
+      hoverColor: "group-hover:text-forest-700",
     },
     {
       name: "Instagram",

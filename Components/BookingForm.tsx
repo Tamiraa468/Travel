@@ -62,8 +62,8 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
       {/* Name Fields */}
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-            <User className="w-4 h-4 text-amber-500" />
+          <label className="flex items-center gap-2 text-sm font-semibold text-forest-700">
+            <User className="w-4 h-4 text-gold-500" />
             First Name
           </label>
           <input
@@ -71,11 +71,11 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             placeholder="John"
-            className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+            className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all placeholder:text-stone"
           />
         </div>
         <div className="space-y-1.5">
-          <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+          <label className="flex items-center gap-2 text-sm font-semibold text-forest-700">
             Last Name
           </label>
           <input
@@ -83,15 +83,15 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             placeholder="Doe"
-            className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+            className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all placeholder:text-stone"
           />
         </div>
       </div>
 
       {/* Email */}
       <div className="space-y-1.5">
-        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-          <Mail className="w-4 h-4 text-amber-500" />
+        <label className="flex items-center gap-2 text-sm font-semibold text-forest-700">
+          <Mail className="w-4 h-4 text-gold-500" />
           Email Address
         </label>
         <input
@@ -100,33 +100,33 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="john@example.com"
-          className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+          className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all placeholder:text-stone"
         />
       </div>
 
       {/* Quantity */}
       <div className="space-y-1.5">
-        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-          <Users className="w-4 h-4 text-amber-500" />
+        <label className="flex items-center gap-2 text-sm font-semibold text-forest-700">
+          <Users className="w-4 h-4 text-gold-500" />
           Number of Travelers
         </label>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
-            className="w-12 h-12 rounded-xl border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all flex items-center justify-center text-slate-600 hover:text-amber-600 font-bold text-lg"
+            className="w-12 h-12 rounded-xl border-2 border-sand hover:border-gold-500 hover:bg-gold-500/10 transition-all flex items-center justify-center text-stone hover:text-gold-500 font-bold text-lg"
           >
             −
           </button>
           <div className="flex-1 text-center">
-            <span className="text-2xl font-bold text-slate-800">
+            <span className="text-2xl font-bold text-forest-900">
               {quantity}
             </span>
           </div>
           <button
             type="button"
             onClick={() => setQuantity(quantity + 1)}
-            className="w-12 h-12 rounded-xl border-2 border-slate-200 hover:border-amber-400 hover:bg-amber-50 transition-all flex items-center justify-center text-slate-600 hover:text-amber-600 font-bold text-lg"
+            className="w-12 h-12 rounded-xl border-2 border-sand hover:border-gold-500 hover:bg-gold-500/10 transition-all flex items-center justify-center text-stone hover:text-gold-500 font-bold text-lg"
           >
             +
           </button>
@@ -136,17 +136,17 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
       {/* Price Summary */}
       <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-5 text-white">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-slate-400 text-sm">Price per person</span>
+          <span className="text-stone text-sm">Price per person</span>
           <span className="text-white">€{price.toLocaleString()}</span>
         </div>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-slate-400 text-sm">Travelers</span>
+          <span className="text-stone text-sm">Travelers</span>
           <span className="text-white">{quantity}</span>
         </div>
-        <div className="h-px bg-slate-700 my-3" />
+        <div className="h-px bg-forest-700 my-3" />
         <div className="flex items-center justify-between">
           <span className="text-white font-semibold">Total</span>
-          <span className="text-2xl font-serif font-bold text-amber-400">
+          <span className="text-2xl font-serif font-bold text-gold-300">
             €{(price * quantity).toLocaleString()}
           </span>
         </div>
@@ -203,7 +203,7 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
         )}
       </button>
 
-      <p className="text-center text-xs text-slate-400">
+      <p className="text-center text-xs text-stone">
         Secure payment • Instant confirmation
       </p>
     </form>

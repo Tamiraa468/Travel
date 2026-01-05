@@ -12,30 +12,75 @@ import {
   MapPin,
   Calendar,
 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 const HeaderSlider = () => {
+  const { t } = useLanguage();
+
   const sliderData = [
     {
       id: 1,
-      title: "Discover the Heart of Mongolia",
-      subtitle: "Untouched Wilderness",
-      description:
-        "Embark on an extraordinary journey through ancient steppes, majestic mountains, and the legendary Gobi Desert",
-      buttonText1: "Explore Tours",
-      buttonText2: "Watch Video",
+      title: t.hero.title,
+      subtitle: t.hero.untouchedWilderness,
+      description: t.hero.subtitle,
+      buttonText1: t.hero.exploreTours,
+      buttonText2: t.hero.watchVideo,
       imgSrc: assets.sliderImages[0],
-      stats: { duration: "7-21 Days", location: "Ulaanbaatar" },
+      stats: { duration: "7-21 " + t.common.days, location: "Ulaanbaatar" },
     },
     {
       id: 2,
-      title: "Experience Nomadic Heritage",
-      subtitle: "Cultural Immersion",
-      description:
-        "Live with nomadic families, witness the famous Naadam Festival, and discover a way of life unchanged for centuries",
-      buttonText1: "View Experiences",
-      buttonText2: "Learn More",
+      title: t.hero.experienceNomadicHeritage,
+      subtitle: t.hero.culturalImmersion,
+      description: t.hero.nomadicDescription,
+      buttonText1: t.hero.viewExperiences,
+      buttonText2: t.common.learnMore,
       imgSrc: assets.sliderImages[1],
-      stats: { duration: "5-14 Days", location: "Khövsgöl" },
+      stats: { duration: "5-14 " + t.common.days, location: "Khövsgöl" },
+    },
+    {
+      id: 3,
+      title: "Authentic Nomadic Life",
+      subtitle: "Traditional Ger Stays",
+      description:
+        "Experience the timeless traditions of Mongolia's nomadic herders. Stay in traditional gers surrounded by pristine wilderness.",
+      buttonText1: t.hero.exploreTours,
+      buttonText2: t.common.learnMore,
+      imgSrc: assets.sliderImages[2],
+      stats: { duration: "3-7 " + t.common.days, location: "Arkhangai" },
+    },
+    {
+      id: 4,
+      title: "Eagle Hunters of Altai",
+      subtitle: "Ancient Kazakh Traditions",
+      description:
+        "Meet the legendary Kazakh eagle hunters in Western Mongolia. Witness a 4,000-year-old tradition passed through generations.",
+      buttonText1: t.hero.viewExperiences,
+      buttonText2: t.hero.watchVideo,
+      imgSrc: assets.sliderImages[3],
+      stats: { duration: "10-14 " + t.common.days, location: "Bayan-Ölgii" },
+    },
+    {
+      id: 5,
+      title: "Endless Golden Steppes",
+      subtitle: "Luxury Ger Camps",
+      description:
+        "Discover the vast beauty of Mongolia's iconic steppes. Premium accommodations blending comfort with authentic wilderness.",
+      buttonText1: t.hero.exploreTours,
+      buttonText2: t.common.learnMore,
+      imgSrc: assets.sliderImages[4],
+      stats: { duration: "5-10 " + t.common.days, location: "Gobi Desert" },
+    },
+    {
+      id: 6,
+      title: "Naadam Festival",
+      subtitle: "Mongolia's Greatest Celebration",
+      description:
+        "Experience the Three Manly Games: wrestling, horse racing, and archery. Join Mongolia's most spectacular cultural event.",
+      buttonText1: t.hero.viewExperiences,
+      buttonText2: t.hero.watchVideo,
+      imgSrc: assets.sliderImages[5],
+      stats: { duration: "7-12 " + t.common.days, location: "Ulaanbaatar" },
     },
   ];
 
@@ -64,7 +109,7 @@ const HeaderSlider = () => {
     );
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-slate-900">
+    <div className="relative w-full h-screen overflow-hidden bg-forest-900">
       {/* Slides */}
       <AnimatePresence mode="wait">
         {sliderData.map(
@@ -87,8 +132,8 @@ const HeaderSlider = () => {
                 />
 
                 {/* Luxury Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/50 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-slate-900/30" />
+                <div className="absolute inset-0 bg-gradient-to-r from-forest-900/90 via-forest-900/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-900/80 via-transparent to-forest-900/30" />
 
                 {/* Content */}
                 <div className="absolute inset-0 flex items-center">
@@ -99,10 +144,10 @@ const HeaderSlider = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3, duration: 0.6 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 backdrop-blur-sm border border-amber-500/30 rounded-full mb-6"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-gold-500/20 backdrop-blur-sm border border-gold-500/30 rounded-full mb-6"
                       >
-                        <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
-                        <span className="text-amber-300 text-sm font-medium tracking-wider uppercase">
+                        <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse" />
+                        <span className="text-gold-300 text-sm font-medium tracking-wider uppercase">
                           {slide.subtitle}
                         </span>
                       </motion.div>
@@ -114,7 +159,7 @@ const HeaderSlider = () => {
                         transition={{ delay: 0.5, duration: 0.8 }}
                         className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight mb-6 drop-shadow-lg"
                       >
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-amber-200">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
                           {slide.title}
                         </span>
                       </motion.h1>
@@ -137,13 +182,13 @@ const HeaderSlider = () => {
                         className="flex items-center gap-6 mb-10"
                       >
                         <div className="flex items-center gap-2 text-white/70">
-                          <Calendar size={18} className="text-amber-400" />
+                          <Calendar size={18} className="text-gold-500" />
                           <span className="text-sm">
                             {slide.stats.duration}
                           </span>
                         </div>
                         <div className="flex items-center gap-2 text-white/70">
-                          <MapPin size={18} className="text-amber-400" />
+                          <MapPin size={18} className="text-gold-500" />
                           <span className="text-sm">
                             {slide.stats.location}
                           </span>
@@ -159,15 +204,15 @@ const HeaderSlider = () => {
                       >
                         <Link
                           href="/tours"
-                          className="group relative px-8 py-4 bg-amber-500 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30"
+                          className="group relative px-8 py-4 bg-gold-500 text-forest-900 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-gold-500/30"
                         >
                           <span className="relative z-10">
                             {slide.buttonText1}
                           </span>
-                          <div className="absolute inset-0 bg-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+                          <div className="absolute inset-0 bg-gold-300 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
                         </Link>
-                        <button className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border border-white/30 hover:bg-white hover:text-slate-900 transition-all duration-300">
-                          <div className="w-10 h-10 rounded-full bg-white/20 group-hover:bg-amber-500 flex items-center justify-center transition-colors duration-300">
+                        <button className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border border-white/30 hover:bg-white hover:text-forest-900 transition-all duration-300">
+                          <div className="w-10 h-10 rounded-full bg-white/20 group-hover:bg-gold-500 flex items-center justify-center transition-colors duration-300">
                             <Play size={16} fill="currentColor" />
                           </div>
                           {slide.buttonText2}
@@ -185,7 +230,7 @@ const HeaderSlider = () => {
       <div className="absolute bottom-1/2 translate-y-1/2 left-6 z-20">
         <button
           onClick={prevSlide}
-          className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all duration-300"
+          className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-forest-900 transition-all duration-300"
         >
           <ChevronLeft size={24} />
         </button>
@@ -193,7 +238,7 @@ const HeaderSlider = () => {
       <div className="absolute bottom-1/2 translate-y-1/2 right-6 z-20">
         <button
           onClick={nextSlide}
-          className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all duration-300"
+          className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-forest-900 transition-all duration-300"
         >
           <ChevronRight size={24} />
         </button>
@@ -210,7 +255,7 @@ const HeaderSlider = () => {
             >
               <div
                 className={`w-12 h-1 rounded-full transition-all duration-500 ${
-                  currentSlide === index ? "bg-amber-500" : "bg-white/30"
+                  currentSlide === index ? "bg-gold-500" : "bg-white/30"
                 }`}
               >
                 {currentSlide === index && (
@@ -218,7 +263,7 @@ const HeaderSlider = () => {
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 6, ease: "linear" }}
-                    className="h-full bg-amber-400 rounded-full"
+                    className="h-full bg-gold-300 rounded-full"
                   />
                 )}
               </div>

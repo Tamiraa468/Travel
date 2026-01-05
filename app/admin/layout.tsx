@@ -19,6 +19,7 @@ export default function AdminLayout({
 
   const navItems = [
     { label: "Dashboard", href: "/admin" },
+    { label: "📬 Inquiries", href: "/admin/inquiries", highlight: true },
     { label: "Tours", href: "/admin/tours" },
     { label: "Bookings", href: "/admin/bookings" },
     { label: "Payments", href: "/admin/payments" },
@@ -34,7 +35,7 @@ export default function AdminLayout({
         } md:translate-x-0 md:static md:z-auto`}
       >
         <div className="p-6 border-b border-gray-700">
-          <h1 className="text-2xl font-bold">UTravel Admin</h1>
+          <h1 className="text-2xl font-bold">Maralgoo Dreamland Admin</h1>
         </div>
 
         <nav className="mt-8 space-y-2 px-4">
@@ -42,7 +43,11 @@ export default function AdminLayout({
             <Link
               key={item.href}
               href={item.href}
-              className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
+              className={`block px-4 py-3 rounded-lg transition ${
+                item.highlight
+                  ? "bg-amber-600 hover:bg-amber-700 font-semibold"
+                  : "hover:bg-gray-800"
+              }`}
               onClick={() => setSidebarOpen(false)}
             >
               {item.label}

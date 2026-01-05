@@ -21,9 +21,9 @@ export default function AdminButton({
     "px-4 py-2 rounded-lg font-medium transition duration-200 disabled:opacity-50";
 
   const variantStyles = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700",
+    primary: "bg-forest-700 text-ivory hover:bg-forest-900",
     danger: "bg-red-600 text-white hover:bg-red-700",
-    secondary: "bg-gray-300 text-gray-800 hover:bg-gray-400",
+    secondary: "bg-sand text-charcoal hover:bg-stone/30",
   };
 
   return (

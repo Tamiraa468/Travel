@@ -17,7 +17,7 @@ export default function StatusBadge({ status }: Props) {
     CANCELLED: "bg-red-100 text-red-800",
     UNPAID: "bg-orange-100 text-orange-800",
     PAID: "bg-green-100 text-green-800",
-    REFUNDED: "bg-blue-100 text-blue-800",
+    REFUNDED: "bg-forest-500/20 text-forest-700",
   };
 
   return (

@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import TourCard from "./TourCard";
 import { useTravelAgencyContext } from "../context/TravelAgencyContext";
 import { useScrollAnimationTrigger } from "@/hooks/useScrollDirection";
+import { useLanguage } from "@/context/LanguageContext";
 
 const ToursSection: React.FC = () => {
   const { tours } = useTravelAgencyContext();
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement | null>(null);
   const triggered = useScrollAnimationTrigger(sectionRef as any, {
     threshold: 0.1,
@@ -36,7 +38,7 @@ const ToursSection: React.FC = () => {
 
   return (
     <section
-      className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 py-20 md:py-28"
+      className="bg-gradient-to-b from-forest-900 via-forest-700 to-forest-900 py-20 md:py-28"
       ref={sectionRef as any}
     >
       <div className="container mx-auto px-4">
@@ -46,9 +48,9 @@ const ToursSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={triggered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
-            className="inline-block text-amber-400 text-sm font-semibold tracking-widest uppercase mb-4"
+            className="inline-block text-gold-500 text-sm font-semibold tracking-widest uppercase mb-4"
           >
-            Explore Mongolia
+            {t.tours.exploreMongolia}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -56,24 +58,23 @@ const ToursSection: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6"
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-amber-200">
-              Our Tours
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
+              {t.tours.ourTours}
             </span>
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
             animate={triggered ? { scaleX: 1 } : { scaleX: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto mb-6"
+            className="w-24 h-1 bg-gradient-to-r from-gold-500 to-gold-700 mx-auto mb-6"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={triggered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg text-slate-300 max-w-2xl mx-auto"
+            className="text-lg text-ivory/80 max-w-2xl mx-auto"
           >
-            Choose from our carefully curated collection of extraordinary
-            journeys across Mongolia
+            {t.tours.toursSubtitle}
           </motion.p>
         </div>
 

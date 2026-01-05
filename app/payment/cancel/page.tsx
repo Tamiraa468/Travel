@@ -52,11 +52,11 @@ export default function PaymentCancelPage() {
           </div>
         )}
 
-        <div className="bg-blue-50 rounded-lg p-4 mb-6 text-left">
+        <div className="bg-gold-500/10 rounded-lg p-4 mb-6 text-left">
           <h3 className="font-semibold text-blue-800 mb-2">
             Want to complete your booking?
           </h3>
-          <ul className="text-sm text-blue-700 space-y-1">
+          <ul className="text-sm text-gold-700 space-y-1">
             <li>• Check your email for payment instructions</li>
             <li>• Use the payment link to try again</li>
             <li>• Contact us for bank transfer details</li>
@@ -72,7 +72,7 @@ export default function PaymentCancelPage() {
           </Link>
           <Link
             href="/tours"
-            className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            className="flex-1 bg-forest-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-forest-700 transition"
           >
             Browse Tours
           </Link>
@@ -80,7 +80,7 @@ export default function PaymentCancelPage() {
 
         <p className="mt-6 text-sm text-gray-500">
           Need help?{" "}
-          <Link href="/contact" className="text-blue-600 hover:underline">
+          <Link href="/contact" className="text-forest-700 hover:underline">
             Contact Support
           </Link>
         </p>

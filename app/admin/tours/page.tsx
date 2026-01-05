@@ -22,7 +22,7 @@ export default async function ToursPage() {
         <h1 className="text-3xl font-bold text-gray-800">Tours</h1>
         <Link
           href="/admin/tours/new"
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="px-4 py-2 bg-forest-900 text-white rounded-lg hover:bg-forest-700"
         >
           Create Tour
         </Link>

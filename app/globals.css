@@ -3,6 +3,31 @@
 @import "tailwindcss";
 
 /* ============================================
+   MARALGOO DREAMLAND TRAVEL - Tailwind v4 Theme
+   ============================================ */
+@theme {
+  /* Primary - Forest Green */
+  --color-forest-500: #3a6b52;
+  --color-forest-700: #2a5440;
+  --color-forest-900: #1d3d2f;
+
+  /* Accent - Gold */
+  --color-gold-300: #e5d4a1;
+  --color-gold-500: #c9a962;
+  --color-gold-700: #a68b4b;
+
+  /* Secondary - Navy */
+  --color-navy-600: #4a5568;
+  --color-navy-900: #1a2b4a;
+
+  /* Neutrals */
+  --color-ivory: #faf9f6;
+  --color-sand: #f5f1ea;
+  --color-charcoal: #2d2d2d;
+  --color-stone: #6b7280;
+}
+
+/* ============================================
    LUXURY PREMIUM THEME - Mongolia Travel
    ============================================ */
 
@@ -10,16 +35,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
-  /* Luxury Color Palette */
+  /* ============================================
+     MARALGOO DREAMLAND TRAVEL - Luxury Color System
+     Primary: Forest Green (Nature, Mongolia identity)
+     Accent: Gold (Premium, handcrafted experience)
+     ============================================ */
+
+  /* Primary - Forest Green */
+  --color-forest-900: #1d3d2f;
+  --color-forest-700: #2a5440;
+  --color-forest-500: #3a6b52;
+
+  /* Accent - Gold (Use sparingly) */
   --color-gold: #c9a962;
   --color-gold-light: #e5d4a1;
   --color-gold-dark: #a68b4b;
+
+  /* Secondary - Navy (Supporting role only) */
   --color-navy: #1a2b4a;
-  --color-navy-light: #2a3f5f;
-  --color-navy-dark: #0f1a2e;
-  --color-cream: #faf8f5;
-  --color-charcoal: #2d2d2d;
+  --color-navy-light: #4a5568;
+
+  /* Neutrals */
+  --color-ivory: #faf9f6;
   --color-white: #ffffff;
+  --color-sand: #f5f1ea;
+  --color-charcoal: #2d2d2d;
+  --color-stone: #6b7280;
 
   /* Gradients */
   --gradient-gold: linear-gradient(
@@ -28,11 +69,11 @@
     #e5d4a1 50%,
     #c9a962 100%
   );
-  --gradient-navy: linear-gradient(135deg, #1a2b4a 0%, #2a3f5f 100%);
+  --gradient-forest: linear-gradient(135deg, #1d3d2f 0%, #2a5440 100%);
   --gradient-dark: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.7) 0%,
-    rgba(0, 0, 0, 0.3) 100%
+    rgba(29, 61, 47, 0.9) 0%,
+    rgba(29, 61, 47, 0.7) 100%
   );
 
   /* Typography */
@@ -57,7 +98,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--color-white);
+  background-color: var(--color-ivory);
   color: var(--color-charcoal);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -74,7 +115,7 @@ h6 {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--color-navy);
+  color: var(--color-forest-900);
 }
 
 /* Premium Button Styles */
@@ -85,22 +126,22 @@ h6 {
 }
 
 .btn-luxury-gold {
-  @apply bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 text-white;
+  @apply bg-gold-500 text-forest-900 font-semibold;
   background-size: 200% auto;
 }
 
 .btn-luxury-gold:hover {
-  background-position: right center;
+  @apply bg-gold-300;
   box-shadow: var(--shadow-gold);
   transform: translateY(-2px);
 }
 
 .btn-luxury-outline {
-  @apply border-2 border-amber-600 text-amber-700 bg-transparent;
+  @apply border-2 border-forest-500 text-forest-500 bg-transparent;
 }
 
 .btn-luxury-outline:hover {
-  @apply bg-amber-600 text-white;
+  @apply bg-forest-700 text-white border-forest-700;
   transform: translateY(-2px);
 }
 
@@ -118,7 +159,7 @@ h6 {
 
 /* Gold Accent Line */
 .gold-line {
-  @apply h-1 w-20 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 rounded-full;
+  @apply h-1 w-20 bg-gradient-to-r from-gold-500 via-gold-300 to-gold-500 rounded-full;
 }
 
 /* Section Spacing */
@@ -131,9 +172,9 @@ h6 {
   @apply absolute inset-0;
   background: linear-gradient(
     180deg,
-    rgba(26, 43, 74, 0) 0%,
-    rgba(26, 43, 74, 0.4) 60%,
-    rgba(26, 43, 74, 0.9) 100%
+    rgba(29, 61, 47, 0) 0%,
+    rgba(29, 61, 47, 0.4) 60%,
+    rgba(29, 61, 47, 0.9) 100%
   );
 }
 
@@ -144,7 +185,7 @@ h6 {
 
 .underline-animated::after {
   content: "";
-  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500;
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gold-500;
   transition: width 0.3s ease;
 }
 

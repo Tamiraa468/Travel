@@ -54,33 +54,33 @@ export default function RelatedTours({
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                    <span className="text-white/70 text-lg">No Image</span>
+                  <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">
+                    <span className="text-ivory/70 text-lg">No Image</span>
                   </div>
                 )}
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-sm font-medium text-gray-800">
+                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-sm font-medium text-charcoal">
                   {tour.days} Days
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors line-clamp-2">
+                <h3 className="font-semibold text-charcoal mb-1 group-hover:text-gold-500 transition-colors line-clamp-2">
                   {tour.title}
                 </h3>
                 {tour.description && (
-                  <p className="text-sm text-gray-500 line-clamp-2 mb-3">
+                  <p className="text-sm text-stone line-clamp-2 mb-3">
                     {tour.description}
                   </p>
                 )}
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-gray-500">From</span>
-                    <span className="ml-1 font-bold text-blue-600">
+                    <span className="text-xs text-stone">From</span>
+                    <span className="ml-1 font-bold text-forest-700">
                       ${tour.priceFrom.toLocaleString()}
                     </span>
                   </div>
-                  <span className="flex items-center gap-1 text-sm text-blue-600 group-hover:gap-2 transition-all">
+                  <span className="flex items-center gap-1 text-sm text-gold-500 group-hover:gap-2 transition-all">
                     View <ArrowRight className="w-4 h-4" />
                   </span>
                 </div>
@@ -92,7 +92,7 @@ export default function RelatedTours({
         <div className="text-center mt-8">
           <Link
             href="/tours"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-forest-900 text-ivory rounded-lg hover:bg-forest-700 transition-colors"
           >
             View All Tours <ArrowRight className="w-4 h-4" />
           </Link>

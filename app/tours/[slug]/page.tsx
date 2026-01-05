@@ -280,7 +280,7 @@ export default async function TourPage({ params }: Props) {
                 </div>
               ) : (
                 <div className="text-center py-8 bg-slate-50 rounded-xl">
-                  <Calendar className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+                  <Calendar className="w-12 h-12 text-stone mx-auto mb-3" />
                   <p className="text-slate-600 mb-2">No scheduled dates yet</p>
                   <p className="text-slate-500 text-sm">
                     Contact us for custom dates and private tours.
@@ -314,7 +314,7 @@ export default async function TourPage({ params }: Props) {
                 <h3 className="font-serif font-bold text-lg mb-2">
                   Need Help?
                 </h3>
-                <p className="text-slate-300 text-sm mb-4">
+                <p className="text-stone text-sm mb-4">
                   Our travel experts are here to help you plan your perfect
                   trip.
                 </p>

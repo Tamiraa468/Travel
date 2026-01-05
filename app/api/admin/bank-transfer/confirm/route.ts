@@ -107,12 +107,12 @@ async function sendPaymentConfirmationEmail(booking: {
           
           <p style="color: #555;">
             Best regards,<br>
-            <strong>UTravel Mongolia Team</strong>
+            <strong>Maralgoo Dreamland Team</strong>
           </p>
         </div>
         
         <div style="text-align: center; padding: 20px; color: #888; font-size: 12px;">
-          <p>UTravel Mongolia | Your Adventure Awaits</p>
+          <p>Maralgoo Dreamland | Your Adventure Awaits</p>
           <p>This is an automated message. Please do not reply directly to this email.</p>
         </div>
       </body>

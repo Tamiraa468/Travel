@@ -215,9 +215,9 @@ export default function RequestInfoForm({
 
         {/* Tour Badge */}
         {tourName && (
-          <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg">
-            <Sparkles className="w-4 h-4 text-amber-500" />
-            <span className="text-sm text-amber-700 font-medium">
+          <div className="flex items-center gap-2 px-3 py-2 bg-gold-500/10 border border-gold-300 rounded-lg">
+            <Sparkles className="w-4 h-4 text-gold-500" />
+            <span className="text-sm text-gold-700 font-medium">
               {tourName}
             </span>
           </div>
@@ -227,9 +227,9 @@ export default function RequestInfoForm({
         <div className="space-y-1.5">
           <label
             htmlFor="fullName"
-            className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+            className="flex items-center gap-2 text-sm font-semibold text-forest-700"
           >
-            <User className="w-4 h-4 text-amber-500" />
+            <User className="w-4 h-4 text-gold-500" />
             Full Name
             <span className="text-rose-500">*</span>
           </label>
@@ -241,7 +241,7 @@ export default function RequestInfoForm({
             onChange={handleInputChange}
             placeholder="John Doe"
             required
-            className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+            className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all placeholder:text-stone"
           />
         </div>
 
@@ -249,9 +249,9 @@ export default function RequestInfoForm({
         <div className="space-y-1.5">
           <label
             htmlFor="email"
-            className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+            className="flex items-center gap-2 text-sm font-semibold text-forest-700"
           >
-            <Mail className="w-4 h-4 text-amber-500" />
+            <Mail className="w-4 h-4 text-gold-500" />
             Email
             <span className="text-rose-500">*</span>
           </label>
@@ -263,7 +263,7 @@ export default function RequestInfoForm({
             onChange={handleInputChange}
             placeholder="john@example.com"
             required
-            className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+            className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all placeholder:text-stone"
           />
         </div>
 
@@ -271,9 +271,9 @@ export default function RequestInfoForm({
         <div className="space-y-1.5">
           <label
             htmlFor="phone"
-            className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+            className="flex items-center gap-2 text-sm font-semibold text-forest-700"
           >
-            <Phone className="w-4 h-4 text-amber-500" />
+            <Phone className="w-4 h-4 text-gold-500" />
             Phone
           </label>
           <input
@@ -283,7 +283,7 @@ export default function RequestInfoForm({
             value={formData.phone}
             onChange={handleInputChange}
             placeholder="+976 8947-5188"
-            className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400"
+            className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all placeholder:text-stone"
           />
         </div>
 
@@ -292,9 +292,9 @@ export default function RequestInfoForm({
           <div className="space-y-1.5">
             <label
               htmlFor="adults"
-              className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+              className="flex items-center gap-2 text-sm font-semibold text-forest-700"
             >
-              <Users className="w-4 h-4 text-amber-500" />
+              <Users className="w-4 h-4 text-gold-500" />
               Adults
               <span className="text-rose-500">*</span>
             </label>
@@ -305,13 +305,13 @@ export default function RequestInfoForm({
               min="1"
               value={formData.adults.toString()}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-center font-semibold"
+              className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all text-center font-semibold"
             />
           </div>
           <div className="space-y-1.5">
             <label
               htmlFor="children"
-              className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+              className="flex items-center gap-2 text-sm font-semibold text-forest-700"
             >
               Children
             </label>
@@ -322,7 +322,7 @@ export default function RequestInfoForm({
               min="0"
               value={formData.children.toString()}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all text-center font-semibold"
+              className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all text-center font-semibold"
             />
           </div>
         </div>
@@ -331,9 +331,9 @@ export default function RequestInfoForm({
         <div className="space-y-1.5">
           <label
             htmlFor="preferredStartDate"
-            className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+            className="flex items-center gap-2 text-sm font-semibold text-forest-700"
           >
-            <Calendar className="w-4 h-4 text-amber-500" />
+            <Calendar className="w-4 h-4 text-gold-500" />
             Preferred Date
           </label>
           <input
@@ -342,7 +342,7 @@ export default function RequestInfoForm({
             name="preferredStartDate"
             value={formData.preferredStartDate}
             onChange={handleInputChange}
-            className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+            className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all"
           />
         </div>
 
@@ -350,9 +350,9 @@ export default function RequestInfoForm({
         <div className="space-y-1.5">
           <label
             htmlFor="message"
-            className="flex items-center gap-2 text-sm font-semibold text-slate-700"
+            className="flex items-center gap-2 text-sm font-semibold text-forest-700"
           >
-            <MessageSquare className="w-4 h-4 text-amber-500" />
+            <MessageSquare className="w-4 h-4 text-gold-500" />
             Message
           </label>
           <textarea
@@ -362,9 +362,9 @@ export default function RequestInfoForm({
             onChange={handleInputChange}
             placeholder="Any special requests or questions..."
             rows={3}
-            className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all placeholder:text-slate-400 resize-none"
+            className="w-full px-4 py-3 text-sm border-2 border-sand rounded-xl focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all placeholder:text-stone resize-none"
           />
-          <p className="text-xs text-slate-400 text-right">
+          <p className="text-xs text-stone text-right">
             {formData.message.length}/1000
           </p>
         </div>
@@ -379,7 +379,7 @@ export default function RequestInfoForm({
               onChange={handleInputChange}
               className="sr-only peer"
             />
-            <div className="w-5 h-5 border-2 border-slate-300 rounded-md peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all flex items-center justify-center">
+            <div className="w-5 h-5 border-2 border-sand rounded-md peer-checked:bg-gold-500 peer-checked:border-gold-500 transition-all flex items-center justify-center">
               {formData.marketingConsent && (
                 <motion.svg
                   initial={{ scale: 0 }}
@@ -399,7 +399,7 @@ export default function RequestInfoForm({
               )}
             </div>
           </div>
-          <span className="text-sm text-slate-600 group-hover:text-slate-800 transition-colors">
+          <span className="text-sm text-stone group-hover:text-charcoal transition-colors">
             I&apos;d like to receive exclusive offers and travel inspiration
           </span>
         </label>
@@ -438,7 +438,7 @@ export default function RequestInfoForm({
           )}
         </button>
 
-        <p className="text-center text-xs text-slate-400">
+        <p className="text-center text-xs text-stone">
           We respect your privacy. Your information is secure.
         </p>
       </form>

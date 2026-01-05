@@ -36,16 +36,16 @@ export default async function TravelGuideSubPage({ params }: Props) {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-grow bg-gray-50">
+      <main className="flex-grow bg-sand">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-xl shadow-sm p-8">
+              <div className="bg-ivory rounded-xl shadow-sm p-8">
                 {/* Back Link */}
                 <Link
                   href="/travel-guide"
-                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
+                  className="inline-flex items-center gap-2 text-forest-700 hover:text-gold-700 mb-6"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back to Travel Guide
@@ -59,14 +59,14 @@ export default async function TravelGuideSubPage({ params }: Props) {
                   />
                 )}
 
-                <h1 className="text-3xl font-bold text-gray-900 mb-6">
+                <h1 className="text-3xl font-bold text-forest-900 mb-6">
                   {page.title}
                 </h1>
 
                 <div className="prose prose-lg max-w-none">
                   <div
                     dangerouslySetInnerHTML={{ __html: page.content }}
-                    className="text-gray-700 leading-relaxed whitespace-pre-wrap"
+                    className="text-charcoal leading-relaxed whitespace-pre-wrap"
                   />
                 </div>
               </div>
@@ -77,14 +77,16 @@ export default async function TravelGuideSubPage({ params }: Props) {
               <div className="sticky top-24 space-y-6">
                 {/* Related Pages */}
                 {relatedPages.length > 0 && (
-                  <div className="bg-white rounded-xl shadow-sm p-6">
-                    <h3 className="font-semibold mb-4">More Travel Info</h3>
+                  <div className="bg-ivory rounded-xl shadow-sm p-6">
+                    <h3 className="font-semibold mb-4 text-forest-900">
+                      More Travel Info
+                    </h3>
                     <ul className="space-y-3">
                       {relatedPages.map((relatedPage) => (
                         <li key={relatedPage.id}>
                           <Link
                             href={`/travel-guide/${relatedPage.slug}`}
-                            className="text-gray-600 hover:text-blue-600 transition-colors block py-1"
+                            className="text-charcoal hover:text-forest-700 transition-colors block py-1"
                           >
                             {relatedPage.title}
                           </Link>
@@ -95,29 +97,33 @@ export default async function TravelGuideSubPage({ params }: Props) {
                 )}
 
                 {/* Need Help CTA */}
-                <div className="bg-blue-50 rounded-xl p-6">
-                  <h3 className="font-semibold mb-2">Need More Information?</h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                <div className="bg-gold-500/10 rounded-xl p-6">
+                  <h3 className="font-semibold mb-2 text-forest-900">
+                    Need More Information?
+                  </h3>
+                  <p className="text-sm text-charcoal mb-4">
                     Our team is here to answer all your questions about
                     traveling to Mongolia.
                   </p>
                   <Link
                     href="/contact"
-                    className="block text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="block text-center px-4 py-2 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition-colors"
                   >
                     Contact Us
                   </Link>
                 </div>
 
                 {/* Browse Tours */}
-                <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-xl p-6">
-                  <h3 className="font-semibold mb-2">Ready to Explore?</h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                <div className="bg-gradient-to-br from-forest-500/10 to-gold-500/10 rounded-xl p-6">
+                  <h3 className="font-semibold mb-2 text-forest-900">
+                    Ready to Explore?
+                  </h3>
+                  <p className="text-sm text-charcoal mb-4">
                     Browse our carefully crafted tours to experience Mongolia.
                   </p>
                   <Link
                     href="/tours"
-                    className="block text-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    className="block text-center px-4 py-2 bg-forest-700 text-white rounded-lg hover:bg-forest-900 transition-colors"
                   >
                     Browse Tours
                   </Link>

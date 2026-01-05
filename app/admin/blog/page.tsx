@@ -85,7 +85,7 @@ export default function AdminBlogPage() {
 
   const getCategoryBadgeColor = (category: string) => {
     const colors: Record<string, string> = {
-      NEWS: "bg-blue-100 text-blue-800",
+      NEWS: "bg-gold-500/10 text-blue-800",
       FESTIVAL: "bg-purple-100 text-purple-800",
       TRAVEL_GUIDE: "bg-green-100 text-green-800",
       CULTURE: "bg-orange-100 text-orange-800",
@@ -105,7 +105,7 @@ export default function AdminBlogPage() {
         </div>
         <Link
           href="/admin/blog/new"
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="flex items-center gap-2 px-4 py-2 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition"
         >
           <Plus size={20} />
           New Post
@@ -157,7 +157,7 @@ export default function AdminBlogPage() {
             <p className="text-gray-500">No blog posts found</p>
             <Link
               href="/admin/blog/new"
-              className="mt-4 inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
+              className="mt-4 inline-flex items-center gap-2 text-forest-700 hover:text-gold-700"
             >
               <Plus size={16} />
               Create your first post
@@ -231,7 +231,7 @@ export default function AdminBlogPage() {
                         <Link
                           href={`/blog/${post.slug}`}
                           target="_blank"
-                          className="p-2 text-gray-400 hover:text-blue-600 transition"
+                          className="p-2 text-gray-400 hover:text-forest-700 transition"
                           title="View"
                         >
                           <Eye size={18} />

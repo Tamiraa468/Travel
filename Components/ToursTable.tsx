@@ -40,7 +40,7 @@ export default function ToursTable({ tours, onDelete }: Props) {
         <div className="flex gap-2">
           <Link
             href={`/admin/tours/${tour.id}/edit`}
-            className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600"
+            className="px-3 py-1 bg-forest-700 text-ivory rounded text-sm hover:bg-forest-900"
           >
             Edit
           </Link>

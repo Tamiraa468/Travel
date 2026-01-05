@@ -130,7 +130,7 @@ export default function NewBlogPostPage() {
           <button
             onClick={() => handleSubmit(true)}
             disabled={loading}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition disabled:opacity-50"
           >
             Publish
           </button>
@@ -308,12 +308,12 @@ export default function NewBlogPostPage() {
                   {formData.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-gold-500/10 text-blue-800 rounded-full text-sm"
                     >
                       {tag}
                       <button
                         onClick={() => handleRemoveTag(tag)}
-                        className="hover:text-blue-600"
+                        className="hover:text-forest-700"
                       >
                         <X size={14} />
                       </button>

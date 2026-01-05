@@ -43,7 +43,7 @@ export default function ItineraryAccordion({ itinerary }: Props) {
         <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
           <Compass className="w-5 h-5 text-white" />
         </div>
-        <h2 className="text-2xl font-serif font-bold text-slate-800">
+        <h2 className="text-2xl font-serif font-bold text-forest-900">
           Day-by-Day Itinerary
         </h2>
       </div>
@@ -77,7 +77,7 @@ export default function ItineraryAccordion({ itinerary }: Props) {
                   className={`w-full px-6 py-5 flex items-center justify-between text-left transition-all ${
                     openDay === day.dayNumber
                       ? "bg-gradient-to-r from-amber-50 to-slate-50 border-b border-slate-100"
-                      : "bg-white hover:bg-slate-50"
+                      : "bg-white hover:bg-sand"
                   }`}
                 >
                   <div className="flex items-center gap-4">
@@ -86,11 +86,11 @@ export default function ItineraryAccordion({ itinerary }: Props) {
                       {day.dayNumber}
                     </span>
                     <div>
-                      <h3 className="font-serif font-semibold text-slate-800 text-lg">
+                      <h3 className="font-serif font-semibold text-forest-900 text-lg">
                         Day {day.dayNumber}: {day.title}
                       </h3>
                       {day.meals && (
-                        <span className="text-xs text-slate-500 flex items-center gap-1 mt-1">
+                        <span className="text-xs text-stone flex items-center gap-1 mt-1">
                           <Utensils className="w-3 h-3" />
                           {day.meals}
                         </span>
@@ -100,15 +100,15 @@ export default function ItineraryAccordion({ itinerary }: Props) {
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
                       openDay === day.dayNumber
-                        ? "bg-amber-100"
-                        : "bg-slate-100"
+                        ? "bg-gold-500/20"
+                        : "bg-sand"
                     }`}
                   >
                     <ChevronDown
                       className={`w-4 h-4 transition-transform ${
                         openDay === day.dayNumber
-                          ? "rotate-180 text-amber-600"
-                          : "text-slate-500"
+                          ? "rotate-180 text-gold-500"
+                          : "text-stone"
                       }`}
                     />
                   </div>
@@ -125,7 +125,7 @@ export default function ItineraryAccordion({ itinerary }: Props) {
                       className="overflow-hidden"
                     >
                       <div className="px-6 py-6 bg-white">
-                        <p className="text-slate-600 leading-relaxed whitespace-pre-line">
+                        <p className="text-stone leading-relaxed whitespace-pre-line">
                           {day.description}
                         </p>
 
@@ -147,18 +147,18 @@ export default function ItineraryAccordion({ itinerary }: Props) {
 
                         {/* Day Highlights */}
                         {day.highlights && day.highlights.length > 0 && (
-                          <div className="mt-6 p-4 bg-amber-50/50 rounded-xl border border-amber-100">
-                            <h4 className="text-sm font-semibold text-slate-800 mb-3 flex items-center gap-2">
-                              <Star className="w-4 h-4 text-amber-500" />
+                          <div className="mt-6 p-4 bg-gold-500/10 rounded-xl border border-gold-300">
+                            <h4 className="text-sm font-semibold text-forest-900 mb-3 flex items-center gap-2">
+                              <Star className="w-4 h-4 text-gold-500" />
                               Day Highlights
                             </h4>
                             <ul className="space-y-2">
                               {day.highlights.map((highlight, idx) => (
                                 <li
                                   key={idx}
-                                  className="flex items-start gap-2 text-sm text-slate-600"
+                                  className="flex items-start gap-2 text-sm text-stone"
                                 >
-                                  <MapPin className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                                  <MapPin className="w-4 h-4 text-gold-500 shrink-0 mt-0.5" />
                                   {highlight}
                                 </li>
                               ))}

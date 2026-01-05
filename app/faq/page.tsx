@@ -22,13 +22,13 @@ export default async function FAQPage() {
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-blue-600 to-indigo-700 py-16">
+        <section className="bg-gradient-to-br from-forest-900 to-forest-700 py-16">
           <div className="max-w-7xl mx-auto px-4 text-center text-white">
             <HelpCircle className="w-16 h-16 mx-auto mb-4 opacity-80" />
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+            <p className="text-xl text-gold-300 max-w-2xl mx-auto">
               Find answers to common questions about our tours, booking process,
               and traveling in Mongolia
             </p>
@@ -45,10 +45,10 @@ export default async function FAQPage() {
             />
           ) : (
             <div className="text-center py-16">
-              <p className="text-gray-500 text-lg mb-4">
+              <p className="text-charcoal text-lg mb-4">
                 No FAQs available at the moment.
               </p>
-              <p className="text-gray-400">
+              <p className="text-stone">
                 Please contact us directly if you have any questions.
               </p>
             </div>
@@ -56,15 +56,17 @@ export default async function FAQPage() {
         </section>
 
         {/* Contact CTA */}
-        <section className="bg-gray-50 py-12">
+        <section className="bg-sand py-12">
           <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-2xl font-bold mb-4 text-forest-900">
+              Still have questions?
+            </h2>
+            <p className="text-charcoal mb-6">
               Our team is here to help you plan your perfect Mongolia adventure.
             </p>
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition-colors"
             >
               Contact Us
             </a>

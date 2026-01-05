@@ -66,13 +66,13 @@ export default function TestimonialsCarousel({
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+    <section className="py-16 bg-gradient-to-br from-sand to-gold-300/20">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-forest-900 mb-2">
             What Our Travelers Say
           </h2>
-          <p className="text-gray-600">
+          <p className="text-stone">
             Real experiences from our satisfied customers
           </p>
         </div>
@@ -87,9 +87,9 @@ export default function TestimonialsCarousel({
               transition={{ duration: 0.3 }}
               className="bg-white rounded-2xl shadow-xl p-8 md:p-10"
             >
-              <Quote className="w-12 h-12 text-blue-200 mb-4" />
+              <Quote className="w-12 h-12 text-gold-300 mb-4" />
 
-              <p className="text-lg md:text-xl text-gray-700 mb-6 italic leading-relaxed">
+              <p className="text-lg md:text-xl text-charcoal mb-6 italic leading-relaxed">
                 "{testimonials[currentIndex].text}"
               </p>
 
@@ -102,21 +102,21 @@ export default function TestimonialsCarousel({
                       className="w-14 h-14 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">
+                    <div className="w-14 h-14 rounded-full bg-forest-700 flex items-center justify-center text-ivory font-bold text-xl">
                       {testimonials[currentIndex].name.charAt(0)}
                     </div>
                   )}
                   <div>
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-forest-900">
                       {testimonials[currentIndex].name}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-stone">
                       {testimonials[currentIndex].country}
                       {testimonials[currentIndex].travelDate &&
                         `, ${testimonials[currentIndex].travelDate}`}
                     </p>
                     {testimonials[currentIndex].tourName && (
-                      <p className="text-sm text-blue-600">
+                      <p className="text-sm text-gold-500">
                         {testimonials[currentIndex].tourName}
                       </p>
                     )}
@@ -135,15 +135,15 @@ export default function TestimonialsCarousel({
             <>
               <button
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-sand transition-colors"
               >
-                <ChevronLeft className="w-6 h-6 text-gray-700" />
+                <ChevronLeft className="w-6 h-6 text-forest-700" />
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-sand transition-colors"
               >
-                <ChevronRight className="w-6 h-6 text-gray-700" />
+                <ChevronRight className="w-6 h-6 text-forest-700" />
               </button>
             </>
           )}
@@ -157,7 +157,7 @@ export default function TestimonialsCarousel({
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentIndex ? "bg-blue-600" : "bg-gray-300"
+                  index === currentIndex ? "bg-gold-500" : "bg-sand"
                 }`}
               />
             ))}

@@ -10,9 +10,9 @@ export async function GET() {
     if (!settings) {
       settings = await prisma.siteSettings.create({
         data: {
-          siteName: "UTravel Mongolia",
+          siteName: "Maralgoo Dreamland",
           tagline: "Discover the Land of the Blue Sky",
-          email: "info@utravel.mn",
+          email: "info@maralgoodreamland.mn",
           phone: "+976 99080061",
         },
       });

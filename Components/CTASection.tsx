@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, MapPin, Calendar, Phone } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
 // Pre-generate particle positions to avoid hydration mismatch
 const generateParticles = () => {
@@ -16,6 +17,7 @@ const generateParticles = () => {
 };
 
 const CTASection = () => {
+  const { t } = useLanguage();
   const [particles, setParticles] = useState<
     Array<{
       id: number;
@@ -42,11 +44,11 @@ const CTASection = () => {
             "url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&q=80')",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/85 to-slate-900/95" />
+      <div className="absolute inset-0 bg-gradient-to-r from-forest-900/95 via-forest-900/85 to-forest-900/95" />
 
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent" />
 
       {/* Floating Particles - Only render after mount to avoid hydration mismatch */}
       {mounted && (
@@ -54,7 +56,7 @@ const CTASection = () => {
           {particles.map((particle) => (
             <motion.div
               key={particle.id}
-              className="absolute w-1 h-1 bg-amber-400/30 rounded-full"
+              className="absolute w-1 h-1 bg-gold-500/30 rounded-full"
               style={{
                 left: `${particle.left}%`,
                 top: `${particle.top}%`,
@@ -81,10 +83,12 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-full text-amber-300 text-sm font-medium mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gold-500/20 border border-gold-500/30 rounded-full text-gold-300 text-sm font-medium mb-8"
           >
             <Sparkles className="w-4 h-4" />
-            Start Your Journey Today
+            {t.cta.title.includes("Ready")
+              ? "Start Your Journey Today"
+              : "Starten Sie Ihre Reise noch heute"}
           </motion.div>
 
           {/* Heading */}
@@ -93,14 +97,9 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6 leading-tight !text-white"
           >
-            Ready to Experience
-            <span className="block mt-2">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
-                Luxury Travel?
-              </span>
-            </span>
+            {t.cta.title}
           </motion.h2>
 
           {/* Description */}
@@ -109,11 +108,9 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="text-ivory/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Let our travel experts craft your perfect getaway. From exotic
-            destinations to exclusive experiences, we create memories that last
-            a lifetime.
+            {t.cta.subtitle}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -126,16 +123,16 @@ const CTASection = () => {
           >
             <Link
               href="/tours"
-              className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full font-semibold text-lg shadow-lg shadow-amber-500/30 hover:shadow-xl hover:shadow-amber-500/40 transition-all flex items-center gap-2"
+              className="group px-8 py-4 bg-gold-500 text-forest-900 rounded-full font-semibold text-lg shadow-lg shadow-gold-500/30 hover:bg-gold-300 hover:shadow-xl hover:shadow-gold-500/40 transition-all flex items-center gap-2"
             >
-              Explore All Tours
+              {t.cta.exploreTours}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-full font-semibold text-lg hover:bg-white/20 transition-all"
+              className="px-8 py-4 bg-transparent backdrop-blur-sm border-2 border-forest-500 text-ivory rounded-full font-semibold text-lg hover:bg-forest-700 hover:border-forest-700 transition-all"
             >
-              Contact Us
+              {t.cta.contactUs}
             </Link>
           </motion.div>
 
@@ -145,33 +142,37 @@ const CTASection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-8 text-slate-300"
+            className="flex flex-wrap justify-center gap-8 text-ivory/80"
           >
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                <Phone className="w-4 h-4 text-amber-400" />
+              <div className="w-10 h-10 bg-forest-700/50 rounded-full flex items-center justify-center">
+                <Phone className="w-4 h-4 text-gold-500" />
               </div>
               <div className="text-left">
-                <div className="text-xs text-slate-400">Call Us</div>
+                <div className="text-xs text-ivory/60">{t.common.callUs}</div>
                 <div className="font-medium">+976 8947-5188</div>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                <MapPin className="w-4 h-4 text-amber-400" />
+              <div className="w-10 h-10 bg-forest-700/50 rounded-full flex items-center justify-center">
+                <MapPin className="w-4 h-4 text-gold-500" />
               </div>
               <div className="text-left">
-                <div className="text-xs text-slate-400">Destinations</div>
-                <div className="font-medium">50+ Worldwide</div>
+                <div className="text-xs text-ivory/60">
+                  {t.cta.destinationsWorldwide}
+                </div>
+                <div className="font-medium">50+</div>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
-                <Calendar className="w-4 h-4 text-amber-400" />
+              <div className="w-10 h-10 bg-forest-700/50 rounded-full flex items-center justify-center">
+                <Calendar className="w-4 h-4 text-gold-500" />
               </div>
               <div className="text-left">
-                <div className="text-xs text-slate-400">Available</div>
-                <div className="font-medium">24/7 Support</div>
+                <div className="text-xs text-ivory/60">
+                  {t.cta.available247}
+                </div>
+                <div className="font-medium">24/7</div>
               </div>
             </div>
           </motion.div>

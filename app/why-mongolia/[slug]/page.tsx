@@ -39,13 +39,13 @@ export default async function WhyMongoliaSubPage({ params }: Props) {
       <main className="flex-grow">
         {/* Cover Image */}
         {page.coverImage && (
-          <div className="relative h-[40vh] bg-gray-900">
+          <div className="relative h-[40vh] bg-forest-900">
             <img
               src={page.coverImage}
               alt={page.title}
               className="w-full h-full object-cover opacity-80"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-forest-900/70 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
               <div className="max-w-7xl mx-auto">
                 <h1 className="text-4xl md:text-5xl font-bold text-white">
@@ -63,14 +63,14 @@ export default async function WhyMongoliaSubPage({ params }: Props) {
               {/* Back Link */}
               <Link
                 href="/why-mongolia"
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
+                className="inline-flex items-center gap-2 text-forest-700 hover:text-gold-700 mb-6"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back to Why Mongolia
               </Link>
 
               {!page.coverImage && (
-                <h1 className="text-4xl font-bold text-gray-900 mb-8">
+                <h1 className="text-4xl font-bold text-forest-900 mb-8">
                   {page.title}
                 </h1>
               )}
@@ -78,7 +78,7 @@ export default async function WhyMongoliaSubPage({ params }: Props) {
               <div className="prose prose-lg max-w-none">
                 <div
                   dangerouslySetInnerHTML={{ __html: page.content }}
-                  className="text-gray-700 leading-relaxed whitespace-pre-wrap"
+                  className="text-charcoal leading-relaxed whitespace-pre-wrap"
                 />
               </div>
             </div>
@@ -88,14 +88,16 @@ export default async function WhyMongoliaSubPage({ params }: Props) {
               <div className="sticky top-24">
                 {/* Related Pages */}
                 {relatedPages.length > 0 && (
-                  <div className="bg-gray-50 rounded-xl p-6 mb-6">
-                    <h3 className="font-semibold mb-4">Explore More</h3>
+                  <div className="bg-sand rounded-xl p-6 mb-6">
+                    <h3 className="font-semibold mb-4 text-forest-900">
+                      Explore More
+                    </h3>
                     <ul className="space-y-3">
                       {relatedPages.map((relatedPage) => (
                         <li key={relatedPage.id}>
                           <Link
                             href={`/why-mongolia/${relatedPage.slug}`}
-                            className="text-gray-600 hover:text-blue-600 transition-colors"
+                            className="text-charcoal hover:text-forest-700 transition-colors"
                           >
                             {relatedPage.title}
                           </Link>
@@ -106,14 +108,16 @@ export default async function WhyMongoliaSubPage({ params }: Props) {
                 )}
 
                 {/* CTA */}
-                <div className="bg-blue-50 rounded-xl p-6">
-                  <h3 className="font-semibold mb-2">Ready to Visit?</h3>
-                  <p className="text-sm text-gray-600 mb-4">
+                <div className="bg-gold-500/10 rounded-xl p-6">
+                  <h3 className="font-semibold mb-2 text-forest-900">
+                    Ready to Visit?
+                  </h3>
+                  <p className="text-sm text-charcoal mb-4">
                     Explore our carefully crafted tours to experience Mongolia.
                   </p>
                   <Link
                     href="/tours"
-                    className="block text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="block text-center px-4 py-2 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition-colors"
                   >
                     Browse Tours
                   </Link>

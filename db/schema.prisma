@@ -157,7 +157,106 @@ enum PaymentStatus {
   REFUNDED
 }
 
-// RequestInfo model for handling tour information requests
+// ============================================
+// INQUIRY MODEL (Lead Management - Inquiry-First Sales Model)
+// ============================================
+// PHILOSOPHY: This platform sells CONVERSATIONS, not instant bookings.
+// Human trust and customization are the core value proposition.
+// Tours are NOT directly bookable - website collects high-quality leads.
+// Human agents close deals via email/WhatsApp after personalized quotation.
+// ============================================
+model Inquiry {
+  id                 String            @id @default(cuid())
+  
+  // Contact Information
+  fullName           String
+  email              String
+  phone              String?
+  country            String?           // Customer's country for timezone/cultural context
+  
+  // Trip Preferences
+  travelMonth        String?           // Preferred travel month (e.g., "July 2026")
+  groupSize          String?           // e.g., "2 adults", "Family of 4"
+  budgetRange        String?           // e.g., "$3000-5000", "Luxury", "Budget-friendly"
+  message            String?           // Special requests, questions, interests
+  
+  // Tour Reference (optional - can be general inquiry)
+  tourId             String?
+  tourName           String?
+  
+  // Lead Pipeline Status
+  // new → contacted → quoted → won → lost
+  leadStatus         LeadStatus        @default(NEW)
+  
+  // Internal Notes (admin only)
+  internalNotes      String?           // Private notes for sales team
+  assignedTo         String?           // Sales agent handling this lead
+  
+  // Quotation & Deal Info (populated when status = quoted/won)
+  quotedPrice        Float?            // Custom quoted price
+  quoteCurrency      String            @default("USD")
+  quoteValidUntil    DateTime?         // Quote expiration date
+  quotePdfUrl        String?           // Link to PDF quotation
+  
+  // Payment Info (populated only when status = won)
+  paymentStatus      RequestPaymentStatus @default(PENDING)
+  amountPaid         Float             @default(0)
+  stripeSessionId    String?           // Stripe checkout session ID (admin-generated)
+  stripePaymentUrl   String?           // Stripe payment link sent to customer
+  paymentMethod      String?           // "stripe", "bank_transfer"
+  
+  // Bank Transfer fields
+  bankTransferRef    String?
+  bankTransferDate   DateTime?
+  bankTransferNote   String?
+  bankVerifiedAt     DateTime?
+  bankVerifiedBy     String?
+  
+  // Conversion to Booking (only when fully paid & confirmed)
+  bookingId          String?           // Links to Booking record when converted
+  convertedAt        DateTime?         // When lead was converted to booking
+  
+  // Timestamps & Tracking
+  marketingConsent   Boolean           @default(false)
+  source             String?           // "website", "referral", "social", etc.
+  utmSource          String?           // UTM tracking
+  utmMedium          String?
+  utmCampaign        String?
+  firstContactAt     DateTime?         // When agent first responded
+  lastContactAt      DateTime?         // Last interaction timestamp
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  
+  @@index([email])
+  @@index([leadStatus])
+  @@index([createdAt])
+  @@index([assignedTo])
+  @@index([stripeSessionId])
+  @@index([bankTransferRef])
+}
+
+// Lead Pipeline Status
+enum LeadStatus {
+  NEW           // Just submitted, not yet contacted
+  CONTACTED     // Agent has reached out
+  QUOTED        // Custom quotation sent
+  NEGOTIATING   // Back-and-forth on price/details
+  WON           // Deal closed, payment pending/received
+  LOST          // Did not convert
+  ON_HOLD       // Temporarily paused (e.g., customer traveling later)
+}
+
+enum RequestPaymentStatus {
+  PENDING
+  PARTIAL
+  PAID
+  REFUNDED
+}
+
+// ============================================
+// LEGACY: RequestInfo model (kept for backward compatibility)
+// New inquiries should use the Inquiry model above
+// ============================================
 model RequestInfo {
   id                 String            @id @default(cuid())
   fullName           String
@@ -169,38 +268,31 @@ model RequestInfo {
   message            String?
   tourId             String?
   tourName           String?
-  tourPrice          Float?            // Total tour price
-  advanceRequired    Float?            // 30% advance payment amount
-  amountPaid         Float             @default(0) // Amount paid so far
+  tourPrice          Float?
+  advanceRequired    Float?
+  amountPaid         Float             @default(0)
   paymentStatus      RequestPaymentStatus @default(PENDING)
   bookingStatus      RequestBookingStatus @default(UNCONFIRMED)
-  stripeSessionId    String?           // Stripe checkout session ID
-  paypalOrderId      String?           // PayPal order ID
-  paymentMethod      String?           // "stripe", "paypal", "bank_transfer"
-  
-  // Bank Transfer fields
-  bankTransferRef    String?           // Unique reference for bank transfer
-  bankTransferDate   DateTime?         // Date customer made the transfer
-  bankTransferNote   String?           // Customer's note about transfer
-  bankVerifiedAt     DateTime?         // When admin verified the payment
-  bankVerifiedBy     String?           // Admin who verified
-  
+  stripeSessionId    String?
+  paypalOrderId      String?
+  paymentMethod      String?
+  bankTransferRef    String?
+  bankTransferDate   DateTime?
+  bankTransferNote   String?
+  bankVerifiedAt     DateTime?
+  bankVerifiedBy     String?
   marketingConsent   Boolean           @default(false)
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
+  
+  // Migration flag - marks if migrated to new Inquiry model
+  migratedToInquiry  Boolean           @default(false)
   
   @@index([email])
   @@index([createdAt])
   @@index([stripeSessionId])
   @@index([paypalOrderId])
   @@index([bankTransferRef])
-}
-
-enum RequestPaymentStatus {
-  PENDING
-  PARTIAL
-  PAID
-  REFUNDED
 }
 
 enum RequestBookingStatus {
@@ -343,7 +435,7 @@ enum ContentSection {
 // ============================================
 model SiteSettings {
   id              String   @id @default(cuid())
-  siteName        String   @default("UTravel Mongolia")
+  siteName        String   @default("Maralgoo Dreamland")
   tagline         String?
   email           String?
   phone           String?

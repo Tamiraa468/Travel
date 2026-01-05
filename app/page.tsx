@@ -14,7 +14,7 @@ export default function Home() {
         <HeaderSlider />
         <RecommendedTours />
         <WhyChooseUs />
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
         <CTASection />
       </main>
       <Footer />

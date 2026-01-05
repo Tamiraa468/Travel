@@ -162,7 +162,7 @@ export default function BankTransfersPage() {
         <h1 className="text-3xl font-bold text-gray-800">Bank Transfers</h1>
         <button
           onClick={fetchTransfers}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="px-4 py-2 bg-forest-900 text-white rounded-lg hover:bg-forest-700 transition"
         >
           Refresh
         </button>
@@ -180,7 +180,7 @@ export default function BankTransfersPage() {
           </div>
           <div>
             <p className="opacity-80">Account Holder</p>
-            <p className="font-semibold">UTravel Mongolia LLC</p>
+            <p className="font-semibold">Maralgoo Dreamland LLC</p>
           </div>
           <div>
             <p className="opacity-80">Account Number</p>
@@ -265,7 +265,7 @@ export default function BankTransfersPage() {
                     </div>
 
                     {transfer.tourName && (
-                      <p className="mt-2 text-blue-600 font-medium">
+                      <p className="mt-2 text-forest-700 font-medium">
                         🏔 {transfer.tourName}
                       </p>
                     )}
