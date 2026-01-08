@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Environment checks for admin panel visibility
+const isProduction = process.env.NODE_ENV === "production";
+const isAdminEnabled = process.env.ADMIN_ENABLED === "true";
+
 // Simple in-memory rate limiter: stores IP -> array of request timestamps
 const requestCounts = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX = 10; // Max 10 requests per minute
+
+// Separate rate limiter for admin login (stricter)
+const loginRequestCounts = new Map<string, number[]>();
+const LOGIN_RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const LOGIN_RATE_LIMIT_MAX = 5; // Max 5 login attempts per minute per IP
 
 // Security headers to prevent XSS, clickjacking, and other attacks
 const securityHeaders = {
@@ -62,8 +71,117 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
+/**
+ * Check if login request exceeds rate limit (stricter for login)
+ */
+function isLoginRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - LOGIN_RATE_LIMIT_WINDOW;
+
+  let requests = loginRequestCounts.get(ip) || [];
+  requests = requests.filter((timestamp) => timestamp > windowStart);
+
+  if (requests.length >= LOGIN_RATE_LIMIT_MAX) {
+    return true;
+  }
+
+  requests.push(now);
+  loginRequestCounts.set(ip, requests);
+
+  return false;
+}
+
+/**
+ * Check if admin panel should be accessible
+ * - Hidden in production by default
+ * - Can be enabled via ADMIN_ENABLED=true environment variable
+ * - Always accessible in development
+ */
+function shouldAllowAdminAccess(): boolean {
+  // In development, always allow
+  if (!isProduction) {
+    return true;
+  }
+
+  // In production, only allow if explicitly enabled
+  return isAdminEnabled;
+}
+
+/**
+ * Return a 404 response that doesn't leak admin existence
+ */
+function return404Response(): NextResponse {
+  return new NextResponse("Not Found", {
+    status: 404,
+    headers: {
+      "Content-Type": "text/html",
+    },
+  });
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // ============================================
+  // ADMIN PANEL PROTECTION (Production Hide)
+  // ============================================
+  // In production, return 404 for all admin routes unless explicitly enabled
+  // This prevents discovery of the admin panel by attackers
+  if (pathname.startsWith("/admin")) {
+    if (!shouldAllowAdminAccess()) {
+      // Return 404 to hide admin panel existence in production
+      return return404Response();
+    }
+
+    // Admin is accessible - apply rate limiting to login endpoint
+    if (pathname === "/admin/login") {
+      const clientIp = getClientIp(request);
+
+      // Rate limit login attempts
+      if (request.method === "POST" && isLoginRateLimited(clientIp)) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Too many login attempts. Please try again in a minute.",
+          },
+          { status: 429 }
+        );
+      }
+
+      // Add no-index headers for login page (dev/staging)
+      const response = NextResponse.next();
+      response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+      for (const [key, value] of Object.entries(securityHeaders)) {
+        response.headers.set(key, value);
+      }
+      return response;
+    }
+
+    // Protect other admin routes - check session
+    const sessionCookie = request.cookies.get("admin_session")?.value;
+    if (!sessionCookie) {
+      return NextResponse.redirect(new URL("/admin/login", request.url));
+    }
+
+    // Verify session signature format (basic check)
+    const parts = sessionCookie.split(".");
+    if (parts.length !== 2 || parts[1].length !== 64) {
+      // Invalid session format - likely tampering attempt
+      const response = NextResponse.redirect(
+        new URL("/admin/login", request.url)
+      );
+      response.cookies.delete("admin_session");
+      return response;
+    }
+
+    // Valid session - add no-index headers for all admin pages
+    const response = NextResponse.next();
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    for (const [key, value] of Object.entries(securityHeaders)) {
+      response.headers.set(key, value);
+    }
+    return response;
+  }
 
   // Apply rate limiting to /api/request-info
   if (pathname === "/api/request-info" && request.method === "POST") {
@@ -80,28 +198,18 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Allow login page
-  if (pathname === "/admin/login") {
-    return NextResponse.next();
-  }
+  // Rate limit admin login API endpoint
+  if (pathname === "/api/admin/login" && request.method === "POST") {
+    const clientIp = getClientIp(request);
 
-  // Protect admin routes - just check if session cookie exists
-  if (pathname.startsWith("/admin")) {
-    const sessionCookie = request.cookies.get("admin_session")?.value;
-    if (!sessionCookie) {
-      return NextResponse.redirect(new URL("/admin/login", request.url));
-    }
-
-    // Verify session signature format (basic check)
-    // Full verification happens in getSession()
-    const parts = sessionCookie.split(".");
-    if (parts.length !== 2 || parts[1].length !== 64) {
-      // Invalid session format - likely tampering attempt
-      const response = NextResponse.redirect(
-        new URL("/admin/login", request.url)
+    if (isLoginRateLimited(clientIp)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Too many login attempts. Please try again in a minute.",
+        },
+        { status: 429 }
       );
-      response.cookies.delete("admin_session");
-      return response;
     }
   }
 
@@ -118,6 +226,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/admin/:path*",
+    "/api/admin/:path*",
     "/api/request-info",
     "/api/stripe/:path*",
     "/payment/:path*",
