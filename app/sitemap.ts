@@ -3,12 +3,28 @@ import { MetadataRoute } from "next";
 /**
  * Dynamic sitemap generation for SEO
  * Generates sitemap.xml at /sitemap.xml
+ *
+ * IMPORTANT: Always use the canonical production domain.
+ * Do NOT use process.env.VERCEL_URL or preview URLs.
  */
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || "https://www.maralgoodreamland.com";
 
-  // Static pages
+// Canonical production domain - hardcoded to prevent preview URL issues
+const PRODUCTION_DOMAIN = "https://maralgoodreamland.com";
+
+/**
+ * Safely join URL parts without double slashes or spaces
+ */
+function buildUrl(base: string, path: string): string {
+  const cleanBase = base.replace(/\/+$/, ""); // Remove trailing slashes
+  const cleanPath = path.replace(/^\/+/, "").trim(); // Remove leading slashes and spaces
+  return cleanPath ? `${cleanBase}/${cleanPath}` : cleanBase;
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Always use production domain for sitemap URLs
+  const baseUrl = PRODUCTION_DOMAIN;
+
+  // Static pages - using buildUrl to ensure proper URL formatting
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -17,64 +33,52 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${baseUrl}/tours`,
+      url: buildUrl(baseUrl, "tours"),
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/about`,
+      url: buildUrl(baseUrl, "about"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/aboutUs`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
+      url: buildUrl(baseUrl, "contact"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/faq`,
+      url: buildUrl(baseUrl, "faq"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
-      url: `${baseUrl}/blog`,
+      url: buildUrl(baseUrl, "blog"),
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/why-mongolia`,
+      url: buildUrl(baseUrl, "why-mongolia"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/travel-guide`,
+      url: buildUrl(baseUrl, "travel-guide"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/request-info`,
+      url: buildUrl(baseUrl, "request-info"),
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/wishlist`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
     },
   ];
 
@@ -88,7 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     tourPages = tours.map((tour) => ({
-      url: `${baseUrl}/tours/${tour.id}`,
+      url: buildUrl(baseUrl, `tours/${encodeURIComponent(tour.id)}`),
       lastModified: tour.updatedAt,
       changeFrequency: "weekly" as const,
       priority: 0.8,
@@ -103,12 +107,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const { default: prisma } = await import("@/lib/prisma");
     const posts = await prisma.blogPost.findMany({
-      where: { published: true },
+      where: { isPublished: true },
       select: { slug: true, updatedAt: true },
     });
 
     blogPages = posts.map((post) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: buildUrl(baseUrl, `blog/${encodeURIComponent(post.slug)}`),
       lastModified: post.updatedAt,
       changeFrequency: "weekly" as const,
       priority: 0.7,

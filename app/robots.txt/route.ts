@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 
+// Canonical production domain - hardcoded to prevent preview URL issues
+const PRODUCTION_DOMAIN = "https://maralgoodreamland.com";
+
 /**
  * Dynamic robots.txt route handler
  * Ensures /admin routes are always disallowed from crawling
  */
 export async function GET() {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || "https://www.maralgoodreamland.com";
-
   const robotsTxt = `# robots.txt for Maralgoo Dreamland Travel
 User-agent: *
 Allow: /
@@ -19,7 +19,7 @@ Disallow: /payment/
 Disallow: /wishlist
 
 # Sitemap
-Sitemap: ${baseUrl}/sitemap.xml
+Sitemap: ${PRODUCTION_DOMAIN}/sitemap.xml
 `;
 
   return new NextResponse(robotsTxt, {
