@@ -20,7 +20,8 @@ const SMTP_USER = process.env.SMTP_USER || "";
 const SMTP_PASS = process.env.SMTP_PASS || "";
 
 // Recipient email for internal notifications
-const INTERNAL_EMAIL = "udelgombotamira@gmail.com";
+// Updated: Official company email for all notifications
+const INTERNAL_EMAIL = "info@maralgoodreamland.com";
 
 /**
  * Create and return a configured Nodemailer transporter for Gmail SMTP
@@ -141,7 +142,7 @@ export async function sendUserConfirmationEmail({
             </div>
             <div class="footer">
               <p>© 2025 Maralgoo Dreamland. All rights reserved.</p>
-              <p><a href="mailto:udelgombotamira@gmail.com">udelgombotamira@gmail.com</a></p>
+              <p><a href="mailto:info@maralgoodreamland.com">info@maralgoodreamland.com</a></p>
             </div>
           </div>
         </body>
@@ -1028,7 +1029,7 @@ export async function sendPaymentLinkEmail({
 
               <div class="contact-section">
                 <p>Questions? We're here to help:</p>
-                <p>Email: <a href="mailto:udelgombotamira@gmail.com">udelgombotamira@gmail.com</a></p>
+                <p>Email: <a href="mailto:info@maralgoodreamland.com">info@maralgoodreamland.com</a></p>
               </div>
 
               <p class="message-text">We look forward to welcoming you to Mongolia!</p>
@@ -1375,7 +1376,7 @@ export async function sendInquiryAutoReplyEmail({
             </div>
             <div class="footer">
               <p>© 2026 Maralgoo Dreamland. All rights reserved.</p>
-              <p><a href="mailto:udelgombotamira@gmail.com">udelgombotamira@gmail.com</a> | <a href="https://wa.me/97689475188">+976 8947-5188</a></p>
+              <p><a href="mailto:info@maralgoodreamland.com">info@maralgoodreamland.com</a> | <a href="https://wa.me/97689475188">+976 8947-5188</a></p>
               <p style="margin-top: 10px; font-size: 11px; color: #64748b;">Reference: ${inquiryId
                 .slice(-8)
                 .toUpperCase()}</p>

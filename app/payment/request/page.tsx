@@ -124,10 +124,10 @@ export default function PaymentRequestPage() {
                 <div className="flex items-center gap-2">
                   <span>📧</span>
                   <a
-                    href="mailto:udelgombotamira@gmail.com"
+                    href="mailto:info@maralgoodreamland.com"
                     className="text-purple-600 hover:underline"
                   >
-                    udelgombotamira@gmail.com
+                    info@maralgoodreamland.com
                   </a>
                 </div>
                 <div className="flex items-center gap-2">

@@ -73,12 +73,13 @@ const Contact = () => {
     });
   };
 
+  // Updated: Official company email for all contact
   const contactInfo = [
     {
       icon: Mail,
       title: "Email Us",
-      value: "udelgombotamira@gmail.com",
-      link: "mailto:udelgombotamira@gmail.com",
+      value: "info@maralgoodreamland.com",
+      link: "mailto:info@maralgoodreamland.com",
     },
     {
       icon: Phone,

@@ -4,12 +4,13 @@ import * as nodemailer from "nodemailer";
 import { getSession } from "@/lib/auth";
 
 // Email transporter configuration
+// Updated: Using official company email
 function createTransporter() {
   return nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "udelgombotamira@gmail.com",
-      pass: process.env.EMAIL_PASSWORD,
+      user: process.env.SMTP_USER || "info@maralgoodreamland.com",
+      pass: process.env.SMTP_PASS || process.env.EMAIL_PASSWORD,
     },
     secure: true,
     tls: {
@@ -41,7 +42,7 @@ async function sendPaymentConfirmationEmail(booking: {
   };
 
   const mailOptions = {
-    from: "udelgombotamira@gmail.com",
+    from: process.env.SMTP_USER || "info@maralgoodreamland.com",
     to: booking.email,
     subject: `✅ Payment Confirmed - ${
       booking.tourName || "Your Tour Booking"
@@ -133,9 +134,10 @@ async function sendAdminNotificationEmail(booking: {
 }) {
   const transporter = createTransporter();
 
+  // Updated: Admin notifications go to official company email
   const mailOptions = {
-    from: "udelgombotamira@gmail.com",
-    to: "udelgombotamira@gmail.com",
+    from: process.env.SMTP_USER || "info@maralgoodreamland.com",
+    to: process.env.ADMIN_EMAIL || "info@maralgoodreamland.com",
     subject: `💰 Bank Transfer Confirmed - ${booking.fullName}`,
     html: `
       <h2>Bank Transfer Payment Confirmed</h2>

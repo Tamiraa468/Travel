@@ -171,13 +171,13 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="mailto:info@mongoliatravel.mn"
+                  href="mailto:info@maralgoodreamland.com"
                   className="flex items-center gap-3 text-ivory/70 hover:text-gold-500 transition-colors"
                 >
                   <div className="w-10 h-10 rounded-full bg-forest-700 flex items-center justify-center">
                     <Mail size={16} className="text-gold-500" />
                   </div>
-                  info@mongoliatravel.mn
+                  info@maralgoodreamland.com
                 </a>
               </li>
               <li className="flex items-center gap-3 text-ivory/70">

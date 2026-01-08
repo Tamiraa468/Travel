@@ -52,7 +52,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const smtpUser = process.env.SMTP_USER || "udelgombotamira@gmail.com";
+    // Updated: Official company email as fallback
+    const smtpUser = process.env.SMTP_USER || "info@maralgoodreamland.com";
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
