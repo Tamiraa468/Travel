@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// ============================================
+// SEO: Canonical domain for HTTPS enforcement
+// ============================================
+const CANONICAL_DOMAIN = "maralgoodreamland.com";
+
 // Environment checks for admin panel visibility
 const isProduction = process.env.NODE_ENV === "production";
 const isAdminEnabled = process.env.ADMIN_ENABLED === "true";
@@ -123,6 +128,29 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // ============================================
+  // SEO: HTTP → HTTPS Redirect (301 Permanent)
+  // ============================================
+  // Check x-forwarded-proto header (set by Vercel/reverse proxy)
+  const proto = request.headers.get("x-forwarded-proto");
+  const host = request.headers.get("host") || CANONICAL_DOMAIN;
+  
+  // Redirect HTTP to HTTPS in production (skip for API routes to avoid breaking webhooks)
+  if (proto === "http" && !pathname.startsWith("/api/")) {
+    const httpsUrl = new URL(request.url);
+    httpsUrl.protocol = "https:";
+    httpsUrl.host = CANONICAL_DOMAIN;
+    return NextResponse.redirect(httpsUrl.toString(), 301);
+  }
+  
+  // Also redirect www to non-www if needed
+  if (host.startsWith("www.")) {
+    const nonWwwUrl = new URL(request.url);
+    nonWwwUrl.host = CANONICAL_DOMAIN;
+    nonWwwUrl.protocol = "https:";
+    return NextResponse.redirect(nonWwwUrl.toString(), 301);
+  }
+
+  // ============================================
   // ADMIN PANEL PROTECTION (Production Hide)
   // ============================================
   // In production, return 404 for all admin routes unless explicitly enabled
@@ -225,10 +253,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/admin/:path*",
-    "/api/admin/:path*",
-    "/api/request-info",
-    "/api/stripe/:path*",
-    "/payment/:path*",
+    // Match all routes for HTTPS redirect and security headers
+    // Exclude static files and Next.js internals
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };
