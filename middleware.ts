@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // ============================================
-// SEO: Canonical domain for HTTPS enforcement
+// NOTE: Domain redirects (HTTP→HTTPS, www→non-www) are handled by Vercel.
+// Do NOT add redirect logic in middleware to avoid ERR_TOO_MANY_REDIRECTS.
 // ============================================
-const CANONICAL_DOMAIN = "maralgoodreamland.com";
 
 // Environment checks for admin panel visibility
 const isProduction = process.env.NODE_ENV === "production";
@@ -128,27 +128,9 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // ============================================
-  // SEO: HTTP → HTTPS Redirect (301 Permanent)
+  // NOTE: HTTP→HTTPS and www→non-www redirects are handled by Vercel
+  // Do NOT add redirect logic here to avoid ERR_TOO_MANY_REDIRECTS
   // ============================================
-  // Check x-forwarded-proto header (set by Vercel/reverse proxy)
-  const proto = request.headers.get("x-forwarded-proto");
-  const host = request.headers.get("host") || CANONICAL_DOMAIN;
-  
-  // Redirect HTTP to HTTPS in production (skip for API routes to avoid breaking webhooks)
-  if (proto === "http" && !pathname.startsWith("/api/")) {
-    const httpsUrl = new URL(request.url);
-    httpsUrl.protocol = "https:";
-    httpsUrl.host = CANONICAL_DOMAIN;
-    return NextResponse.redirect(httpsUrl.toString(), 301);
-  }
-  
-  // Also redirect www to non-www if needed
-  if (host.startsWith("www.")) {
-    const nonWwwUrl = new URL(request.url);
-    nonWwwUrl.host = CANONICAL_DOMAIN;
-    nonWwwUrl.protocol = "https:";
-    return NextResponse.redirect(nonWwwUrl.toString(), 301);
-  }
 
   // ============================================
   // ADMIN PANEL PROTECTION (Production Hide)

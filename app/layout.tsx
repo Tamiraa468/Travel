@@ -20,7 +20,7 @@ const SITE_URL = "https://maralgoodreamland.com";
 export const metadata: Metadata = {
   // Base URL for all relative URLs in metadata
   metadataBase: new URL(SITE_URL),
-  
+
   // Site title and description
   title: {
     default: "Maralgoo Dreamland - Mongolia Tours & Travel",
@@ -28,12 +28,12 @@ export const metadata: Metadata = {
   },
   description:
     "Discover authentic Mongolia adventures with Maralgoo Dreamland. Expert-guided tours to the Gobi Desert, nomadic experiences, and unforgettable journeys across the land of eternal blue sky.",
-  
+
   // Canonical URL - tells search engines this is the primary URL
   alternates: {
     canonical: SITE_URL,
   },
-  
+
   // Open Graph for social sharing
   openGraph: {
     type: "website",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  
+
   // Twitter Card
   twitter: {
     card: "summary_large_image",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
       "Discover authentic Mongolia adventures with expert-guided tours.",
     images: ["/og-image.jpg"],
   },
-  
+
   // Favicon and icons
   icons: {
     icon: [
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
-  
+
   // Additional SEO settings
   robots: {
     index: true,
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  
+
   // Verification (add your codes when available)
   // verification: {
   //   google: "your-google-verification-code",
