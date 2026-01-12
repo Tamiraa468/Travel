@@ -1,22 +1,21 @@
-"use client";
+import type { Metadata } from "next";
+import ToursClient from "./ToursClient";
 
-import React, { useState } from "react";
-import Navbar from "@/Components/Navbar";
-import Footer from "@/Components/Footer";
-import HeroSection from "@/Components/HeroSection";
-import ToursSection from "@/Components/ToursSection";
-import { useTravelAgencyContext } from "@/context/TravelAgencyContext";
-
-const ToursPage = () => {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <Navbar />
-      <main className="flex-grow bg-sand">
-        <ToursSection />
-      </main>
-      <Footer />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Tours",
+  description:
+    "Explore our collection of authentic Mongolia tours. From Gobi Desert adventures to nomadic experiences, find your perfect journey.",
+  alternates: {
+    canonical: "/tours",
+  },
+  openGraph: {
+    title: "Mongolia Tours - Maralgoo Dreamland",
+    description:
+      "Explore our collection of authentic Mongolia tours and adventures.",
+    url: "/tours",
+  },
 };
 
-export default ToursPage;
+export default function ToursPage() {
+  return <ToursClient />;
+}

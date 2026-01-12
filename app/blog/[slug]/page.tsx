@@ -4,10 +4,41 @@ import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Calendar, User, Eye, ArrowLeft, Tag } from "lucide-react";
+import type { Metadata } from "next";
 
 type Props = {
   params: { slug: string };
 };
+
+// Generate dynamic metadata for each blog post
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post = await prisma.blogPost.findUnique({
+    where: { slug: params.slug },
+    select: { title: true, excerpt: true, coverImage: true, slug: true },
+  });
+
+  if (!post) {
+    return {
+      title: "Post Not Found",
+    };
+  }
+
+  return {
+    title: post.title,
+    description:
+      post.excerpt || `Read ${post.title} on Maralgoo Dreamland blog.`,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || undefined,
+      url: `/blog/${post.slug}`,
+      type: "article",
+      images: post.coverImage ? [{ url: post.coverImage }] : undefined,
+    },
+  };
+}
 
 export default async function BlogPostPage({ params }: Props) {
   const post = await prisma.blogPost.findUnique({

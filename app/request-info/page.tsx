@@ -1,9 +1,23 @@
 /**
- * Example page showing how to integrate RequestInfoForm component
- * This page demonstrates using the form in a real tour context
+ * Request Info page - allows users to request tour information
  */
 
 import RequestInfoForm from "@/Components/RequestInfoForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Request Information",
+  description:
+    "Request personalized tour information from Maralgoo Dreamland. Tell us about your dream Mongolia trip and get custom recommendations.",
+  alternates: {
+    canonical: "/request-info",
+  },
+  openGraph: {
+    title: "Request Tour Information - Maralgoo Dreamland",
+    description: "Get personalized Mongolia tour recommendations.",
+    url: "/request-info",
+  },
+};
 
 export default function RequestInfoPage() {
   return (

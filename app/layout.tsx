@@ -19,6 +19,7 @@ const SITE_URL = "https://maralgoodreamland.com";
 
 export const metadata: Metadata = {
   // Base URL for all relative URLs in metadata
+  // This is used to resolve relative canonical URLs in child pages
   metadataBase: new URL(SITE_URL),
 
   // Site title and description
@@ -29,10 +30,9 @@ export const metadata: Metadata = {
   description:
     "Discover authentic Mongolia adventures with Maralgoo Dreamland. Expert-guided tours to the Gobi Desert, nomadic experiences, and unforgettable journeys across the land of eternal blue sky.",
 
-  // Canonical URL - tells search engines this is the primary URL
-  alternates: {
-    canonical: SITE_URL,
-  },
+  // NOTE: Do NOT set global canonical here!
+  // Each page should define its own canonical URL to avoid duplicates
+  // alternates: { canonical: "/" } - set per page, not globally
 
   // Open Graph for social sharing
   openGraph: {

@@ -10,6 +10,21 @@ import {
   Landmark,
   Utensils,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Why Mongolia",
+  description:
+    "Discover why Mongolia is a must-visit destination. Learn about the land of nomads, rich history, stunning landscapes, and unique culture.",
+  alternates: {
+    canonical: "/why-mongolia",
+  },
+  openGraph: {
+    title: "Why Mongolia - Maralgoo Dreamland",
+    description: "Discover the land of nomads, adventure, and rich history.",
+    url: "/why-mongolia",
+  },
+};
 
 const sectionIcons: Record<string, any> = {
   geography: Globe2,

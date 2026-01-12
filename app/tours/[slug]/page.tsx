@@ -20,8 +20,65 @@ import {
   Shield,
   Award,
 } from "lucide-react";
+import type { Metadata } from "next";
 
 type Props = { params: { slug: string } };
+
+// Generate dynamic metadata for each tour
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = params;
+
+  // Try find by slug first
+  let tour = await prisma.tour.findUnique({
+    where: { slug },
+    select: {
+      title: true,
+      description: true,
+      coverImage: true,
+      slug: true,
+      id: true,
+    },
+  });
+
+  // Fallback search by id
+  if (!tour) {
+    tour = await prisma.tour.findUnique({
+      where: { id: slug },
+      select: {
+        title: true,
+        description: true,
+        coverImage: true,
+        slug: true,
+        id: true,
+      },
+    });
+  }
+
+  if (!tour) {
+    return {
+      title: "Tour Not Found",
+    };
+  }
+
+  // Use slug if available, otherwise use id
+  const canonicalPath = tour.slug || tour.id;
+
+  return {
+    title: tour.title,
+    description:
+      tour.description || `Explore ${tour.title} with Maralgoo Dreamland.`,
+    alternates: {
+      canonical: `/tours/${canonicalPath}`,
+    },
+    openGraph: {
+      title: tour.title,
+      description: tour.description || undefined,
+      url: `/tours/${canonicalPath}`,
+      type: "website",
+      images: tour.coverImage ? [{ url: tour.coverImage }] : undefined,
+    },
+  };
+}
 
 export default async function TourPage({ params }: Props) {
   const { slug } = params;

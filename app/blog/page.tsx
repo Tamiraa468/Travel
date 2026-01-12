@@ -3,6 +3,22 @@ import Footer from "@/Components/Footer";
 import BlogCard from "@/Components/BlogCard";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description:
+    "Read our latest articles about Mongolia travel, culture, festivals, and adventure tips. Get inspired for your next journey.",
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "Blog - Maralgoo Dreamland",
+    description:
+      "Latest articles about Mongolia travel, culture, and adventure tips.",
+    url: "/blog",
+  },
+};
 
 type Props = {
   searchParams?: { category?: string; page?: string };

@@ -13,6 +13,21 @@ import {
   Camera,
   Mountain,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Travel Guide",
+  description:
+    "Essential Mongolia travel guide: visa requirements, weather, transportation, accommodation, and tips for your perfect trip.",
+  alternates: {
+    canonical: "/travel-guide",
+  },
+  openGraph: {
+    title: "Travel Guide - Maralgoo Dreamland",
+    description: "Everything you need to know for your Mongolia trip.",
+    url: "/travel-guide",
+  },
+};
 
 const guideIcons: Record<string, any> = {
   visa: FileText,

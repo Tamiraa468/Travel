@@ -3,6 +3,21 @@ import Footer from "@/Components/Footer";
 import FAQAccordion from "@/Components/FAQAccordion";
 import prisma from "@/lib/prisma";
 import { HelpCircle } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FAQ",
+  description:
+    "Find answers to frequently asked questions about our Mongolia tours, booking process, payments, and travel preparation.",
+  alternates: {
+    canonical: "/faq",
+  },
+  openGraph: {
+    title: "FAQ - Maralgoo Dreamland",
+    description: "Frequently asked questions about Mongolia tours and travel.",
+    url: "/faq",
+  },
+};
 
 export default async function FAQPage() {
   const result = await prisma.fAQ.findMany({

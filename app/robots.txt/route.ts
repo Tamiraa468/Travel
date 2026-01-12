@@ -12,11 +12,13 @@ export async function GET() {
 User-agent: *
 Allow: /
 Disallow: /admin
-Disallow: /admin/*
+Disallow: /admin/
+Disallow: /api
 Disallow: /api/
-Disallow: /api/*
+Disallow: /payment
 Disallow: /payment/
 Disallow: /wishlist
+Disallow: /wishlist/
 
 # Sitemap
 Sitemap: ${PRODUCTION_DOMAIN}/sitemap.xml

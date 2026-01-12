@@ -3,6 +3,22 @@ import Footer from "@/Components/Footer";
 import TeamSection from "@/Components/TeamSection";
 import prisma from "@/lib/prisma";
 import { Building2, Target, Heart, Award } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "Learn about Maralgoo Dreamland - your trusted partner for authentic Mongolia adventures since 2020. Meet our passionate team of local travel experts.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Maralgoo Dreamland",
+    description:
+      "Your trusted partner for authentic Mongolia adventures since 2020.",
+    url: "/about",
+  },
+};
 
 export default async function AboutPage() {
   const teamMembers = await prisma.teamMember.findMany({
