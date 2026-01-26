@@ -2,6 +2,8 @@ import * as nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 import { sanitizeString, sanitizeEmail } from "@/lib/security";
 
+export const dynamic = "force-dynamic";
+
 // Rate limiting: simple in-memory store
 const contactRequests = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -24,7 +26,7 @@ export async function POST(req: Request) {
     if (isRateLimited(ip)) {
       return NextResponse.json(
         { error: "Too many requests. Please try again in a minute." },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
@@ -39,7 +41,7 @@ export async function POST(req: Request) {
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Name, email, and message are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +50,7 @@ export async function POST(req: Request) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: "Invalid email address" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -89,13 +91,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "Email sent successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Failed to send email:", error);
     return NextResponse.json(
       { error: "Failed to send email" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

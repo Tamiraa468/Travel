@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
 // Increase body size limit for this route
 export const maxDuration = 60;
 
@@ -16,7 +17,7 @@ export async function GET() {
     console.error("GET /api/tours error", error);
     return NextResponse.json(
       { ok: false, error: "Failed to fetch tours" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
     if (!session?.isAdmin) {
       return NextResponse.json(
         { ok: false, error: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
     console.error("POST /api/tours error", error);
     return NextResponse.json(
       { ok: false, error: "Failed to create tour" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

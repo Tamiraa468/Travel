@@ -16,6 +16,7 @@ import {
   sendPaymentReminderEmail,
 } from "@/lib/email";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 // Initialize Stripe
@@ -34,7 +35,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
  */
 function meetsAdvanceRequirement(
   amountPaid: number,
-  totalPrice: number
+  totalPrice: number,
 ): boolean {
   const requiredAdvance = totalPrice * 0.3;
   return amountPaid >= requiredAdvance;
@@ -47,7 +48,7 @@ async function generatePaymentUrls(
   requestId: string,
   remainingAmount: number,
   customerEmail: string,
-  tourName: string
+  tourName: string,
 ): Promise<{ stripeUrl?: string; paypalUrl?: string }> {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -89,7 +90,7 @@ async function processPayment(
   requestId: string,
   amountPaid: number,
   paymentMethod: string,
-  providerId?: string
+  providerId?: string,
 ) {
   // Get current request info
   const requestInfo = await prisma.requestInfo.findUnique({
@@ -116,8 +117,8 @@ async function processPayment(
         totalAmountPaid >= tourPrice
           ? "PAID"
           : totalAmountPaid > 0
-          ? "PARTIAL"
-          : "PENDING",
+            ? "PARTIAL"
+            : "PENDING",
       bookingStatus: isConfirmed ? "CONFIRMED" : "UNCONFIRMED",
       paymentMethod: paymentMethod,
     },
@@ -144,7 +145,7 @@ async function processPayment(
       requestId,
       advanceRequired - totalAmountPaid,
       updatedRequest.email,
-      updatedRequest.tourName || "Tour Booking"
+      updatedRequest.tourName || "Tour Booking",
     );
 
     await sendPaymentReminderEmail({
@@ -178,7 +179,7 @@ async function handleStripeWebhook(request: NextRequest) {
   if (!signature) {
     return NextResponse.json(
       { error: "Missing Stripe signature" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -201,7 +202,7 @@ async function handleStripeWebhook(request: NextRequest) {
         console.error("No requestId in session metadata");
         return NextResponse.json(
           { error: "Missing request ID" },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -212,7 +213,7 @@ async function handleStripeWebhook(request: NextRequest) {
           requestId,
           amountPaid,
           "stripe",
-          session.id
+          session.id,
         );
 
         console.log(`✓ Payment processed for ${requestId}:`, result);
@@ -221,7 +222,7 @@ async function handleStripeWebhook(request: NextRequest) {
         console.error("Error processing payment:", error);
         return NextResponse.json(
           { error: "Failed to process payment" },
-          { status: 500 }
+          { status: 500 },
         );
       }
     }
@@ -258,14 +259,14 @@ export async function POST(request: NextRequest) {
     if (!requestId) {
       return NextResponse.json(
         { success: false, error: "Request ID is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!amountPaid || amountPaid <= 0) {
       return NextResponse.json(
         { success: false, error: "Valid payment amount is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -273,7 +274,7 @@ export async function POST(request: NextRequest) {
       requestId,
       amountPaid,
       paymentMethod || "manual",
-      providerId
+      providerId,
     );
 
     return NextResponse.json(result);
@@ -285,7 +286,7 @@ export async function POST(request: NextRequest) {
         error:
           error instanceof Error ? error.message : "Failed to confirm payment",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -301,7 +302,7 @@ export async function GET(request: NextRequest) {
   if (!requestId && !sessionId) {
     return NextResponse.json(
       { error: "Request ID or Session ID is required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -339,7 +340,7 @@ export async function GET(request: NextRequest) {
       (requestInfo.tourPrice || 0) - (requestInfo.amountPaid || 0);
     const paidPercentage = requestInfo.tourPrice
       ? Math.round(
-          ((requestInfo.amountPaid || 0) / requestInfo.tourPrice) * 100
+          ((requestInfo.amountPaid || 0) / requestInfo.tourPrice) * 100,
         )
       : 0;
 
@@ -356,7 +357,7 @@ export async function GET(request: NextRequest) {
     console.error("Error fetching payment status:", error);
     return NextResponse.json(
       { error: "Failed to fetch payment status" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { sanitizeEmail, sanitizeString, sanitizePhone } from "@/lib/security";
 
+export const dynamic = "force-dynamic";
+
 // Rate limiting for booking endpoint
 const bookingRequests = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -27,7 +29,7 @@ export async function POST(req: NextRequest) {
           ok: false,
           error: "Too many requests. Please try again in a minute.",
         },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
@@ -45,7 +47,7 @@ export async function POST(req: NextRequest) {
     if (!sanitizedCustomer.email || !tourId) {
       return NextResponse.json(
         { ok: false, error: "Email and tour are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -61,7 +63,7 @@ export async function POST(req: NextRequest) {
     if (!tour)
       return NextResponse.json(
         { ok: false, error: "Tour not found" },
-        { status: 404 }
+        { status: 404 },
       );
 
     const totalPrice = Number(tour.price) * Number(quantity);
@@ -81,7 +83,7 @@ export async function POST(req: NextRequest) {
     console.error("POST /api/booking error", error);
     return NextResponse.json(
       { ok: false, error: "Failed to create booking" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

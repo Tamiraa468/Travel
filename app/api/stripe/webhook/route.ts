@@ -27,6 +27,8 @@ import Stripe from "stripe";
 import prisma from "@/lib/prisma";
 import { sendPaymentConfirmationEmail } from "@/lib/email";
 
+export const dynamic = "force-dynamic";
+
 // ==========================================
 // STRIPE CONFIGURATION
 // ==========================================
@@ -60,7 +62,7 @@ export async function POST(request: Request) {
     console.error("❌ STRIPE_WEBHOOK_SECRET environment variable is not set");
     return NextResponse.json(
       { error: "Webhook secret not configured" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -81,11 +83,11 @@ export async function POST(request: Request) {
     console.error("   Signature:", signature.substring(0, 50) + "...");
     console.error(
       "   Secret starts with:",
-      webhookSecret.substring(0, 10) + "..."
+      webhookSecret.substring(0, 10) + "...",
     );
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -193,7 +195,7 @@ export async function POST(request: Request) {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
       console.log("❌ Payment failed:", paymentIntent.id);
       console.log(
-        `   Error: ${paymentIntent.last_payment_error?.message || "Unknown"}`
+        `   Error: ${paymentIntent.last_payment_error?.message || "Unknown"}`,
       );
 
       // Optionally update database to track failed payment

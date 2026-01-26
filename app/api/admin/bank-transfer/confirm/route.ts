@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import * as nodemailer from "nodemailer";
 import { getSession } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 // Email transporter configuration
 // Updated: Using official company email
 function createTransporter() {
@@ -79,7 +81,7 @@ async function sendPaymentConfirmationEmail(booking: {
               <tr>
                 <td style="padding: 8px 0; color: #666;">Start Date:</td>
                 <td style="padding: 8px 0; font-weight: bold; text-align: right;">${formatDate(
-                  booking.preferredStartDate
+                  booking.preferredStartDate,
                 )}</td>
               </tr>
               <tr>
@@ -91,7 +93,7 @@ async function sendPaymentConfirmationEmail(booking: {
               <tr style="border-top: 1px solid #ddd;">
                 <td style="padding: 12px 0; color: #666;">Amount Paid:</td>
                 <td style="padding: 12px 0; font-weight: bold; text-align: right; font-size: 20px; color: #28a745;">$${booking.amountPaid.toFixed(
-                  2
+                  2,
                 )} USD</td>
               </tr>
             </table>
@@ -167,7 +169,7 @@ export async function POST(request: Request) {
     if (!requestId) {
       return NextResponse.json(
         { error: "Request ID is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -179,7 +181,7 @@ export async function POST(request: Request) {
     if (!bookingRequest) {
       return NextResponse.json(
         { error: "Booking request not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -245,7 +247,7 @@ export async function POST(request: Request) {
     console.error("Error confirming bank transfer:", error);
     return NextResponse.json(
       { error: "Failed to confirm payment" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

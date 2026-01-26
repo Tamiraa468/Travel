@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAdminCredentials, createSession } from "@/lib/auth";
 import { loginSchema } from "@/lib/validation";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
     if (!verifyAdminCredentials(email, password)) {
       return NextResponse.json(
         { ok: false, error: "Invalid email or password" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     return NextResponse.json(
       { ok: false, error: error.message },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }

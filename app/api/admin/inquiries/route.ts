@@ -11,6 +11,7 @@ import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 import { updateInquiryStatusSchema } from "@/lib/validation";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 // GET: List inquiries with filters
@@ -20,7 +21,7 @@ export async function GET(request: NextRequest) {
     if (!session?.isAdmin) {
       return NextResponse.json(
         { success: false, error: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -90,7 +91,7 @@ export async function GET(request: NextRequest) {
     console.error("Failed to fetch inquiries:", error);
     return NextResponse.json(
       { success: false, error: "Failed to fetch inquiries" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -102,7 +103,7 @@ export async function PATCH(request: NextRequest) {
     if (!session?.isAdmin) {
       return NextResponse.json(
         { success: false, error: "Unauthorized" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -112,7 +113,7 @@ export async function PATCH(request: NextRequest) {
     if (!inquiryId) {
       return NextResponse.json(
         { success: false, error: "Inquiry ID is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -161,7 +162,7 @@ export async function PATCH(request: NextRequest) {
     console.error("Failed to update inquiry:", error);
     return NextResponse.json(
       { success: false, error: "Failed to update inquiry" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

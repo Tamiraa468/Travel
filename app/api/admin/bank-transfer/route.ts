@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     // Verify admin is logged in
@@ -37,7 +39,7 @@ export async function GET() {
     console.error("Error fetching bank transfers:", error);
     return NextResponse.json(
       { error: "Failed to fetch bank transfers" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

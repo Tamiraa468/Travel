@@ -24,6 +24,7 @@ import { sendPaymentLinkSchema } from "@/lib/validation";
 import { sendInquiryPaymentLinkEmail } from "@/lib/email";
 import Stripe from "stripe";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 // Initialize Stripe
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
     if (!session?.isAdmin) {
       return NextResponse.json(
         { success: false, error: "Unauthorized - Admin access required" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
     if (!inquiry) {
       return NextResponse.json(
         { success: false, error: "Inquiry not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -67,7 +68,7 @@ export async function POST(request: NextRequest) {
       if (!process.env.STRIPE_SECRET_KEY) {
         return NextResponse.json(
           { success: false, error: "Stripe is not configured" },
-          { status: 500 }
+          { status: 500 },
         );
       }
 
@@ -177,13 +178,13 @@ export async function POST(request: NextRequest) {
     if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
         { success: false, error: "Invalid request data" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     return NextResponse.json(
       { success: false, error: "Failed to generate payment link" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
