@@ -97,6 +97,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={playfair.variable}>
+      <head>
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="Nns/FvE1KbM30Z24DHSwgw"
+          async
+        ></script>
+      </head>
       <body>
         <AntdProvider>
           <LanguageProvider>
