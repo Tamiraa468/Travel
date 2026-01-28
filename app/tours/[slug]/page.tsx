@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     select: {
       title: true,
       description: true,
-      coverImage: true,
+      mainImage: true,
       slug: true,
       id: true,
     },
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       select: {
         title: true,
         description: true,
-        coverImage: true,
+        mainImage: true,
         slug: true,
         id: true,
       },
@@ -75,7 +75,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: tour.description || undefined,
       url: `/tours/${canonicalPath}`,
       type: "website",
-      images: tour.coverImage ? [{ url: tour.coverImage }] : undefined,
+      images: tour.mainImage ? [{ url: tour.mainImage }] : undefined,
     },
   };
 }

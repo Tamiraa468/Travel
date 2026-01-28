@@ -207,8 +207,8 @@ const Navbar: React.FC = () => {
             {t.tours.requestInfo}
           </Link>
 
-          {/* Language Switcher - visible when scrolled on desktop */}
-          <div className={`hidden lg:block ${isScrolled ? "" : "lg:hidden"}`}>
+          {/* Language Switcher - always visible on desktop */}
+          <div className="hidden lg:block">
             <LanguageSwitcher variant="compact" isScrolled={isScrolled} />
           </div>
 

@@ -19,6 +19,9 @@ const loginRequestCounts = new Map<string, number[]>();
 const LOGIN_RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const LOGIN_RATE_LIMIT_MAX = 5; // Max 5 login attempts per minute per IP
 
+// Check if we're in development mode
+const isDevelopment = process.env.NODE_ENV === "development";
+
 // Security headers to prevent XSS, clickjacking, and other attacks
 const securityHeaders = {
   "X-Content-Type-Options": "nosniff",
@@ -26,14 +29,15 @@ const securityHeaders = {
   "X-XSS-Protection": "1; mode=block",
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
-  // Content Security Policy - adjusted for Stripe and Vercel
+  // Content Security Policy - adjusted for Stripe, Vercel, and development tools
   "Content-Security-Policy":
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://vercel.live https://*.vercel.live; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://vercel.live https://*.vercel.live https://va.vercel-scripts.com; " +
     "style-src 'self' 'unsafe-inline'; " +
     "img-src 'self' data: https: blob:; " +
     "font-src 'self' data:; " +
-    "connect-src 'self' https://api.stripe.com https://maps.googleapis.com https://*.vercel.live wss://*.vercel.live; " +
+    // In development, allow localhost websocket connections for dev tools like Console Ninja
+    `connect-src 'self' https://api.stripe.com https://maps.googleapis.com https://*.vercel.live wss://*.vercel.live https://va.vercel-scripts.com${isDevelopment ? " ws://127.0.0.1:* ws://localhost:*" : ""}; ` +
     "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://vercel.live; " +
     "object-src 'none'; " +
     "base-uri 'self';",
@@ -154,7 +158,7 @@ export async function middleware(request: NextRequest) {
             success: false,
             error: "Too many login attempts. Please try again in a minute.",
           },
-          { status: 429 }
+          { status: 429 },
         );
       }
 
@@ -178,7 +182,7 @@ export async function middleware(request: NextRequest) {
     if (parts.length !== 2 || parts[1].length !== 64) {
       // Invalid session format - likely tampering attempt
       const response = NextResponse.redirect(
-        new URL("/admin/login", request.url)
+        new URL("/admin/login", request.url),
       );
       response.cookies.delete("admin_session");
       return response;
@@ -203,7 +207,7 @@ export async function middleware(request: NextRequest) {
           success: false,
           error: "Too many requests. Please try again in a minute.",
         },
-        { status: 429 }
+        { status: 429 },
       );
     }
   }
@@ -218,7 +222,7 @@ export async function middleware(request: NextRequest) {
           success: false,
           error: "Too many login attempts. Please try again in a minute.",
         },
-        { status: 429 }
+        { status: 429 },
       );
     }
   }

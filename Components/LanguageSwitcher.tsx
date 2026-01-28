@@ -48,8 +48,8 @@ export default function LanguageSwitcher({
               locale === loc
                 ? "bg-gold-500 text-forest-900"
                 : isScrolled
-                ? "text-stone hover:text-gold-500"
-                : "text-ivory/80 hover:text-ivory"
+                  ? "text-stone hover:text-gold-500"
+                  : "text-ivory/80 hover:text-ivory"
             }`}
           >
             {loc.toUpperCase()}
@@ -144,12 +144,17 @@ export default function LanguageSwitcher({
                   {localeNames[loc]}
                 </p>
                 <p className="text-xs text-stone">
-                  {loc === "en" ? "English" : loc === "de" ? "German" : loc}
+                  {loc === "en"
+                    ? "English"
+                    : loc === "de"
+                      ? "German"
+                      : loc === "ko"
+                        ? "Korean"
+                        : loc}
                 </p>
               </div>
               {locale === loc && (
                 <div className="ml-auto w-2 h-2 bg-gold-500 rounded-full" />
-              )}
               )}
             </button>
           ))}

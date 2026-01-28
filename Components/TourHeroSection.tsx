@@ -101,41 +101,12 @@ export default function TourHeroSection({
           </motion.button>
         </div>
 
-        {/* Breadcrumb */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-white/70 text-sm mb-4 flex items-center gap-2"
-        >
-          <span className="hover:text-gold-500 cursor-pointer transition-colors">
-            Home
-          </span>
-          <span>/</span>
-          <span className="hover:text-gold-500 cursor-pointer transition-colors">
-            Tours
-          </span>
-          <span>/</span>
-          <span className="text-gold-500">{title}</span>
-        </motion.div>
-
-        {/* Badge - Updated for inquiry-first */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-gold-500/20 border border-gold-500/30 backdrop-blur-sm rounded-full text-gold-300 text-sm font-medium mb-4 w-fit"
-        >
-          <Star className="w-4 h-4 fill-gold-500 text-gold-500" />
-          100% Customizable Experience
-        </motion.div>
-
         {/* Tour Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 max-w-3xl leading-tight"
+          className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 mt-30 max-w-3xl leading-tight"
         >
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
             {title}
