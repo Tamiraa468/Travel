@@ -36,6 +36,7 @@ import {
   Shield,
   Clock,
 } from "lucide-react";
+import { trackGoogleAdsConversion } from "@/lib/gtag";
 
 interface FormData {
   fullName: string;
@@ -122,7 +123,7 @@ export default function InquiryForm({
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
 
@@ -188,6 +189,9 @@ export default function InquiryForm({
       if (!response.ok) {
         throw new Error(result.error || "Something went wrong");
       }
+
+      // Track Google Ads conversion on successful inquiry submission
+      trackGoogleAdsConversion();
 
       setSuccess(true);
 

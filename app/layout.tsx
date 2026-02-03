@@ -6,6 +6,7 @@ import { WishlistProvider } from "@/Components/Wishlist";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { Playfair_Display } from "next/font/google";
 import type { Metadata } from "next";
+import Script from "next/script";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -104,6 +105,20 @@ export default function RootLayout({
           async
         ></script>
       </head>
+
+      {/* Google Ads Global Tag (gtag.js) */}
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=AW-17911480435"
+      />
+      <Script id="google-ads-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17911480435');
+        `}
+      </Script>
       <body>
         <AntdProvider>
           <LanguageProvider>

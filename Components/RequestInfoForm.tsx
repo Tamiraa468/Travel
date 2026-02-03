@@ -14,6 +14,7 @@ import {
   Send,
   Sparkles,
 } from "lucide-react";
+import { trackGoogleAdsConversion } from "@/lib/gtag";
 
 interface FormData {
   fullName: string;
@@ -63,7 +64,7 @@ export default function RequestInfoForm({
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
 
@@ -140,6 +141,9 @@ export default function RequestInfoForm({
       if (!response.ok) {
         throw new Error(result.error || "Failed to submit request");
       }
+
+      // Track Google Ads conversion on successful info request
+      trackGoogleAdsConversion();
 
       setSuccess(true);
       setFormData({
