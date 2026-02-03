@@ -17,13 +17,23 @@ export const createTourSchema = z.object({
     .optional()
     .or(z.literal(""))
     .nullable(),
-  images: z.array(z.string().url()).default([]),
+  images: z.array(z.string()).default([]),
   includes: z.array(z.string()).default([]),
+  excludes: z.array(z.string()).default([]),
   highlights: z.array(z.string()).default([]),
   mapEmbed: z.string().optional().or(z.literal("")).nullable(),
+  season: z.string().optional().or(z.literal("")).nullable(),
+  groupSize: z.string().optional().or(z.literal("")).nullable(),
+  activityLevel: z.string().optional().or(z.literal("")).nullable(),
+  isActive: z.boolean().default(true),
+  isFeatured: z.boolean().default(false),
+  categoryId: z.string().optional().or(z.literal("")).nullable(),
 });
 
-export const updateTourSchema = createTourSchema;
+export const updateTourSchema = createTourSchema.partial().extend({
+  title: z.string().min(3, "Title must be at least 3 characters").optional(),
+  slug: z.string().min(3, "Slug must be at least 3 characters").optional(),
+});
 
 export const tourDateSchema = z.object({
   startDate: z.string().datetime("Invalid date format"),

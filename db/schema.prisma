@@ -39,6 +39,7 @@ model Tour {
   excludes     String[]      @default([])  // NEW: Package excludes
   highlights   String[]      @default([])
   mapEmbed     String?
+  mapImage     String?       // NEW: Map image URL (alternative to embed)
   season       String?       // NEW: Best season (e.g., "June-September")
   groupSize    String?       // NEW: e.g., "1-10 pax"
   activityLevel String?      // NEW: e.g., "Moderate", "Easy", "Challenging"

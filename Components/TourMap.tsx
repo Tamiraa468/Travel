@@ -1,19 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import { MapPin } from "lucide-react";
 
 type Props = {
-  mapEmbed: string;
+  mapEmbed?: string;
+  mapImage?: string;
   title?: string;
 };
 
-export default function TourMap({ mapEmbed, title = "Tour Route Map" }: Props) {
-  if (!mapEmbed) {
+export default function TourMap({
+  mapEmbed,
+  mapImage,
+  title = "Tour Route Map",
+}: Props) {
+  // If neither mapImage nor mapEmbed is provided, don't render anything
+  if (!mapImage && !mapEmbed) {
     return null;
   }
-
-  // Check if it's an iframe string or just a URL
-  const isIframe = mapEmbed.includes("<iframe");
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
@@ -22,23 +26,36 @@ export default function TourMap({ mapEmbed, title = "Tour Route Map" }: Props) {
         <h3 className="font-semibold text-gray-900">{title}</h3>
       </div>
 
-      <div className="aspect-video w-full">
-        {isIframe ? (
-          <div
-            className="w-full h-full"
-            dangerouslySetInnerHTML={{ __html: mapEmbed }}
-          />
-        ) : (
-          <iframe
-            src={mapEmbed}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        )}
+      <div className="w-full">
+        {/* Priority: Show mapImage if available, otherwise show mapEmbed */}
+        {mapImage ? (
+          <div className="relative w-full">
+            <img
+              src={mapImage}
+              alt={title}
+              className="w-full h-auto object-contain"
+            />
+          </div>
+        ) : mapEmbed ? (
+          <div className="aspect-video w-full">
+            {mapEmbed.includes("<iframe") ? (
+              <div
+                className="w-full h-full"
+                dangerouslySetInnerHTML={{ __html: mapEmbed }}
+              />
+            ) : (
+              <iframe
+                src={mapEmbed}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            )}
+          </div>
+        ) : null}
       </div>
     </div>
   );

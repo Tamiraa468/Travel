@@ -4,7 +4,6 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useTravelAgencyContext, Tour } from "../context/TravelAgencyContext";
 import TourCard from "./TourCard";
-import TOURS from "@/data/tours";
 import { ChevronLeft, ChevronRight, Compass } from "lucide-react";
 
 const RecommendedTours: React.FC = () => {
@@ -17,9 +16,6 @@ const RecommendedTours: React.FC = () => {
     once: true,
     margin: "0px 0px -100px 0px",
   });
-
-  // Use tours from context if available, otherwise fallback to TOURS data
-  const displayTours = tours && tours.length > 0 ? tours : TOURS;
 
   // Ensure tours are loaded in context on first mount
   useEffect(() => {
@@ -42,8 +38,8 @@ const RecommendedTours: React.FC = () => {
 
   // Split tours into chunks for each slide
   const slides: Tour[][] = [];
-  for (let i = 0; i < displayTours.length; i += cardsPerSlide) {
-    slides.push(displayTours.slice(i, i + cardsPerSlide));
+  for (let i = 0; i < tours.length; i += cardsPerSlide) {
+    slides.push(tours.slice(i, i + cardsPerSlide));
   }
 
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);

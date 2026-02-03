@@ -137,7 +137,7 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
       <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-5 text-white">
         <div className="flex items-center justify-between mb-2">
           <span className="text-stone text-sm">Price per person</span>
-          <span className="text-white">€{price.toLocaleString()}</span>
+          <span className="text-white">${price.toLocaleString()}</span>
         </div>
         <div className="flex items-center justify-between mb-2">
           <span className="text-stone text-sm">Travelers</span>
@@ -147,7 +147,7 @@ export default function BookingForm({ tourId, tourDateId, price }: Props) {
         <div className="flex items-center justify-between">
           <span className="text-white font-semibold">Total</span>
           <span className="text-2xl font-serif font-bold text-gold-300">
-            €{(price * quantity).toLocaleString()}
+            ${(price * quantity).toLocaleString()}
           </span>
         </div>
       </div>

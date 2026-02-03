@@ -285,9 +285,13 @@ export default async function TourPage({ params }: Props) {
             )}
 
             {/* Tour Map */}
-            {tour.mapEmbed && (
+            {(tour.mapImage || tour.mapEmbed) && (
               <section className="bg-white rounded-2xl shadow-sm p-8 border border-slate-100">
-                <TourMap mapEmbed={tour.mapEmbed} title="Tour Route Map" />
+                <TourMap
+                  mapEmbed={tour.mapEmbed || undefined}
+                  mapImage={tour.mapImage || undefined}
+                  title="Tour Route Map"
+                />
               </section>
             )}
 

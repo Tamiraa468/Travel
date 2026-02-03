@@ -139,7 +139,7 @@ export default function PriceCalculatorModal({
                     <Users className="w-4 h-4 text-gold-500" />
                     Adults
                     <span className="text-stone font-normal">
-                      €{basePrice}/person
+                      ${basePrice}/person
                     </span>
                   </label>
                   <div className="flex items-center gap-3">
@@ -196,9 +196,7 @@ export default function PriceCalculatorModal({
                   <label className="flex items-center gap-2 text-sm font-semibold text-forest-700">
                     <Calendar className="w-4 h-4 text-gold-500" />
                     Preferred Date
-                    <span className="text-stone font-normal">
-                      (Optional)
-                    </span>
+                    <span className="text-stone font-normal">(Optional)</span>
                   </label>
                   <input
                     type="date"
@@ -226,16 +224,14 @@ export default function PriceCalculatorModal({
                       animate={{ opacity: 1, y: 0 }}
                       className="text-center"
                     >
-                      <p className="text-stone text-sm mb-1">
-                        Estimated Total
-                      </p>
+                      <p className="text-stone text-sm mb-1">Estimated Total</p>
                       <p className="text-4xl font-serif font-bold text-gold-300">
-                        €{calculatedPrice.toLocaleString()}
+                        ${calculatedPrice.toLocaleString()}
                       </p>
                       <p className="text-stone text-xs mt-2">
-                        ~€
+                        ~$
                         {Math.round(
-                          calculatedPrice / (adults + children)
+                          calculatedPrice / (adults + children),
                         ).toLocaleString()}{" "}
                         per person
                       </p>

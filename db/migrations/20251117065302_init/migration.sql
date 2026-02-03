@@ -20,6 +20,21 @@ CREATE TABLE "Tour" (
 );
 
 -- CreateTable
+CREATE TABLE "ItineraryDay" (
+    "id" TEXT NOT NULL,
+    "tourId" TEXT NOT NULL,
+    "dayNumber" INTEGER NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "meals" TEXT,
+    "accommodation" TEXT,
+    "activities" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "images" TEXT[] DEFAULT ARRAY[]::TEXT[],
+
+    CONSTRAINT "ItineraryDay_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "TourDate" (
     "id" TEXT NOT NULL,
     "tourId" TEXT NOT NULL,
@@ -79,6 +94,15 @@ CREATE UNIQUE INDEX "Customer_email_key" ON "Customer"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Payment_bookingId_key" ON "Payment"("bookingId");
+
+-- CreateIndex
+CREATE INDEX "ItineraryDay_tourId_idx" ON "ItineraryDay"("tourId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ItineraryDay_tourId_dayNumber_key" ON "ItineraryDay"("tourId", "dayNumber");
+
+-- AddForeignKey
+ALTER TABLE "ItineraryDay" ADD CONSTRAINT "ItineraryDay_tourId_fkey" FOREIGN KEY ("tourId") REFERENCES "Tour"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "TourDate" ADD CONSTRAINT "TourDate_tourId_fkey" FOREIGN KEY ("tourId") REFERENCES "Tour"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

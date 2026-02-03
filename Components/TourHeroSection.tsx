@@ -206,7 +206,7 @@ export default function TourHeroSection({
             <p className="text-white/60 text-sm">Starting from</p>
             <div className="flex items-baseline gap-1">
               <span className="text-4xl font-serif font-bold text-white">
-                €{price.toLocaleString()}
+                ${price.toLocaleString()}
               </span>
               <span className="text-white/60">/ person</span>
             </div>

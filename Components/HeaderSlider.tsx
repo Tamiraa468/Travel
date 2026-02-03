@@ -14,78 +14,93 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
+// Tour type for slider data
+type SliderTour = {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  buttonText1: string;
+  buttonText2: string;
+  imgSrc: string | any;
+  stats: { duration: string; location: string };
+};
+
 const HeaderSlider = () => {
   const { t } = useLanguage();
 
-  const sliderData = [
+  const [tours, setTours] = useState<SliderTour[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fallback slider data when no tours available
+  const fallbackSliderData: SliderTour[] = [
     {
-      id: 1,
+      id: "fallback-1",
+      slug: "",
       title: t.hero.title,
       subtitle: t.hero.untouchedWilderness,
       description: t.hero.subtitle,
       buttonText1: t.hero.exploreTours,
       buttonText2: t.hero.watchVideo,
       imgSrc: assets.sliderImages[0],
-      stats: { duration: "7-21 " + t.common.days, location: "Ulaanbaatar" },
-    },
-    {
-      id: 2,
-      title: t.hero.experienceNomadicHeritage,
-      subtitle: t.hero.culturalImmersion,
-      description: t.hero.nomadicDescription,
-      buttonText1: t.hero.viewExperiences,
-      buttonText2: t.common.learnMore,
-      imgSrc: assets.sliderImages[1],
-      stats: { duration: "5-14 " + t.common.days, location: "Khövsgöl" },
-    },
-    {
-      id: 3,
-      title: "Authentic Nomadic Life",
-      subtitle: "Traditional Ger Stays",
-      description:
-        "Experience the timeless traditions of Mongolia's nomadic herders. Stay in traditional gers surrounded by pristine wilderness.",
-      buttonText1: t.hero.exploreTours,
-      buttonText2: t.common.learnMore,
-      imgSrc: assets.sliderImages[2],
-      stats: { duration: "3-7 " + t.common.days, location: "Arkhangai" },
-    },
-    {
-      id: 4,
-      title: "Eagle Hunters of Altai",
-      subtitle: "Ancient Kazakh Traditions",
-      description:
-        "Meet the legendary Kazakh eagle hunters in Western Mongolia. Witness a 4,000-year-old tradition passed through generations.",
-      buttonText1: t.hero.viewExperiences,
-      buttonText2: t.hero.watchVideo,
-      imgSrc: assets.sliderImages[3],
-      stats: { duration: "10-14 " + t.common.days, location: "Bayan-Ölgii" },
-    },
-    {
-      id: 5,
-      title: "Endless Golden Steppes",
-      subtitle: "Luxury Ger Camps",
-      description:
-        "Discover the vast beauty of Mongolia's iconic steppes. Premium accommodations blending comfort with authentic wilderness.",
-      buttonText1: t.hero.exploreTours,
-      buttonText2: t.common.learnMore,
-      imgSrc: assets.sliderImages[4],
-      stats: { duration: "5-10 " + t.common.days, location: "Gobi Desert" },
-    },
-    {
-      id: 6,
-      title: "Naadam Festival",
-      subtitle: "Mongolia's Greatest Celebration",
-      description:
-        "Experience the Three Manly Games: wrestling, horse racing, and archery. Join Mongolia's most spectacular cultural event.",
-      buttonText1: t.hero.viewExperiences,
-      buttonText2: t.hero.watchVideo,
-      imgSrc: assets.sliderImages[5],
-      stats: { duration: "7-12 " + t.common.days, location: "Ulaanbaatar" },
+      stats: { duration: "7-21 " + t.common.days, location: "Mongolia" },
     },
   ];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  // Fetch tours from API
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const response = await fetch("/api/tours?limit=6");
+        const result = await response.json();
+        const dbTours = result.data || result || [];
+
+        if (dbTours.length > 0) {
+          // Map database tours to slider format
+          const mappedTours: SliderTour[] = dbTours.map(
+            (tour: any, index: number) => ({
+              id: tour.id,
+              slug: tour.slug || tour.id,
+              title: tour.title,
+              subtitle:
+                tour.category || tour.tourType || t.hero.untouchedWilderness,
+              description:
+                tour.shortDescription ||
+                tour.description?.substring(0, 150) + "..." ||
+                "",
+              buttonText1: t.hero.exploreTours,
+              buttonText2: t.common.learnMore,
+              imgSrc:
+                tour.mainImage ||
+                tour.images?.[0] ||
+                assets.sliderImages[index % assets.sliderImages.length],
+              stats: {
+                duration: tour.days
+                  ? `${tour.days} ${t.common.days}`
+                  : tour.duration || "7 " + t.common.days,
+                location: tour.region || tour.location || "Mongolia",
+              },
+            }),
+          );
+          setTours(mappedTours);
+        } else {
+          setTours(fallbackSliderData);
+        }
+      } catch (error) {
+        console.error("Error fetching tours for slider:", error);
+        setTours(fallbackSliderData);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTours();
+  }, [t]);
+
+  const sliderData = tours.length > 0 ? tours : fallbackSliderData;
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -105,7 +120,7 @@ const HeaderSlider = () => {
     handleSlideChange((currentSlide + 1) % sliderData.length);
   const prevSlide = () =>
     handleSlideChange(
-      (currentSlide - 1 + sliderData.length) % sliderData.length
+      (currentSlide - 1 + sliderData.length) % sliderData.length,
     );
 
   return (
@@ -203,7 +218,7 @@ const HeaderSlider = () => {
                         className="flex flex-wrap gap-4"
                       >
                         <Link
-                          href="/tours"
+                          href={slide.slug ? `/tours/${slide.slug}` : "/tours"}
                           className="group relative px-8 py-4 bg-gold-500 text-forest-900 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-gold-500/30"
                         >
                           <span className="relative z-10">
@@ -211,18 +226,21 @@ const HeaderSlider = () => {
                           </span>
                           <div className="absolute inset-0 bg-gold-300 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
                         </Link>
-                        <button className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border border-white/30 hover:bg-white hover:text-forest-900 transition-all duration-300">
+                        <Link
+                          href="/tours"
+                          className="group flex items-center gap-3 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border border-white/30 hover:bg-white hover:text-forest-900 transition-all duration-300"
+                        >
                           <div className="w-10 h-10 rounded-full bg-white/20 group-hover:bg-gold-500 flex items-center justify-center transition-colors duration-300">
                             <Play size={16} fill="currentColor" />
                           </div>
                           {slide.buttonText2}
-                        </button>
+                        </Link>
                       </motion.div>
                     </div>
                   </div>
                 </div>
               </motion.div>
-            )
+            ),
         )}
       </AnimatePresence>
 

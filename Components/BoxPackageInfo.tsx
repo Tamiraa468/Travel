@@ -56,7 +56,7 @@ export default function BoxPackageInfo({
         </p>
         <div className="flex items-baseline justify-center gap-1">
           <span className="text-5xl font-serif font-bold text-forest-900">
-            €{price.toLocaleString()}
+            ${price.toLocaleString()}
           </span>
         </div>
         <p className="text-stone text-sm mt-1">per person</p>
