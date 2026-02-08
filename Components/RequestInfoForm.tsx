@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -43,6 +44,7 @@ export default function RequestInfoForm({
   className = "",
   onClose,
 }: RequestInfoFormProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     email: "",
@@ -145,25 +147,8 @@ export default function RequestInfoForm({
       // Track Google Ads conversion on successful info request
       trackGoogleAdsConversion();
 
-      setSuccess(true);
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        preferredStartDate: "",
-        adults: 1,
-        children: 0,
-        message: "",
-        tourName: tourName || "",
-        tourId: tourId || "",
-        marketingConsent: false,
-        hp: "",
-      });
-
-      setTimeout(() => {
-        setSuccess(false);
-        if (onClose) onClose();
-      }, 3000);
+      // Redirect to thank-you page for conversion tracking
+      router.push("/thank-you?source=site");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {

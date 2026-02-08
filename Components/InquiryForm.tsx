@@ -19,6 +19,7 @@
  */
 
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -116,6 +117,7 @@ export default function InquiryForm({
     hp: "",
   });
 
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -193,7 +195,8 @@ export default function InquiryForm({
       // Track Google Ads conversion on successful inquiry submission
       trackGoogleAdsConversion();
 
-      setSuccess(true);
+      // Redirect to thank-you page for conversion tracking
+      router.push("/thank-you?source=site");
 
       // Reset form
       setFormData({
