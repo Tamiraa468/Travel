@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CheckCircle, MessageCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-export default function ThankYouPage() {
+function ThankYouContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isValid, setIsValid] = useState<boolean | null>(null);
@@ -30,10 +30,10 @@ export default function ThankYouPage() {
 
   // Valid access - show thank you content
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sand to-ivory flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-linear-to-br from-sand to-ivory flex items-center justify-center px-4 py-12">
       <div className="max-w-lg w-full text-center">
         {/* Success Icon */}
-        <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-emerald-500/30">
+        <div className="w-20 h-20 bg-linear-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-lg shadow-emerald-500/30">
           <CheckCircle className="w-10 h-10 text-white" />
         </div>
 
@@ -102,5 +102,19 @@ export default function ThankYouPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function ThankYouPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-sand">
+          <p className="text-charcoal">Loading...</p>
+        </div>
+      }
+    >
+      <ThankYouContent />
+    </Suspense>
   );
 }
