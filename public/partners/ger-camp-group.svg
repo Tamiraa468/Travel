@@ -1,0 +1,8 @@
+<svg width="280" height="96" viewBox="0 0 280 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="280" height="96" rx="18" fill="#F5F1EA"/>
+  <rect x="28" y="24" width="56" height="48" rx="14" fill="#1D3D2F"/>
+  <path d="M38 58V46L56 34L74 46V58" stroke="#E5D4A1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="56" cy="48" r="4" fill="#E5D4A1"/>
+  <text x="97" y="43" fill="#1D3D2F" font-family="Arial, sans-serif" font-size="20" font-weight="700">GER CAMP</text>
+  <text x="97" y="64" fill="#A68B4B" font-family="Arial, sans-serif" font-size="16" font-weight="600">GROUP</text>
+</svg>

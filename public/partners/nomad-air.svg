@@ -1,0 +1,7 @@
+<svg width="280" height="96" viewBox="0 0 280 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="280" height="96" rx="18" fill="#F5F1EA"/>
+  <circle cx="58" cy="48" r="24" fill="#1D3D2F"/>
+  <path d="M46 51L57.5 40L70 52" stroke="#E5D4A1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="95" y="42" fill="#1D3D2F" font-family="Arial, sans-serif" font-size="21" font-weight="700">NOMAD</text>
+  <text x="95" y="63" fill="#3A6B52" font-family="Arial, sans-serif" font-size="16" font-weight="600" letter-spacing="2">AIR</text>
+</svg>

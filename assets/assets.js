@@ -10,10 +10,12 @@ import gobi from './gobi.jpg';
 import khuvsgul from './khuvsgul.jpg';
 import terelj from './terelj.jpg';
 import Hero  from './gobi_Hero.jpg';
+import partner1 from './partner1.jpg';
 
 export const assets = { 
   sliderImages: [Slider1, Slider2, Slider3, Slider4, Slider5, Slider6],
   logo: logo,
   tourImages: { gobi, khuvsgul, terelj }, // keyed by name
   heroImage: Hero,
+  partnerLogo: [partner1]
 };

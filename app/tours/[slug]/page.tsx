@@ -219,10 +219,6 @@ export default async function TourPage({ params }: Props) {
               {/* Trust Badges */}
               <div className="flex flex-wrap gap-6 mt-8 pt-8 border-t border-slate-100">
                 <div className="flex items-center gap-2 text-slate-600">
-                  <Shield className="w-5 h-5 text-green-500" />
-                  <span className="text-sm">Free Cancellation</span>
-                </div>
-                <div className="flex items-center gap-2 text-slate-600">
                   <Award className="w-5 h-5 text-amber-500" />
                   <span className="text-sm">Best Price Guarantee</span>
                 </div>

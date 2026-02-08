@@ -68,10 +68,6 @@ export default function BoxPackageInfo({
       {/* Features - Updated for inquiry-first model */}
       <div className="p-6 space-y-3">
         <div className="flex items-center gap-3 text-charcoal">
-          <Sparkles className="w-5 h-5 text-gold-500" />
-          <span className="text-sm">100% customizable itinerary</span>
-        </div>
-        <div className="flex items-center gap-3 text-charcoal">
           <Users className="w-5 h-5 text-forest-500" />
           <span className="text-sm">Private or small group options</span>
         </div>
@@ -105,14 +101,6 @@ export default function BoxPackageInfo({
           <MessageCircle className="w-5 h-5" />
           Chat on WhatsApp
         </a>
-
-        {/* Trust microcopy */}
-        <div className="mt-4 p-3 bg-sand rounded-lg">
-          <p className="text-center text-stone text-xs flex items-center justify-center gap-2">
-            <Shield className="w-4 h-4 text-green-500" />
-            No payment required • Free consultation
-          </p>
-        </div>
       </div>
     </div>
   );

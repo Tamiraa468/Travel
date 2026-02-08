@@ -2,8 +2,8 @@ import Navbar from "../Components/Navbar";
 import HeaderSlider from "../Components/HeaderSlider";
 import RecommendedTours from "@/Components/RecommendedTours";
 import WhyChooseUs from "@/Components/WhyChooseUs";
+import PartnersSection from "@/Components/PartnersSection";
 import Footer from "@/Components/Footer";
-import TestimonialsSection from "@/Components/TestimonialsSection";
 import CTASection from "@/Components/CTASection";
 import type { Metadata } from "next";
 
@@ -30,6 +30,7 @@ export default function Home() {
         <HeaderSlider />
         <RecommendedTours />
         <WhyChooseUs />
+        <PartnersSection />
         {/* <TestimonialsSection /> */}
         <CTASection />
       </main>

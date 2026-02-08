@@ -243,16 +243,6 @@ export default function InquiryForm({
           and reach out within 24 hours.
         </p>
 
-        <div className="bg-gold-500/10 border border-gold-300 rounded-xl p-4 mb-6">
-          <p className="text-gold-700 text-sm flex items-center justify-center gap-2">
-            <Shield className="w-4 h-4" />
-            <span>
-              <strong>No payment required</strong> until you&apos;re 100% happy
-              with your trip plan
-            </span>
-          </p>
-        </div>
-
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
             href="https://wa.me/97689475188"
@@ -305,19 +295,13 @@ export default function InquiryForm({
           </div>
         )}
 
-        {/* Trust Indicators */}
-        <div className="grid grid-cols-3 gap-2 text-center">
-          <div className="p-2 bg-sand rounded-lg">
-            <Shield className="w-4 h-4 text-green-500 mx-auto mb-1" />
-            <span className="text-xs text-stone">No Payment</span>
-          </div>
-          <div className="p-2 bg-sand rounded-lg">
-            <Sparkles className="w-4 h-4 text-gold-500 mx-auto mb-1" />
-            <span className="text-xs text-stone">100% Custom</span>
-          </div>
-          <div className="p-2 bg-sand rounded-lg">
-            <Clock className="w-4 h-4 text-forest-500 mx-auto mb-1" />
-            <span className="text-xs text-stone">Reply in 24h</span>
+        {/* Trust Indicator */}
+        <div className="flex justify-center">
+          <div className="p-2 bg-sand rounded-lg px-4">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-forest-500" />
+              <span className="text-xs text-stone">Reply in 24h</span>
+            </div>
           </div>
         </div>
 
@@ -515,9 +499,7 @@ export default function InquiryForm({
         </button>
 
         {/* Trust Footer */}
-        <p className="text-center text-xs text-stone">
-          ✓ No payment required • ✓ 100% customizable • ✓ Reply within 24h
-        </p>
+        <p className="text-center text-xs text-stone">✓ Reply within 24h</p>
       </form>
     </div>
   );

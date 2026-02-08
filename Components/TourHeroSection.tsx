@@ -250,7 +250,6 @@ export default function TourHeroSection({
           transition={{ delay: 0.7 }}
           className="mt-4 text-white/50 text-sm"
         >
-          ✓ No payment required &nbsp;•&nbsp; ✓ 100% customizable &nbsp;•&nbsp;
           ✓ Local expert reply within 24 hours
         </motion.p>
       </div>

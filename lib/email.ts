@@ -124,8 +124,8 @@ export async function sendUserConfirmationEmail({
                 <div class="info-row">
                   <span class="info-label">Travelers</span>
                   <span class="info-value">${adults || 1} adult(s), ${
-      children || 0
-    } child(ren)</span>
+                    children || 0
+                  } child(ren)</span>
                 </div>
                 <div class="info-row">
                   <span class="info-label">Preferred Date</span>
@@ -285,7 +285,7 @@ export async function sendInternalNotificationEmail({
                 message
                   ? `<div class="message-box"><strong>Customer Message:</strong><p style="margin: 10px 0 0 0; color: #475569;">${message.replace(
                       /\n/g,
-                      "<br>"
+                      "<br>",
                     )}</p></div>`
                   : ""
               }
@@ -424,8 +424,8 @@ export async function sendPaymentInfoEmail({
                 <tr>
                   <td>Travelers</td>
                   <td>${adults} adult(s)${
-      children > 0 ? `, ${children} child(ren)` : ""
-    }</td>
+                    children > 0 ? `, ${children} child(ren)` : ""
+                  }</td>
                 </tr>
                 <tr>
                   <td>Preferred Date</td>
@@ -447,7 +447,7 @@ export async function sendPaymentInfoEmail({
                 })}</div>
                 <div class="note">Remaining $${remainingAmount.toLocaleString(
                   "en-US",
-                  { minimumFractionDigits: 2 }
+                  { minimumFractionDigits: 2 },
                 )} due before tour start</div>
               </div>
 
@@ -621,8 +621,8 @@ export async function sendBookingConfirmationEmail({
                 <tr>
                   <td>Travelers</td>
                   <td>${adults} adult(s)${
-      children > 0 ? `, ${children} child(ren)` : ""
-    }</td>
+                    children > 0 ? `, ${children} child(ren)` : ""
+                  }</td>
                 </tr>
                 <tr>
                   <td>Tour Date</td>
@@ -782,17 +782,17 @@ export async function sendPaymentReminderEmail({
               
               <p class="message-text">You've paid <strong>$${amountPaid.toLocaleString(
                 "en-US",
-                { minimumFractionDigits: 2 }
+                { minimumFractionDigits: 2 },
               )}</strong> (${paidPercentage}% of total), but we need at least 30% ($${advanceRequired.toLocaleString(
-      "en-US",
-      { minimumFractionDigits: 2 }
-    )}) to secure your spot.</p>
+                "en-US",
+                { minimumFractionDigits: 2 },
+              )}) to secure your spot.</p>
 
               <div class="reminder-card">
                 <div class="label">Amount Needed to Confirm</div>
                 <div class="amount">$${remainingAdvance.toLocaleString(
                   "en-US",
-                  { minimumFractionDigits: 2 }
+                  { minimumFractionDigits: 2 },
                 )}</div>
               </div>
 
@@ -968,7 +968,7 @@ export async function sendPaymentLinkEmail({
                   <span class="detail-label">Total Price</span>
                   <span class="detail-value">$${totalPrice.toLocaleString(
                     "en-US",
-                    { minimumFractionDigits: 2 }
+                    { minimumFractionDigits: 2 },
                   )}</span>
                 </div>
                 <div class="detail-row">
@@ -990,7 +990,7 @@ export async function sendPaymentLinkEmail({
                   isAdvancePayment
                     ? `<div class="note">Remaining $${remainingAmount.toLocaleString(
                         "en-US",
-                        { minimumFractionDigits: 2 }
+                        { minimumFractionDigits: 2 },
                       )} due before tour start</div>`
                     : ""
                 }
@@ -1186,7 +1186,7 @@ export async function sendPaymentConfirmationEmail({
                   <td>Remaining Balance</td>
                   <td class="remaining">$${remainingAmount.toLocaleString(
                     "en-US",
-                    { minimumFractionDigits: 2 }
+                    { minimumFractionDigits: 2 },
                   )}</td>
                 </tr>
                 `
@@ -1210,7 +1210,7 @@ export async function sendPaymentConfirmationEmail({
                     !isFullyPaid
                       ? `<li>Remaining balance of $${remainingAmount.toLocaleString(
                           "en-US",
-                          { minimumFractionDigits: 2 }
+                          { minimumFractionDigits: 2 },
                         )} is due before tour start</li>`
                       : ""
                   }
@@ -1339,11 +1339,6 @@ export async function sendInquiryAutoReplyEmail({
                   <li>We'll answer all your questions and tailor everything to your preferences</li>
                   <li>Your trip, your pace – <strong>100% flexible</strong></li>
                 </ul>
-              </div>
-
-              <div class="no-payment-note">
-                <strong>💳 No Payment Required</strong>
-                <p>This is just the beginning of our conversation. We'll discuss everything before any commitment.</p>
               </div>
 
               <p class="message-text" style="text-align: center;">
@@ -1513,13 +1508,13 @@ export async function sendInquiryNotificationToAdmin({
               <div class="quick-actions">
                 <h3>⚡ Quick Actions</h3>
                 <a href="mailto:${email}?subject=Re: Your Mongolia Travel Inquiry&body=Hi ${
-      name.split(" ")[0]
-    },%0D%0A%0D%0AThank you for your interest in traveling to Mongolia!" class="btn btn-email">📧 Reply by Email</a>
+                  name.split(" ")[0]
+                },%0D%0A%0D%0AThank you for your interest in traveling to Mongolia!" class="btn btn-email">📧 Reply by Email</a>
                 ${
                   phone
                     ? `<a href="https://wa.me/${phone.replace(
                         /[^0-9]/g,
-                        ""
+                        "",
                       )}" class="btn btn-whatsapp">💬 WhatsApp</a>`
                     : ""
                 }
