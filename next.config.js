@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
+
+// Bundle analyzer – run with ANALYZE=true to inspect chunk sizes
+const withBundleAnalyzer = process.env.ANALYZE === "true"
+  ? require("@next/bundle-analyzer")({ enabled: true })
+  : (config) => config;
+
 const nextConfig = {
   // ============================================
   // SEO CONFIGURATION
@@ -57,4 +63,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

@@ -7,6 +7,7 @@
     "build": "prisma generate --schema=./db/schema.prisma && next build",
     "start": "next start",
     "lint": "next lint",
+    "analyze": "ANALYZE=true next build",
     "postinstall": "prisma generate --schema=./db/schema.prisma"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "2": "^3.0.0",
+    "@next/bundle-analyzer": "^16.1.6",
     "@tailwindcss/postcss": "^4.1.16",
     "@types/ioredis": "^4.28.10",
     "@types/node": "^20",

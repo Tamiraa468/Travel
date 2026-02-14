@@ -1,9 +1,5 @@
 import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import AntdProvider from "@/Components/AntdProvider";
-import TravelAgencyProvider from "../context/TravelAgencyContext";
-import { WishlistProvider } from "@/Components/Wishlist";
-import { LanguageProvider } from "@/context/LanguageContext";
 import { Playfair_Display } from "next/font/google";
 import type { Metadata } from "next";
 import Script from "next/script";
@@ -98,13 +94,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={playfair.variable}>
-      <head>
-        <script
-          src="https://analytics.ahrefs.com/analytics.js"
-          data-key="Nns/FvE1KbM30Z24DHSwgw"
-          async
-        ></script>
-      </head>
+      {/* Ahrefs analytics – loaded after hydration to avoid blocking render */}
+      <Script
+        src="https://analytics.ahrefs.com/analytics.js"
+        data-key="Nns/FvE1KbM30Z24DHSwgw"
+        strategy="afterInteractive"
+      />
 
       {/* Google Ads Global Tag (gtag.js) */}
       <Script
@@ -120,16 +115,8 @@ export default function RootLayout({
         `}
       </Script>
       <body>
-        <AntdProvider>
-          <LanguageProvider>
-            <TravelAgencyProvider>
-              <WishlistProvider>
-                {children}
-                <SpeedInsights />
-              </WishlistProvider>
-            </TravelAgencyProvider>
-          </LanguageProvider>
-        </AntdProvider>
+        {children}
+        <SpeedInsights />
       </body>
     </html>
   );
