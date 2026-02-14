@@ -90,7 +90,9 @@ export default function TourHeroSection({
                 ? "bg-rose-500 text-white"
                 : "bg-white/20 text-white hover:bg-white/30"
             }`}
-            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            aria-label={
+              isWishlisted ? "Remove from wishlist" : "Add to wishlist"
+            }
           >
             <Heart className={`w-5 h-5 ${isWishlisted ? "fill-white" : ""}`} />
           </motion.button>

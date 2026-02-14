@@ -70,8 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: displayTitle,
     description:
-      tour.description ||
-      `Explore ${displayTitle} with Maralgoo Dreamland.`,
+      tour.description || `Explore ${displayTitle} with Maralgoo Dreamland.`,
     alternates: {
       canonical: `/tours/${canonicalPath}`,
     },
