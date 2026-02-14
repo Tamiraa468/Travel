@@ -10,6 +10,7 @@ import IncludesExcludes from "@/Components/IncludesExcludes";
 import PhotoGallery from "@/Components/PhotoGallery";
 import TourMap from "@/Components/TourMap";
 import RelatedTours from "@/Components/RelatedTours";
+import { slugToTitle } from "@/lib/format";
 import {
   Calendar,
   Users,
@@ -17,7 +18,6 @@ import {
   Sun,
   Check,
   Sparkles,
-  Shield,
   Award,
 } from "lucide-react";
 import type { Metadata } from "next";
@@ -62,16 +62,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // Use slug if available, otherwise use id
   const canonicalPath = tour.slug || tour.id;
+  const displayTitle =
+    tour.title && tour.title.trim().length > 0
+      ? tour.title
+      : slugToTitle(canonicalPath);
 
   return {
-    title: tour.title,
+    title: displayTitle,
     description:
-      tour.description || `Explore ${tour.title} with Maralgoo Dreamland.`,
+      tour.description ||
+      `Explore ${displayTitle} with Maralgoo Dreamland.`,
     alternates: {
       canonical: `/tours/${canonicalPath}`,
     },
     openGraph: {
-      title: tour.title,
+      title: displayTitle,
       description: tour.description || undefined,
       url: `/tours/${canonicalPath}`,
       type: "website",
@@ -132,6 +137,11 @@ export default async function TourPage({ params }: Props) {
     );
   }
 
+  const displayTitle =
+    tour.title && tour.title.trim().length > 0
+      ? tour.title
+      : slugToTitle(tour.slug || slug);
+
   // Fetch related tours (same category or similar duration)
   const relatedTours = await prisma.tour.findMany({
     where: {
@@ -152,14 +162,15 @@ export default async function TourPage({ params }: Props) {
 
       {/* Hero Section */}
       <TourHeroWrapper
-        title={tour.title}
+        imageUrl={tour.mainImage || undefined}
+        title={displayTitle}
         rating={4.8}
         reviewCount={29}
         duration={tour.days}
         nights={tour.days - 1}
         price={tour.priceFrom}
         tourId={tour.id}
-        tourName={tour.title}
+        tourName={displayTitle}
       />
 
       {/* Main Content Area - Two Column Layout */}
@@ -362,7 +373,7 @@ export default async function TourPage({ params }: Props) {
                 <TourPackageSection
                   price={tour.priceFrom}
                   tourId={tour.id}
-                  tourName={tour.title}
+                  tourName={displayTitle}
                 />
               </div>
 

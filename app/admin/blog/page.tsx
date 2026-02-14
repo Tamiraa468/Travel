@@ -100,8 +100,8 @@ export default function AdminBlogPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Blog Posts</h1>
-          <p className="text-gray-500 mt-1">Manage your blog content</p>
+          <h1 className="text-2xl font-bold text-gray-900">News Posts</h1>
+          <p className="text-gray-500 mt-1">Manage your news and blog content</p>
         </div>
         <Link
           href="/admin/blog/new"

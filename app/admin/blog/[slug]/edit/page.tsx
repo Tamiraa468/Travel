@@ -33,7 +33,7 @@ export default function EditBlogPostPage({ params }: Props) {
     content: "",
     category: "NEWS",
     author: "",
-    featuredImage: "",
+    coverImage: "",
     tags: [] as string[],
     isPublished: false,
   });
@@ -56,7 +56,7 @@ export default function EditBlogPostPage({ params }: Props) {
           content: post.content || "",
           category: post.category || "NEWS",
           author: post.author || "",
-          featuredImage: post.featuredImage || "",
+          coverImage: post.coverImage || "",
           tags: post.tags || [],
           isPublished: post.isPublished || false,
         });
@@ -102,7 +102,8 @@ export default function EditBlogPostPage({ params }: Props) {
       });
 
       if (res.ok) {
-        const updatedPost = await res.json();
+        const payload = await res.json();
+        const updatedPost = payload?.data || payload;
         // If slug changed, redirect to new edit URL
         if (updatedPost.slug !== slug) {
           router.push(`/admin/blog/${updatedPost.slug}/edit`);
@@ -328,16 +329,16 @@ export default function EditBlogPostPage({ params }: Props) {
 
           {/* Featured Image */}
           <AdminCard title="Featured Image">
-            {formData.featuredImage ? (
+            {formData.coverImage ? (
               <div className="relative">
                 <img
-                  src={formData.featuredImage}
+                  src={formData.coverImage}
                   alt="Featured"
                   className="w-full h-40 object-cover rounded-lg"
                 />
                 <button
                   onClick={() =>
-                    setFormData({ ...formData, featuredImage: "" })
+                    setFormData({ ...formData, coverImage: "" })
                   }
                   className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
                 >
@@ -347,9 +348,9 @@ export default function EditBlogPostPage({ params }: Props) {
             ) : (
               <ImageUpload
                 label="Featured Image"
-                value={formData.featuredImage}
+                value={formData.coverImage}
                 onChange={(url: string) =>
-                  setFormData({ ...formData, featuredImage: url })
+                  setFormData({ ...formData, coverImage: url })
                 }
               />
             )}

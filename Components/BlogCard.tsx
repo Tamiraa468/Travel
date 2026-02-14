@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, Clock, Eye, ArrowRight } from "lucide-react";
 
 type BlogPost = {
@@ -48,10 +49,13 @@ export default function BlogCard({ post }: Props) {
         className="block relative aspect-[16/9] overflow-hidden"
       >
         {post.coverImage ? (
-          <img
+          <Image
             src={post.coverImage}
             alt={post.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            quality={75}
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">

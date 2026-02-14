@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Save, Eye, Image as ImageIcon, X } from "lucide-react";
+import { ArrowLeft, Save, Eye, X } from "lucide-react";
 import AdminCard from "@/Components/AdminCard";
 import ImageUpload from "@/Components/ImageUpload";
 
@@ -28,7 +28,7 @@ export default function NewBlogPostPage() {
     content: "",
     category: "NEWS",
     author: "",
-    featuredImage: "",
+    coverImage: "",
     tags: [] as string[],
     isPublished: false,
   });
@@ -255,16 +255,16 @@ export default function NewBlogPostPage() {
 
           {/* Featured Image */}
           <AdminCard title="Featured Image">
-            {formData.featuredImage ? (
+            {formData.coverImage ? (
               <div className="relative">
                 <img
-                  src={formData.featuredImage}
+                  src={formData.coverImage}
                   alt="Featured"
                   className="w-full h-40 object-cover rounded-lg"
                 />
                 <button
                   onClick={() =>
-                    setFormData({ ...formData, featuredImage: "" })
+                    setFormData({ ...formData, coverImage: "" })
                   }
                   className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
                 >
@@ -274,9 +274,9 @@ export default function NewBlogPostPage() {
             ) : (
               <ImageUpload
                 label="Featured Image"
-                value={formData.featuredImage}
+                value={formData.coverImage}
                 onChange={(url: string) =>
-                  setFormData({ ...formData, featuredImage: url })
+                  setFormData({ ...formData, coverImage: url })
                 }
               />
             )}

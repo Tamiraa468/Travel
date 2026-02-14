@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -35,7 +36,7 @@ export default function PhotoGallery({ images, title }: Props) {
   const prevImage = () => {
     if (selectedIndex !== null) {
       setSelectedIndex(
-        selectedIndex === 0 ? images.length - 1 : selectedIndex - 1
+        selectedIndex === 0 ? images.length - 1 : selectedIndex - 1,
       );
     }
   };
@@ -59,10 +60,13 @@ export default function PhotoGallery({ images, title }: Props) {
             onClick={() => openLightbox(index)}
             className="relative aspect-[4/3] rounded-lg overflow-hidden cursor-pointer group"
           >
-            <img
+            <Image
               src={image}
               alt={`Gallery image ${index + 1}`}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              fill
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-110"
+              quality={75}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
               <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />

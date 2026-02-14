@@ -1,12 +1,13 @@
 import Image from "next/image";
-import { assets } from "../assets/assets";
+
 type PartnerLogo = {
   name: string;
   logo: string;
 };
 
+// All partner logos served from /public/partners/ — static SVGs, no 400 errors
 const partnerLogos: PartnerLogo[] = [
-  { name: "Nomad Air", logo: assets.partnerLogo[0] },
+  { name: "Nomad Air", logo: "/partners/nomad-air.svg" },
   { name: "Steppe Hotels", logo: "/partners/steppe-hotels.svg" },
   { name: "Blue Sky Bank", logo: "/partners/blue-sky-bank.svg" },
   { name: "Eagle Outfitters", logo: "/partners/eagle-outfitters.svg" },

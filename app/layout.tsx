@@ -2,7 +2,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Playfair_Display } from "next/font/google";
 import type { Metadata } from "next";
-import Script from "next/script";
+import Analytics from "@/Components/Analytics";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -94,29 +94,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={playfair.variable}>
-      {/* Ahrefs analytics – loaded after hydration to avoid blocking render */}
-      <Script
-        src="https://analytics.ahrefs.com/analytics.js"
-        data-key="Nns/FvE1KbM30Z24DHSwgw"
-        strategy="afterInteractive"
-      />
-
-      {/* Google Ads Global Tag (gtag.js) */}
-      <Script
-        strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=AW-17911480435"
-      />
-      <Script id="google-ads-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-17911480435');
-        `}
-      </Script>
       <body>
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

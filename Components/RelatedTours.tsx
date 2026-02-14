@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 type Tour = {
@@ -53,10 +54,13 @@ export default function RelatedTours({
               {/* Image */}
               <div className="relative aspect-[16/10] overflow-hidden">
                 {tour.mainImage ? (
-                  <img
+                  <Image
                     src={tour.mainImage}
                     alt={tour.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    quality={75}
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">

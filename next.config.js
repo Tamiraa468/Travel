@@ -28,12 +28,18 @@ const nextConfig = {
   // IMAGES
   // ============================================
   images: {
+    // Serve modern formats automatically (WebP for all browsers, AVIF for supported)
+    formats: ['image/avif', 'image/webp'],
+    // Allow remote images from any HTTPS source (tour images from DB/CDN)
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**',
       },
     ],
+    // Optimized device breakpoints for responsive images
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
   
   // ============================================

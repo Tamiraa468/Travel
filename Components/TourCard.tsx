@@ -77,13 +77,16 @@ export default function TourCard({
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
     >
-      {/* Image Container */}
-      <div className="relative h-64 overflow-hidden">
+      {/* Image Container — aspect ratio container prevents CLS */}
+      <div className="relative aspect-[4/3] overflow-hidden">
         {finalMainImage ? (
-          <img
+          <Image
             src={finalMainImage}
             alt={finalTitle}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-110"
+            quality={75}
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">

@@ -16,6 +16,7 @@
  */
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   Star,
   Clock,
@@ -79,7 +80,7 @@ export default function TourHeroSection({
       {/* Content */}
       <div className="relative h-full min-h-[70vh] flex flex-col justify-end pb-24 px-4 sm:px-8 max-w-7xl mx-auto w-full">
         {/* Top Actions */}
-        <div className="absolute top-8 right-8 flex items-center gap-3">
+        <div className="absolute top-6 right-4 sm:top-8 sm:right-8 flex items-center gap-3">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -89,6 +90,7 @@ export default function TourHeroSection({
                 ? "bg-rose-500 text-white"
                 : "bg-white/20 text-white hover:bg-white/30"
             }`}
+            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
           >
             <Heart className={`w-5 h-5 ${isWishlisted ? "fill-white" : ""}`} />
           </motion.button>
@@ -96,19 +98,37 @@ export default function TourHeroSection({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="p-3 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/30 transition-all"
+            aria-label="Share this tour"
           >
             <Share2 className="w-5 h-5" />
           </motion.button>
         </div>
+
+        <motion.nav
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
+          className="mb-3 mt-20 sm:mt-24 flex items-center gap-2 max-w-full text-sm text-white/80 overflow-hidden"
+          aria-label="Breadcrumb"
+        >
+          <Link
+            href="/tours"
+            className="shrink-0 hover:text-gold-300 transition-colors"
+          >
+            Tours
+          </Link>
+          <span className="shrink-0 text-white/60">/</span>
+          <span className="min-w-0 line-clamp-1 break-words">{title}</span>
+        </motion.nav>
 
         {/* Tour Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 mt-30 max-w-3xl leading-tight"
+          className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white mb-6 max-w-3xl leading-tight break-words line-clamp-2 sm:line-clamp-none"
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300 break-words">
             {title}
           </span>
         </motion.h1>

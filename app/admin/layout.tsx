@@ -20,6 +20,7 @@ export default function AdminLayout({
   const navItems = [
     { label: "Dashboard", href: "/admin" },
     { label: "📬 Inquiries", href: "/admin/inquiries", highlight: true },
+    { label: "📰 News", href: "/admin/blog" },
     { label: "Tours", href: "/admin/tours" },
     { label: "Bookings", href: "/admin/bookings" },
     { label: "Payments", href: "/admin/payments" },

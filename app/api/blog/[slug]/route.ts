@@ -1,27 +1,33 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { getSession } from "@/lib/auth";
 
 type Params = { params: { slug: string } };
 
 // GET single blog post by slug
 export async function GET(req: Request, { params }: Params) {
   try {
+    const session = await getSession();
+    const isAdmin = Boolean(session?.isAdmin);
+
     const post = await prisma.blogPost.findUnique({
       where: { slug: params.slug },
     });
 
-    if (!post) {
+    if (!post || (!post.isPublished && !isAdmin)) {
       return NextResponse.json(
         { ok: false, error: "Post not found" },
         { status: 404 }
       );
     }
 
-    // Increment view count
-    await prisma.blogPost.update({
-      where: { slug: params.slug },
-      data: { views: { increment: 1 } },
-    });
+    if (post.isPublished && !isAdmin) {
+      // Only count public reads as views.
+      await prisma.blogPost.update({
+        where: { slug: params.slug },
+        data: { views: { increment: 1 } },
+      });
+    }
 
     return NextResponse.json(post);
   } catch (error) {
@@ -36,6 +42,14 @@ export async function GET(req: Request, { params }: Params) {
 // PUT update blog post
 export async function PUT(req: Request, { params }: Params) {
   try {
+    const session = await getSession();
+    if (!session?.isAdmin) {
+      return NextResponse.json(
+        { ok: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const {
       title,
@@ -43,6 +57,7 @@ export async function PUT(req: Request, { params }: Params) {
       excerpt,
       content,
       coverImage,
+      featuredImage,
       author,
       category,
       tags,
@@ -68,15 +83,15 @@ export async function PUT(req: Request, { params }: Params) {
         slug: newSlug || params.slug,
         excerpt,
         content,
-        coverImage,
+        coverImage: coverImage || featuredImage || null,
         author,
         category,
         tags,
         isPublished,
         publishedAt:
-          isPublished && !existing.publishedAt
-            ? new Date()
-            : existing.publishedAt,
+          isPublished
+            ? existing.publishedAt || new Date()
+            : null,
       },
     });
 
@@ -93,6 +108,14 @@ export async function PUT(req: Request, { params }: Params) {
 // DELETE blog post
 export async function DELETE(req: Request, { params }: Params) {
   try {
+    const session = await getSession();
+    if (!session?.isAdmin) {
+      return NextResponse.json(
+        { ok: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     await prisma.blogPost.delete({
       where: { slug: params.slug },
     });

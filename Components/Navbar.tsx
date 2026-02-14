@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -19,6 +19,21 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileDrawerRef = useRef<HTMLDivElement>(null);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  const getFocusableDrawerElements = useCallback((): HTMLElement[] => {
+    if (!mobileDrawerRef.current) return [];
+    const selector =
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(
+      mobileDrawerRef.current.querySelectorAll<HTMLElement>(selector),
+    ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
+  }, []);
 
   // Handle scroll effect
   useEffect(() => {
@@ -28,6 +43,94 @@ const Navbar: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+    const previousStyles = {
+      htmlOverflow: html.style.overflow,
+      bodyOverflow: body.style.overflow,
+      bodyPaddingRight: body.style.paddingRight,
+      htmlOverscrollBehavior: html.style.overscrollBehavior,
+      bodyOverscrollBehavior: body.style.overscrollBehavior,
+      bodyTouchAction: body.style.touchAction,
+    };
+
+    const scrollbarWidth = window.innerWidth - html.clientWidth;
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    html.style.overscrollBehavior = "none";
+    body.style.overscrollBehavior = "none";
+    body.style.touchAction = "none";
+    if (scrollbarWidth > 0) {
+      body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    const rafId = window.requestAnimationFrame(() => {
+      const focusable = getFocusableDrawerElements();
+      if (focusable.length > 0) {
+        focusable[0].focus();
+      } else {
+        mobileDrawerRef.current?.focus();
+      }
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeMobileMenu();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      const focusable = getFocusableDrawerElements();
+      if (focusable.length === 0) {
+        event.preventDefault();
+        mobileDrawerRef.current?.focus();
+        return;
+      }
+
+      const firstElement = focusable[0];
+      const lastElement = focusable[focusable.length - 1];
+      const activeElement = document.activeElement as HTMLElement | null;
+
+      if (event.shiftKey) {
+        if (
+          !activeElement ||
+          activeElement === firstElement ||
+          !mobileDrawerRef.current?.contains(activeElement)
+        ) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+        return;
+      }
+
+      if (activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      document.removeEventListener("keydown", handleKeyDown);
+
+      html.style.overflow = previousStyles.htmlOverflow;
+      body.style.overflow = previousStyles.bodyOverflow;
+      body.style.paddingRight = previousStyles.bodyPaddingRight;
+      html.style.overscrollBehavior = previousStyles.htmlOverscrollBehavior;
+      body.style.overscrollBehavior = previousStyles.bodyOverscrollBehavior;
+      body.style.touchAction = previousStyles.bodyTouchAction;
+
+      mobileMenuButtonRef.current?.focus();
+    };
+  }, [closeMobileMenu, getFocusableDrawerElements, isMobileMenuOpen]);
 
   const navLinks = [
     { href: "/", label: t.common.home },
@@ -214,12 +317,16 @@ const Navbar: React.FC = () => {
 
           {/* Mobile Menu Toggle */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            ref={mobileMenuButtonRef}
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className={`lg:hidden p-2 rounded-lg transition-colors ${
               isScrolled
                 ? "text-forest-700 hover:bg-sand"
                 : "text-ivory hover:bg-ivory/10"
             }`}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu-drawer"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -227,81 +334,106 @@ const Navbar: React.FC = () => {
       </nav>
 
       {/* Mobile Menu */}
-      <div
-        className={`lg:hidden fixed inset-0 top-[72px] bg-white z-40 transition-all duration-500 ${
-          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-      >
-        <div className="flex flex-col h-full">
-          <div className="flex-1 overflow-y-auto py-6 px-6">
-            {navLinks.map((link, index) => (
-              <div key={link.href} className="border-b border-sand">
-                <Link
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-4 text-lg font-medium text-forest-900 hover:text-gold-500 transition-colors"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+      {isMobileMenuOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/50 z-[70] lg:hidden"
+            onClick={closeMobileMenu}
+            aria-hidden="true"
+          />
+
+          <div
+            id="mobile-menu-drawer"
+            ref={mobileDrawerRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
+            tabIndex={-1}
+            className="fixed top-0 right-0 h-dvh w-[85%] max-w-sm bg-white z-[80] lg:hidden overflow-y-auto overscroll-contain touch-pan-y overflow-x-hidden shadow-2xl"
+          >
+            <div className="flex min-h-full flex-col">
+              <div className="sticky top-0 z-10 flex items-center justify-between border-b border-sand bg-white px-5 py-4">
+                <p className="text-sm font-semibold tracking-[0.14em] uppercase text-forest-900">
+                  Menu
+                </p>
+                <button
+                  onClick={closeMobileMenu}
+                  className="rounded-lg p-2 text-forest-700 hover:bg-sand transition-colors"
+                  aria-label="Close menu"
                 >
-                  {link.label}
-                </Link>
-                {link.dropdown && (
-                  <div className="pb-4 pl-4 space-y-2">
-                    {link.dropdown.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block py-2 text-sm text-stone hover:text-gold-500 transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                  <X size={22} />
+                </button>
               </div>
-            ))}
 
-            <div className="mt-6 space-y-3">
-              <Link
-                href="/faq"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
-              >
-                {t.common.faq}
-              </Link>
-              <Link
-                href="/wishlist"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
-              >
-                {t.common.wishlist}
-              </Link>
+              <div className="flex-1 px-5 py-4">
+                {navLinks.map((link, index) => (
+                  <div key={link.href} className="border-b border-sand/80">
+                    <Link
+                      href={link.href}
+                      onClick={closeMobileMenu}
+                      className="block py-4 text-lg font-medium text-forest-900 hover:text-gold-500 transition-colors"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      {link.label}
+                    </Link>
+                    {link.dropdown && (
+                      <div className="space-y-2 pb-4 pl-4">
+                        {link.dropdown.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={closeMobileMenu}
+                            className="block py-2 text-sm text-stone hover:text-gold-500 transition-colors"
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
 
-              {/* Language Switcher in Mobile Menu */}
-              <div className="flex justify-center pt-4 border-t border-sand">
-                <LanguageSwitcher variant="default" isScrolled={true} />
+                <div className="mt-6 space-y-3">
+                  <Link
+                    href="/faq"
+                    onClick={closeMobileMenu}
+                    className="block py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
+                  >
+                    {t.common.faq}
+                  </Link>
+                  <Link
+                    href="/wishlist"
+                    onClick={closeMobileMenu}
+                    className="block py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
+                  >
+                    {t.common.wishlist}
+                  </Link>
+                  <div className="flex justify-center border-t border-sand pt-4">
+                    <LanguageSwitcher variant="default" isScrolled={true} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-sand p-5">
+                <Link
+                  href="/request-info"
+                  onClick={closeMobileMenu}
+                  className="block w-full rounded-xl bg-gold-500 py-4 text-center font-semibold text-forest-900 hover:bg-gold-300 transition-colors"
+                >
+                  {t.tours.requestInfo}
+                </Link>
+                <a
+                  href="tel:+97689475188"
+                  className="mt-4 block py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
+                >
+                  <Phone size={16} className="mr-2 inline" />
+                  +976 8947-5188
+                </a>
               </div>
             </div>
           </div>
-
-          <div className="p-6 border-t border-sand">
-            <Link
-              href="/request-info"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block w-full py-4 bg-gold-500 text-forest-900 text-center rounded-xl font-semibold hover:bg-gold-300 transition-colors"
-            >
-              {t.tours.requestInfo}
-            </Link>
-            <a
-              href="tel:+97689475188"
-              className="block mt-4 py-3 text-center text-forest-700 hover:text-gold-500 transition-colors"
-            >
-              <Phone size={16} className="inline mr-2" />
-              +976 8947-5188
-            </a>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </header>
   );
 };

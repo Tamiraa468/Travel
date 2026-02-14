@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Mail, Phone, MapPin, User } from "lucide-react";
 
 type TeamMember = {
@@ -41,12 +42,15 @@ export default function TeamSection({ members }: Props) {
               className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
             >
               {/* Photo */}
-              <div className="aspect-square bg-gray-100">
+              <div className="relative aspect-square bg-gray-100">
                 {member.image ? (
-                  <img
+                  <Image
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                    className="object-cover"
+                    quality={75}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-400 to-blue-600">

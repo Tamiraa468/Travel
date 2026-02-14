@@ -144,6 +144,12 @@ export default async function AdminDashboard() {
             Create Tour
           </Link>
           <Link
+            href="/admin/blog/new"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Create News Post
+          </Link>
+          <Link
             href="/admin/bookings"
             className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400"
           >
