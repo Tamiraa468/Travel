@@ -5,14 +5,31 @@ type PartnerLogo = {
   logo: string;
 };
 
-// All partner logos served from /public/partners/ — static SVGs, no 400 errors
+// All partner logos served from Cloudinary CDN
+const CLOUD = "https://res.cloudinary.com/dutauqy6m/image/upload";
+
 const partnerLogos: PartnerLogo[] = [
-  { name: "Nomad Air", logo: "/partners/nomad-air.svg" },
-  { name: "Steppe Hotels", logo: "/partners/steppe-hotels.svg" },
-  { name: "Blue Sky Bank", logo: "/partners/blue-sky-bank.svg" },
-  { name: "Eagle Outfitters", logo: "/partners/eagle-outfitters.svg" },
-  { name: "Ger Camp Group", logo: "/partners/ger-camp-group.svg" },
-  { name: "Horizon Logistics", logo: "/partners/horizon-logistics.svg" },
+  { name: "Nomad Air", logo: `${CLOUD}/utravel/partners/nomad-air.svg` },
+  {
+    name: "Steppe Hotels",
+    logo: `${CLOUD}/utravel/partners/steppe-hotels.svg`,
+  },
+  {
+    name: "Blue Sky Bank",
+    logo: `${CLOUD}/utravel/partners/blue-sky-bank.svg`,
+  },
+  {
+    name: "Eagle Outfitters",
+    logo: `${CLOUD}/utravel/partners/eagle-outfitters.svg`,
+  },
+  {
+    name: "Ger Camp Group",
+    logo: `${CLOUD}/utravel/partners/ger-camp-group.svg`,
+  },
+  {
+    name: "Horizon Logistics",
+    logo: `${CLOUD}/utravel/partners/horizon-logistics.svg`,
+  },
 ];
 
 const PartnersSection = () => {

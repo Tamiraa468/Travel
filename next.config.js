@@ -30,8 +30,13 @@ const nextConfig = {
   images: {
     // Serve modern formats automatically (WebP for all browsers, AVIF for supported)
     formats: ['image/avif', 'image/webp'],
-    // Allow remote images from any HTTPS source (tour images from DB/CDN)
+    // Allow remote images from Cloudinary CDN and other HTTPS sources
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/dutauqy6m/**',
+      },
       {
         protocol: 'https',
         hostname: '**',

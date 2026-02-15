@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sanitizeFilename } from "@/lib/security";
+import cloudinary from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
 
@@ -14,7 +15,7 @@ export async function POST(req: NextRequest) {
     if (!file) {
       return NextResponse.json(
         { ok: false, error: "No file provided" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
         { ok: false, error: "File too large. Maximum size is 5MB" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
     if (!validTypes.includes(file.type)) {
       return NextResponse.json(
         { ok: false, error: "Invalid file type. Use JPEG, PNG, WebP, or GIF" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +49,7 @@ export async function POST(req: NextRequest) {
     if (!extension || !validExtensions[file.type]?.includes(extension)) {
       return NextResponse.json(
         { ok: false, error: "File extension does not match content type" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -82,24 +83,35 @@ export async function POST(req: NextRequest) {
     if (!isValidMagic) {
       return NextResponse.json(
         { ok: false, error: "Invalid file content" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    // Convert to base64
+    // Upload to Cloudinary
     const buffer = Buffer.from(bytes);
     const base64 = buffer.toString("base64");
-    const dataUrl = `data:${file.type};base64,${base64}`;
+    const dataUri = `data:${file.type};base64,${base64}`;
+
+    const result = await cloudinary.uploader.upload(dataUri, {
+      folder: "utravel/uploads",
+      resource_type: "image",
+      allowed_formats: ["jpg", "jpeg", "png", "webp", "gif"],
+    });
 
     return NextResponse.json(
-      { ok: true, url: dataUrl, filename },
-      { status: 200 }
+      {
+        ok: true,
+        url: result.secure_url,
+        publicId: result.public_id,
+        filename,
+      },
+      { status: 200 },
     );
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json(
       { ok: false, error: "Upload failed" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

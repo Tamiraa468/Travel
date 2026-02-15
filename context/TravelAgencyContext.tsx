@@ -27,7 +27,7 @@ export type Tour = {
   description: string;
   price: number;
   duration: string;
-  image?: any; // Support for both StaticImageData and string/string[]
+  image?: string; // Cloudinary URL or string path
   location?: string;
   highlights?: string[];
   itinerary?: Array<{
@@ -56,7 +56,7 @@ export type TravelAgencyContextType = {
   fetchTours: () => Promise<void>;
   submitBookingRequest: (
     traveler: Omit<Traveler, "id">,
-    tourId?: string
+    tourId?: string,
   ) => Promise<void>;
   updateBookingStatus: (id: string, status: BookingRequest["status"]) => void;
 };
@@ -68,7 +68,7 @@ export const useTravelAgencyContext = () => {
   const ctx = useContext(TravelAgencyContext);
   if (!ctx)
     throw new Error(
-      "useTravelAgencyContext must be used inside TravelAgencyProvider"
+      "useTravelAgencyContext must be used inside TravelAgencyProvider",
     );
   return ctx;
 };
@@ -130,7 +130,7 @@ export default function TravelAgencyProvider({
   // Submit booking request & send mail
   const submitBookingRequest = async (
     traveler: Omit<Traveler, "id">,
-    tourId?: string
+    tourId?: string,
   ) => {
     const newTraveler: Traveler = {
       id: Math.random().toString(36).slice(2),
@@ -162,10 +162,10 @@ export default function TravelAgencyProvider({
 
   const updateBookingStatus = (
     id: string,
-    status: BookingRequest["status"]
+    status: BookingRequest["status"],
   ) => {
     setBookingRequests((prev) =>
-      prev.map((b) => (b.id === id ? { ...b, status } : b))
+      prev.map((b) => (b.id === id ? { ...b, status } : b)),
     );
   };
 
