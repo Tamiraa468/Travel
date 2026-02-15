@@ -1,9 +1,11 @@
+import Image from "next/image";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { normalizeImageUrl, SIZES } from "@/lib/images";
 
 type Props = {
   params: { slug: string };
@@ -52,11 +54,15 @@ export default async function TravelGuideSubPage({ params }: Props) {
                 </Link>
 
                 {page.coverImage && (
-                  <img
-                    src={page.coverImage}
-                    alt={page.title}
-                    className="w-full h-64 object-cover rounded-lg mb-6"
-                  />
+                  <div className="relative w-full h-64 rounded-lg overflow-hidden mb-6">
+                    <Image
+                      src={normalizeImageUrl(page.coverImage)}
+                      alt={page.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 66vw"
+                      className="object-cover"
+                    />
+                  </div>
                 )}
 
                 <h1 className="text-3xl font-bold text-forest-900 mb-6">

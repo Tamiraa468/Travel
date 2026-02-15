@@ -1,9 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, MapPin, Calendar, Phone } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import { heroImages, SIZES } from "@/lib/images";
 
 // Pre-generate particle positions to avoid hydration mismatch
 const generateParticles = () => {
@@ -37,12 +39,12 @@ const CTASection = () => {
   return (
     <section className="relative py-32 overflow-hidden">
       {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&q=80')",
-        }}
+      <Image
+        src={heroImages.cta.src}
+        alt={heroImages.cta.alt}
+        fill
+        sizes={SIZES.hero}
+        className="object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-forest-900/95 via-forest-900/85 to-forest-900/95" />
 

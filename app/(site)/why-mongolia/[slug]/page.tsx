@@ -1,9 +1,11 @@
+import Image from "next/image";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { normalizeImageUrl, SIZES } from "@/lib/images";
 
 type Props = {
   params: { slug: string };
@@ -40,10 +42,13 @@ export default async function WhyMongoliaSubPage({ params }: Props) {
         {/* Cover Image */}
         {page.coverImage && (
           <div className="relative h-[40vh] bg-forest-900">
-            <img
-              src={page.coverImage}
+            <Image
+              src={normalizeImageUrl(page.coverImage)}
               alt={page.title}
-              className="w-full h-full object-cover opacity-80"
+              fill
+              priority
+              sizes={SIZES.hero}
+              className="object-cover opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-forest-900/70 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8">

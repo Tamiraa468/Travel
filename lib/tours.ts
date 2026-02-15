@@ -86,3 +86,78 @@ export async function getTourCategories() {
     orderBy: { order: "asc" },
   });
 }
+
+/**
+ * Fetch a single tour by slug (or id fallback) with all relations.
+ * Uses Redis read-through cache (10-minute TTL).
+ * Called from the [slug] detail page with ISR.
+ */
+export async function getTourBySlug(slug: string) {
+  const { cacheGet, CacheKeys } = await import("@/lib/cache");
+
+  return cacheGet(
+    CacheKeys.TOUR_BY_SLUG(slug),
+    async () => {
+      // Try slug first
+      let tour = await prisma.tour.findUnique({
+        where: { slug },
+        include: {
+          dates: true,
+          category: true,
+          itinerary: { orderBy: { dayNumber: "asc" } },
+          priceTiers: { orderBy: { minPax: "asc" } },
+        },
+      });
+
+      // Fallback to id
+      if (!tour) {
+        tour = await prisma.tour.findUnique({
+          where: { id: slug },
+          include: {
+            dates: true,
+            category: true,
+            itinerary: { orderBy: { dayNumber: "asc" } },
+            priceTiers: { orderBy: { minPax: "asc" } },
+          },
+        });
+      }
+
+      return tour;
+    },
+    600, // 10-minute Redis TTL
+  );
+}
+
+/**
+ * Fetch related tours for a given tour (same category or similar duration).
+ * Used by the tour detail page sidebar.
+ */
+export async function getRelatedTours(
+  tourId: string,
+  categoryId: string | null,
+  days: number,
+) {
+  return prisma.tour.findMany({
+    where: {
+      isActive: true,
+      id: { not: tourId },
+      OR: [
+        ...(categoryId ? [{ categoryId }] : []),
+        { days: { gte: days - 2, lte: days + 2 } },
+      ],
+    },
+    take: 3,
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+/**
+ * Return all active tour slugs for generateStaticParams (ISR pre-rendering).
+ */
+export async function getAllTourSlugs(): Promise<string[]> {
+  const tours = await prisma.tour.findMany({
+    where: { isActive: true },
+    select: { slug: true },
+  });
+  return tours.map((t) => t.slug).filter(Boolean);
+}

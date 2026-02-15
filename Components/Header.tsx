@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { assets } from "@/assets/assets";
+import { logo } from "@/lib/images";
 import { useLanguage } from "@/context/LanguageContext";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
@@ -42,8 +42,8 @@ export default function Header() {
           <div className="relative">
             <Image
               className="w-12 h-12 rounded-full ring-2 ring-gold-500/30 group-hover:ring-gold-500/60 transition-all"
-              src={assets.logo}
-              alt="Maralgoo Dreamland Travel"
+              src={logo.src}
+              alt={logo.alt}
               width={48}
               height={48}
             />

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
       "Discover authentic Mongolia adventures with Maralgoo Dreamland. Expert-guided tours to the Gobi Desert, nomadic experiences, and unforgettable journeys.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://res.cloudinary.com/dutauqy6m/image/upload/f_auto,q_auto,w_1200/utravel/gobi_Hero.jpg",
         width: 1200,
         height: 630,
         alt: "Maralgoo Dreamland - Mongolia Tours",
@@ -56,16 +56,22 @@ export const metadata: Metadata = {
     title: "Maralgoo Dreamland - Mongolia Tours & Travel",
     description:
       "Discover authentic Mongolia adventures with expert-guided tours.",
-    images: ["/og-image.jpg"],
+    images: [
+      "https://res.cloudinary.com/dutauqy6m/image/upload/f_auto,q_auto,w_1200/utravel/gobi_Hero.jpg",
+    ],
   },
 
   // Favicon and icons
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/favicon.png", type: "image/png" },
+      {
+        url: "https://res.cloudinary.com/dutauqy6m/image/upload/f_auto,q_auto,w_32/utravel/logo.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
     ],
-    apple: "/apple-touch-icon.png",
+    apple:
+      "https://res.cloudinary.com/dutauqy6m/image/upload/f_auto,q_auto,w_180/utravel/logo.png",
   },
 
   // Additional SEO settings

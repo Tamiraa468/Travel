@@ -25,12 +25,13 @@ const nextConfig = {
   compress: true,
 
   // ============================================
-  // IMAGES
+  // IMAGES — next/image optimization enabled
+  // Serves WebP/AVIF, responsive srcset, lazy loading
   // ============================================
   images: {
-    // Serve modern formats automatically (WebP for all browsers, AVIF for supported)
     formats: ['image/avif', 'image/webp'],
-    // Allow remote images from Cloudinary CDN and other HTTPS sources
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       {
         protocol: 'https',
@@ -39,12 +40,9 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**',
+        hostname: 'images.unsplash.com',
       },
     ],
-    // Optimized device breakpoints for responsive images
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
   
   // ============================================

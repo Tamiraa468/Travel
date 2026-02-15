@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { MapPin } from "lucide-react";
+import { normalizeImageUrl } from "@/lib/images";
 
 type Props = {
   mapEmbed?: string;
@@ -29,11 +30,13 @@ export default function TourMap({
       <div className="w-full">
         {/* Priority: Show mapImage if available, otherwise show mapEmbed */}
         {mapImage ? (
-          <div className="relative w-full">
-            <img
-              src={mapImage}
+          <div className="relative w-full aspect-[4/3]">
+            <Image
+              src={normalizeImageUrl(mapImage)}
               alt={title}
-              className="w-full h-auto object-contain"
+              fill
+              sizes="(max-width: 1024px) 100vw, 33vw"
+              className="object-contain"
             />
           </div>
         ) : mapEmbed ? (

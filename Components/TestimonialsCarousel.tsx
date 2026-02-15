@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { normalizeImageUrl } from "@/lib/images";
 
 type Testimonial = {
   id: string;
@@ -31,13 +33,13 @@ export default function TestimonialsCarousel({
 
   const nextSlide = () => {
     setCurrentIndex((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
+      prev === testimonials.length - 1 ? 0 : prev + 1,
     );
   };
 
   const prevSlide = () => {
     setCurrentIndex((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
+      prev === 0 ? testimonials.length - 1 : prev - 1,
     );
   };
 
@@ -96,10 +98,15 @@ export default function TestimonialsCarousel({
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="flex items-center gap-4">
                   {testimonials[currentIndex].avatar ? (
-                    <img
-                      src={testimonials[currentIndex].avatar}
+                    <Image
+                      src={normalizeImageUrl(
+                        testimonials[currentIndex].avatar!,
+                      )}
                       alt={testimonials[currentIndex].name}
-                      className="w-14 h-14 rounded-full object-cover"
+                      width={56}
+                      height={56}
+                      sizes="56px"
+                      className="rounded-full object-cover"
                     />
                   ) : (
                     <div className="w-14 h-14 rounded-full bg-forest-700 flex items-center justify-center text-ivory font-bold text-xl">

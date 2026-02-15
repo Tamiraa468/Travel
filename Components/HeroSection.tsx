@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { assets } from "../assets/assets";
+import { heroImages, SIZES } from "@/lib/images";
 import Image from "next/image";
 
 const HeroSection: React.FC = () => {
@@ -9,9 +9,10 @@ const HeroSection: React.FC = () => {
     <section className="relative w-full h-[58vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
       {/* Background Image */}
       <Image
-        src={assets.heroImage}
-        alt="Hero background"
+        src={heroImages.home.src}
+        alt={heroImages.home.alt}
         fill
+        sizes={SIZES.hero}
         className="absolute top-0 left-0 object-cover"
         priority
       />

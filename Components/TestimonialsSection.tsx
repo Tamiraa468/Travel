@@ -56,7 +56,7 @@ const TestimonialsSection = () => {
 
   const prevTestimonial = () => {
     setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
     );
   };
 
@@ -110,6 +110,7 @@ const TestimonialsSection = () => {
                         alt={testimonials[currentIndex].name}
                         width={96}
                         height={96}
+                        sizes="96px"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -141,7 +142,7 @@ const TestimonialsSection = () => {
                           key={i}
                           className="w-4 h-4 text-gold-500 fill-gold-500"
                         />
-                      )
+                      ),
                     )}
                   </div>
                 </div>

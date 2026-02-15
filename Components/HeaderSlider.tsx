@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { assets } from "../assets/assets";
+import { sliderImages as registrySliders, SIZES } from "@/lib/images";
 import {
   ChevronLeft,
   ChevronRight,
@@ -13,6 +13,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { optimizeImage } from "@/lib/image";
 
 // Tour type for slider data
 type SliderTour = {
@@ -45,7 +46,7 @@ const HeaderSlider = () => {
       description: t.hero.subtitle,
       buttonText1: t.hero.exploreTours,
       buttonText2: t.hero.watchVideo,
-      imgSrc: assets.sliderImages[0],
+      imgSrc: registrySliders[0].src,
       stats: { duration: "7-21 " + t.common.days, location: "Mongolia" },
     },
   ];
@@ -73,10 +74,12 @@ const HeaderSlider = () => {
                 "",
               buttonText1: t.hero.exploreTours,
               buttonText2: t.common.learnMore,
-              imgSrc:
+              imgSrc: optimizeImage(
                 tour.mainImage ||
-                tour.images?.[0] ||
-                assets.sliderImages[index % assets.sliderImages.length],
+                  tour.images?.[0] ||
+                  registrySliders[index % registrySliders.length].src,
+                1920,
+              ),
               stats: {
                 duration: tour.days
                   ? `${tour.days} ${t.common.days}`
@@ -142,8 +145,9 @@ const HeaderSlider = () => {
                   src={slide.imgSrc}
                   alt={slide.title}
                   fill
+                  sizes={SIZES.hero}
                   className="object-cover"
-                  priority
+                  priority={index === 0}
                 />
 
                 {/* Luxury Gradient Overlay */}

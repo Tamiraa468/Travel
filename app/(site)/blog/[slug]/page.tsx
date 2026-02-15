@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import prisma from "@/lib/prisma";
@@ -5,6 +6,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Calendar, User, Eye, ArrowLeft, Tag } from "lucide-react";
 import type { Metadata } from "next";
+import { normalizeImageUrl, SIZES } from "@/lib/images";
 
 type Props = {
   params: { slug: string };
@@ -82,10 +84,13 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Cover Image */}
         {post.coverImage && (
           <div className="relative h-[50vh] bg-forest-900">
-            <img
-              src={post.coverImage}
+            <Image
+              src={normalizeImageUrl(post.coverImage)}
               alt={post.title}
-              className="w-full h-full object-cover opacity-80"
+              fill
+              priority
+              sizes={SIZES.hero}
+              className="object-cover opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-forest-900/70 to-transparent" />
           </div>
@@ -170,11 +175,15 @@ export default async function BlogPostPage({ params }: Props) {
                     className="bg-ivory rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-sand hover:border-gold-300"
                   >
                     {relatedPost.coverImage && (
-                      <img
-                        src={relatedPost.coverImage}
-                        alt={relatedPost.title}
-                        className="w-full h-48 object-cover"
-                      />
+                      <div className="relative h-48">
+                        <Image
+                          src={normalizeImageUrl(relatedPost.coverImage)}
+                          alt={relatedPost.title}
+                          fill
+                          sizes={SIZES.card}
+                          className="object-cover"
+                        />
+                      </div>
                     )}
                     <div className="p-4">
                       <h3 className="font-semibold text-forest-900 line-clamp-2">

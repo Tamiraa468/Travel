@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import TeamSection from "@/Components/TeamSection";
 import prisma from "@/lib/prisma";
+import { heroImages, tourImages, SIZES } from "@/lib/images";
 import { Building2, Target, Heart, Award } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -32,7 +34,14 @@ export default async function AboutPage() {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center bg-gradient-to-b from-forest-900 via-forest-700 to-forest-900">
-          <div className="absolute inset-0 bg-[url('/images/about-hero.jpg')] bg-cover bg-center opacity-20" />
+          <Image
+            src={heroImages.about.src}
+            alt={heroImages.about.alt}
+            fill
+            sizes={SIZES.hero}
+            className="object-cover opacity-20"
+            priority
+          />
           <div className="relative z-10 text-center px-4">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
@@ -77,11 +86,13 @@ export default async function AboutPage() {
                 </div>
               </div>
               <div className="relative">
-                <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
-                  <img
-                    src="/images/about-team.jpg"
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+                  <Image
+                    src={tourImages.gobi.src}
                     alt="Maralgoo Dreamland Team"
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes={SIZES.half}
+                    className="object-cover"
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 bg-forest-900 text-white p-6 rounded-xl shadow-lg">

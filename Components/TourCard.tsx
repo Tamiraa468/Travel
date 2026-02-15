@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, Clock, Star, ArrowRight, Heart } from "lucide-react";
 import { useState } from "react";
+import { optimizeImage } from "@/lib/image";
 
 type Tour = {
   id?: string;
@@ -81,12 +82,11 @@ export default function TourCard({
       <div className="relative aspect-[4/3] overflow-hidden">
         {finalMainImage ? (
           <Image
-            src={finalMainImage}
+            src={optimizeImage(finalMainImage, 800)}
             alt={finalTitle}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-300 group-hover:scale-110"
-            quality={75}
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">

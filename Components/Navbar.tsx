@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTravelAgencyContext } from "../context/TravelAgencyContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { assets } from "../assets/assets";
+import { logo } from "@/lib/images";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import LanguageSwitcher from "./LanguageSwitcher";
 
@@ -206,8 +206,8 @@ const Navbar: React.FC = () => {
         >
           <div className="relative">
             <Image
-              src={assets.logo}
-              alt="Mongolia Travel"
+              src={logo.src}
+              alt={logo.alt}
               width={50}
               height={50}
               className="rounded-full ring-2 ring-gold-500/30 group-hover:ring-gold-500 transition-all duration-300"

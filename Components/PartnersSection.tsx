@@ -1,36 +1,5 @@
 import Image from "next/image";
-
-type PartnerLogo = {
-  name: string;
-  logo: string;
-};
-
-// All partner logos served from Cloudinary CDN
-const CLOUD = "https://res.cloudinary.com/dutauqy6m/image/upload";
-
-const partnerLogos: PartnerLogo[] = [
-  { name: "Nomad Air", logo: `${CLOUD}/utravel/partners/nomad-air.svg` },
-  {
-    name: "Steppe Hotels",
-    logo: `${CLOUD}/utravel/partners/steppe-hotels.svg`,
-  },
-  {
-    name: "Blue Sky Bank",
-    logo: `${CLOUD}/utravel/partners/blue-sky-bank.svg`,
-  },
-  {
-    name: "Eagle Outfitters",
-    logo: `${CLOUD}/utravel/partners/eagle-outfitters.svg`,
-  },
-  {
-    name: "Ger Camp Group",
-    logo: `${CLOUD}/utravel/partners/ger-camp-group.svg`,
-  },
-  {
-    name: "Horizon Logistics",
-    logo: `${CLOUD}/utravel/partners/horizon-logistics.svg`,
-  },
-];
+import { partnerLogos } from "@/lib/images";
 
 const PartnersSection = () => {
   return (
@@ -55,14 +24,15 @@ const PartnersSection = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {partnerLogos.map((partner) => (
             <div
-              key={partner.name}
+              key={partner.alt}
               className="group bg-white border border-sand rounded-2xl min-h-[148px] px-5 py-6 flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300"
             >
               <Image
-                src={partner.logo}
-                alt={`${partner.name} logo`}
-                width={400}
-                height={100}
+                src={partner.src}
+                alt={partner.alt}
+                width={partner.width}
+                height={partner.height}
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                 className="h-16 w-auto opacity-80 group-hover:opacity-100 transition-opacity duration-300"
               />
             </div>

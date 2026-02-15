@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useWishlist } from "@/Components/Wishlist";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import { Heart, Trash2, ShoppingBag, ArrowRight } from "lucide-react";
+import { normalizeImageUrl, SIZES } from "@/lib/images";
 
 export default function WishlistPage() {
   const { wishlist, removeFromWishlist, clearWishlist } = useWishlist();
@@ -47,10 +49,12 @@ export default function WishlistPage() {
                   <Link href={`/tours/${tour.slug}`} className="block">
                     <div className="relative aspect-[16/10] overflow-hidden">
                       {tour.mainImage ? (
-                        <img
-                          src={tour.mainImage}
+                        <Image
+                          src={normalizeImageUrl(tour.mainImage)}
                           alt={tour.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes={SIZES.card}
+                          className="object-cover"
                         />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">

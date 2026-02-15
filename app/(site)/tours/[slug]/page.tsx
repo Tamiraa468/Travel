@@ -1,5 +1,4 @@
 import React from "react";
-import prisma from "@/lib/prisma";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import TourPackageSection from "@/Components/TourPackageSection";
@@ -11,6 +10,8 @@ import PhotoGallery from "@/Components/PhotoGallery";
 import TourMap from "@/Components/TourMap";
 import RelatedTours from "@/Components/RelatedTours";
 import { slugToTitle } from "@/lib/format";
+import { getTourBySlug, getRelatedTours, getAllTourSlugs } from "@/lib/tours";
+import { ensureCloudinaryOptimized } from "@/lib/cloudinary";
 import {
   Calendar,
   Users,
@@ -22,37 +23,22 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 
+// ISR: revalidate every 30 minutes — tour data changes infrequently
+export const revalidate = 1800;
+
+// Pre-render all active tour pages at build time
+export async function generateStaticParams() {
+  const slugs = await getAllTourSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
+
 type Props = { params: { slug: string } };
 
-// Generate dynamic metadata for each tour
+// Generate dynamic metadata for each tour (uses cached data)
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params;
 
-  // Try find by slug first
-  let tour = await prisma.tour.findUnique({
-    where: { slug },
-    select: {
-      title: true,
-      description: true,
-      mainImage: true,
-      slug: true,
-      id: true,
-    },
-  });
-
-  // Fallback search by id
-  if (!tour) {
-    tour = await prisma.tour.findUnique({
-      where: { id: slug },
-      select: {
-        title: true,
-        description: true,
-        mainImage: true,
-        slug: true,
-        id: true,
-      },
-    });
-  }
+  const tour = await getTourBySlug(slug);
 
   if (!tour) {
     return {
@@ -87,29 +73,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function TourPage({ params }: Props) {
   const { slug } = params;
 
-  // Try find by slug first
-  let tour = await prisma.tour.findUnique({
-    where: { slug },
-    include: {
-      dates: true,
-      category: true,
-      itinerary: { orderBy: { dayNumber: "asc" } },
-      priceTiers: { orderBy: { minPax: "asc" } },
-    },
-  });
-
-  // Fallback search by id
-  if (!tour) {
-    tour = await prisma.tour.findUnique({
-      where: { id: slug },
-      include: {
-        dates: true,
-        category: true,
-        itinerary: { orderBy: { dayNumber: "asc" } },
-        priceTiers: { orderBy: { minPax: "asc" } },
-      },
-    });
-  }
+  // Fetch tour via cached helper (Redis read-through + ISR)
+  const tour = await getTourBySlug(slug);
 
   if (!tour) {
     return (
@@ -142,18 +107,11 @@ export default async function TourPage({ params }: Props) {
       : slugToTitle(tour.slug || slug);
 
   // Fetch related tours (same category or similar duration)
-  const relatedTours = await prisma.tour.findMany({
-    where: {
-      isActive: true,
-      id: { not: tour.id },
-      OR: [
-        { categoryId: tour.categoryId },
-        { days: { gte: tour.days - 2, lte: tour.days + 2 } },
-      ],
-    },
-    take: 3,
-    orderBy: { createdAt: "desc" },
-  });
+  const relatedTours = await getRelatedTours(
+    tour.id,
+    tour.categoryId,
+    tour.days,
+  );
 
   return (
     <>
@@ -161,7 +119,11 @@ export default async function TourPage({ params }: Props) {
 
       {/* Hero Section */}
       <TourHeroWrapper
-        imageUrl={tour.mainImage || undefined}
+        imageUrl={
+          tour.mainImage
+            ? ensureCloudinaryOptimized(tour.mainImage, 1920)
+            : undefined
+        }
         title={displayTitle}
         rating={4.8}
         reviewCount={29}

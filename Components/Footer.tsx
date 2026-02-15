@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { assets } from "@/assets/assets";
+import { logo } from "@/lib/images";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -23,7 +23,13 @@ const Footer = () => {
     <footer className="relative bg-forest-900 text-ivory overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/pattern.svg')] bg-repeat" />
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-repeat"
+          style={{
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23D4A853'/%3E%3C/svg%3E\")",
+          }}
+        />
       </div>
 
       {/* Gold Accent Line */}
@@ -38,8 +44,8 @@ const Footer = () => {
               <div className="relative">
                 <Image
                   className="w-14 h-14 rounded-full ring-2 ring-gold-500/30"
-                  src={assets.logo}
-                  alt="Maralgoo Dreamland Travel"
+                  src={logo.src}
+                  alt={logo.alt}
                   width={56}
                   height={56}
                 />

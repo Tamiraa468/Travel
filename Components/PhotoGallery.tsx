@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { optimizeImage } from "@/lib/image";
 
 type Props = {
   images: string[];
@@ -61,12 +62,11 @@ export default function PhotoGallery({ images, title }: Props) {
             className="relative aspect-[4/3] rounded-lg overflow-hidden cursor-pointer group"
           >
             <Image
-              src={image}
+              src={optimizeImage(image, 400)}
               alt={`Gallery image ${index + 1}`}
               fill
               sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className="object-cover transition-transform duration-300 group-hover:scale-110"
-              quality={75}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
               <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -131,7 +131,7 @@ export default function PhotoGallery({ images, title }: Props) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.2 }}
-              src={images[selectedIndex]}
+              src={optimizeImage(images[selectedIndex], 1600)}
               alt={`Gallery image ${selectedIndex + 1}`}
               className="max-w-[90vw] max-h-[85vh] object-contain"
               onClick={(e) => e.stopPropagation()}
@@ -153,7 +153,7 @@ export default function PhotoGallery({ images, title }: Props) {
                   }`}
                 >
                   <img
-                    src={image}
+                    src={optimizeImage(image, 160)}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                   />

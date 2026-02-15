@@ -15,6 +15,7 @@
  * Price shown as "starting from" to encourage inquiry.
  */
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -29,6 +30,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { useState } from "react";
+import { heroImages, normalizeImageUrl, SIZES } from "@/lib/images";
 
 interface TourHeroSectionProps {
   title: string;
@@ -60,13 +62,15 @@ export default function TourHeroSection({
   return (
     <div className="relative w-full min-h-[70vh] overflow-hidden">
       {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: imageUrl
-            ? `url(${imageUrl})`
-            : "url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920&q=80')",
-        }}
+      <Image
+        src={
+          imageUrl ? normalizeImageUrl(imageUrl) : heroImages.tourFallback.src
+        }
+        alt={title}
+        fill
+        priority
+        sizes={SIZES.hero}
+        className="object-cover"
       />
 
       {/* Gradient Overlays */}

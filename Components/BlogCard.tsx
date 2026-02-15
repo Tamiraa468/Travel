@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, Clock, Eye, ArrowRight } from "lucide-react";
+import { optimizeImage } from "@/lib/image";
 
 type BlogPost = {
   id: string;
@@ -50,12 +51,11 @@ export default function BlogCard({ post }: Props) {
       >
         {post.coverImage ? (
           <Image
-            src={post.coverImage}
+            src={optimizeImage(post.coverImage, 600)}
             alt={post.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
-            quality={75}
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">

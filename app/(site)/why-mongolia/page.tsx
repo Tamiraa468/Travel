@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import { heroImages, normalizeImageUrl, SIZES } from "@/lib/images";
 import {
   Globe2,
   MapPin,
@@ -50,7 +52,14 @@ export default async function WhyMongoliaPage() {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center">
-          <div className="absolute inset-0 bg-[url('/images/mongolia-hero.jpg')] bg-cover bg-center" />
+          <Image
+            src={heroImages.whyMongolia.src}
+            alt={heroImages.whyMongolia.alt}
+            fill
+            sizes={SIZES.hero}
+            className="object-cover"
+            priority
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-forest-900/80 to-forest-700/50" />
           <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
@@ -123,11 +132,13 @@ export default async function WhyMongoliaPage() {
                       className="group bg-ivory rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all border border-sand hover:border-gold-300"
                     >
                       {page.coverImage ? (
-                        <div className="aspect-video overflow-hidden">
-                          <img
-                            src={page.coverImage}
+                        <div className="relative aspect-video overflow-hidden">
+                          <Image
+                            src={normalizeImageUrl(page.coverImage)}
                             alt={page.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            fill
+                            sizes={SIZES.card}
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         </div>
                       ) : (
