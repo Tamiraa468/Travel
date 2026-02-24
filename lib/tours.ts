@@ -1,21 +1,8 @@
 import prisma from "@/lib/prisma";
 
-/**
- * Minimal tour shape for list pages (cards).
- * Only selects fields needed for rendering — keeps payload small.
- */
-export type TourListItem = {
-  id: string;
-  title: string;
-  slug: string;
-  priceFrom: number;
-  days: number;
-  mainImage: string | null;
-  description: string | null;
-  location?: string;
-  isFeatured: boolean;
-  category: { id: string; name: string; slug: string } | null;
-};
+// Re-export client-safe types and helpers so existing server-side imports still work
+export type { TourListItem } from "@/lib/tour-image";
+export { resolveTourImage } from "@/lib/tour-image";
 
 type GetToursOptions = {
   page?: number;
@@ -49,6 +36,7 @@ export async function getToursPaginated({
         priceFrom: true,
         days: true,
         mainImage: true,
+        mainImageUrl: true,
         description: true,
         isFeatured: true,
         category: {

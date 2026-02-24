@@ -11,6 +11,7 @@ type Tour = {
   slug: string;
   priceFrom: number;
   mainImage?: string | null;
+  mainImageUrl?: string | null;
   days: number;
   description?: string | null;
 };
@@ -54,9 +55,13 @@ export default function RelatedTours({
             >
               {/* Image */}
               <div className="relative aspect-[16/10] overflow-hidden">
-                {tour.mainImage ? (
+                {tour.mainImageUrl ||
+                (tour.mainImage && !tour.mainImage.startsWith("data:")) ? (
                   <Image
-                    src={optimizeImage(tour.mainImage, 600)}
+                    src={optimizeImage(
+                      tour.mainImageUrl || tour.mainImage!,
+                      600,
+                    )}
                     alt={tour.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"

@@ -35,6 +35,7 @@ export default function NewTourPage() {
     days: 1,
     priceFrom: 0,
     mainImage: "",
+    mainImageUrl: "",
     mapEmbed: "",
     season: "",
     groupSize: "",
@@ -299,14 +300,22 @@ export default function NewTourPage() {
           <AdminInput
             label="Main Image URL"
             type="text"
-            value={formData.mainImage}
-            onChange={(v) => setFormData({ ...formData, mainImage: String(v) })}
+            value={formData.mainImageUrl}
+            onChange={(v) =>
+              setFormData({
+                ...formData,
+                mainImageUrl: String(v),
+                mainImage: String(v),
+              })
+            }
           />
 
           <ImageUpload
             label="Or Upload Main Image from Desktop"
-            value={formData.mainImage}
-            onChange={(url) => setFormData({ ...formData, mainImage: url })}
+            value={formData.mainImageUrl}
+            onChange={(url) =>
+              setFormData({ ...formData, mainImageUrl: url, mainImage: url })
+            }
           />
 
           <AdminInput

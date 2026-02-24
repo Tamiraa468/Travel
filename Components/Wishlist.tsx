@@ -16,6 +16,7 @@ type Tour = {
   slug: string;
   priceFrom: number;
   mainImage?: string | null;
+  mainImageUrl?: string | null;
   days: number;
 };
 

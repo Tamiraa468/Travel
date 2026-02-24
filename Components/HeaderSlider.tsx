@@ -75,7 +75,8 @@ const HeaderSlider = () => {
               buttonText1: t.hero.exploreTours,
               buttonText2: t.common.learnMore,
               imgSrc: optimizeImage(
-                tour.mainImage ||
+                tour.mainImageUrl ||
+                  tour.mainImage ||
                   tour.images?.[0] ||
                   registrySliders[index % registrySliders.length].src,
                 1920,

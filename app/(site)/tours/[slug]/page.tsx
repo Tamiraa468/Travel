@@ -11,6 +11,7 @@ import TourMap from "@/Components/TourMap";
 import RelatedTours from "@/Components/RelatedTours";
 import { slugToTitle } from "@/lib/format";
 import { getTourBySlug, getRelatedTours, getAllTourSlugs } from "@/lib/tours";
+import { resolveTourImage } from "@/lib/tour-image";
 import { ensureCloudinaryOptimized } from "@/lib/cloudinary";
 import {
   Calendar,
@@ -65,7 +66,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: tour.description || undefined,
       url: `/tours/${canonicalPath}`,
       type: "website",
-      images: tour.mainImage ? [{ url: tour.mainImage }] : undefined,
+      images: resolveTourImage(tour)
+        ? [{ url: resolveTourImage(tour)! }]
+        : undefined,
     },
   };
 }
@@ -120,8 +123,8 @@ export default async function TourPage({ params }: Props) {
       {/* Hero Section */}
       <TourHeroWrapper
         imageUrl={
-          tour.mainImage
-            ? ensureCloudinaryOptimized(tour.mainImage, 1920)
+          resolveTourImage(tour)
+            ? ensureCloudinaryOptimized(resolveTourImage(tour)!, 1920)
             : undefined
         }
         title={displayTitle}

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Clock, Star, ArrowRight } from "lucide-react";
-import type { TourListItem } from "@/lib/tours";
+import type { TourListItem } from "@/lib/tour-image";
+import { resolveTourImage } from "@/lib/tour-image";
 import { optimizeImage } from "@/lib/image";
 
 type Props = {
@@ -20,13 +21,15 @@ export default function TourCardServer({ tour, index = 0 }: Props) {
       : tour.description
     : "";
 
+  const imageUrl = resolveTourImage(tour);
+
   return (
     <article className="group relative bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500">
       {/* Image Container — aspect ratio wrapper prevents CLS */}
       <div className="relative aspect-[4/3] overflow-hidden">
-        {tour.mainImage ? (
+        {imageUrl ? (
           <Image
-            src={optimizeImage(tour.mainImage, 800)}
+            src={optimizeImage(imageUrl, 800)}
             alt={tour.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

@@ -261,6 +261,9 @@ export const SIZES = {
 export function normalizeImageUrl(url: string | null | undefined): string {
   if (!url) return "";
 
+  // Never pass base64 through — it bloats SSR output
+  if (url.startsWith("data:")) return "";
+
   // Already a full URL
   if (url.startsWith("https://") || url.startsWith("http://")) {
     return url;

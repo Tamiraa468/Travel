@@ -48,9 +48,11 @@ export default function WishlistPage() {
                   {/* Image */}
                   <Link href={`/tours/${tour.slug}`} className="block">
                     <div className="relative aspect-[16/10] overflow-hidden">
-                      {tour.mainImage ? (
+                      {tour.mainImageUrl || tour.mainImage ? (
                         <Image
-                          src={normalizeImageUrl(tour.mainImage)}
+                          src={normalizeImageUrl(
+                            tour.mainImageUrl || tour.mainImage,
+                          )}
                           alt={tour.title}
                           fill
                           sizes={SIZES.card}

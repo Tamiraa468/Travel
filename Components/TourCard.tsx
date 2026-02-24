@@ -16,7 +16,9 @@ type Tour = {
   priceFrom?: number;
   days?: number;
   mainImage?: string | null;
+  mainImageUrl?: string | null;
   image?: string | null; // Context uses 'image' instead of 'mainImage'
+  images?: string[];
   rating?: number;
   reviewCount?: number;
   location?: string;
@@ -57,9 +59,16 @@ export default function TourCard({
   // Parse days from duration string like "8 days" if days not available
   const parseDays = tour?.duration ? parseInt(tour.duration) : undefined;
   const finalDays = tour?.days || days || parseDays || 7;
-  // Check both mainImage and image (context uses 'image')
+  // Prefer Cloudinary URL, then legacy mainImage (skip base64), then context/image arrays
   const finalMainImage =
-    tour?.mainImage || tour?.image || (images && images[0]) || null;
+    tour?.mainImageUrl ||
+    (tour?.mainImage && !tour.mainImage.startsWith("data:")
+      ? tour.mainImage
+      : null) ||
+    tour?.image ||
+    (tour?.images && tour.images[0]) ||
+    (images && images[0]) ||
+    null;
   const finalRating = tour?.rating || 4.8;
   const finalReviewCount = tour?.reviewCount || 24;
   const finalLocation = tour?.location || "Mongolia";

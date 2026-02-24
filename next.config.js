@@ -56,6 +56,9 @@ const nextConfig = {
       bodySizeLimit: '50mb',
     },
   },
+
+  // Increase static generation timeout (default 60s is too short for data-heavy pages)
+  staticPageGenerationTimeout: 120,
   
   // ============================================
   // REDIRECTS (SEO - avoid duplicate content)

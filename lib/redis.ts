@@ -7,8 +7,11 @@ import Redis from "ioredis";
 // Redis connection options
 const REDIS_URL = process.env.REDIS_URL;
 
+// Detect Next.js build phase — Redis is NOT available during `next build`
+const isBuildPhase = process.env.NEXT_PHASE === "phase-production-build";
+
 // Track if Redis is available
-let isRedisAvailable = !!REDIS_URL;
+let isRedisAvailable = !!REDIS_URL && !isBuildPhase;
 
 // Global reference for connection reuse in serverless environment
 declare global {
@@ -20,6 +23,12 @@ declare global {
  * Create Redis client with proper error handling and reconnection logic
  */
 function createRedisClient(): Redis | null {
+  // Skip during build phase — Redis is unavailable in CI/CD
+  if (isBuildPhase) {
+    console.log("[Redis] Build phase detected, caching disabled");
+    return null;
+  }
+
   // Skip if no Redis URL configured
   if (!REDIS_URL) {
     console.log("[Redis] No REDIS_URL configured, caching disabled");

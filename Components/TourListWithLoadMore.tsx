@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import TourCardServer from "@/Components/TourCardServer";
-import type { TourListItem } from "@/lib/tours";
+import type { TourListItem } from "@/lib/tour-image";
 
 type Props = {
   initialTours: TourListItem[];

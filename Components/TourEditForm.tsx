@@ -49,6 +49,7 @@ interface TourFormData {
   days: number;
   priceFrom: number;
   mainImage: string;
+  mainImageUrl: string;
   images: string[];
   highlights: string[];
   includes: string[];
@@ -89,6 +90,7 @@ export default function TourEditForm({ tourId }: TourEditFormProps) {
     days: 1,
     priceFrom: 0,
     mainImage: "",
+    mainImageUrl: "",
     images: [],
     highlights: [],
     includes: [],
@@ -138,6 +140,7 @@ export default function TourEditForm({ tourId }: TourEditFormProps) {
           days: tour.days || 1,
           priceFrom: tour.priceFrom || 0,
           mainImage: tour.mainImage || "",
+          mainImageUrl: tour.mainImageUrl || "",
           images: tour.images || [],
           highlights: tour.highlights || [],
           includes: tour.includes || [],
@@ -770,9 +773,9 @@ export default function TourEditForm({ tourId }: TourEditFormProps) {
           <div className="mb-6">
             <ImageUpload
               label="Main Image"
-              value={formData.mainImage}
+              value={formData.mainImageUrl || formData.mainImage}
               onChange={(url) => {
-                setFormData({ ...formData, mainImage: url });
+                setFormData({ ...formData, mainImageUrl: url, mainImage: url });
                 markUnsaved();
               }}
             />

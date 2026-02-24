@@ -8,12 +8,24 @@ declare global {
 
 // Configure Prisma with logging and error handling
 const prismaClientSingleton = () => {
+  if (!process.env.DATABASE_URL) {
+    console.warn("[Prisma] DATABASE_URL is not set — skipping client creation");
+    // Return a proxy that throws helpful errors instead of crashing at import
+    return new Proxy({} as PrismaClient, {
+      get(_, prop) {
+        if (prop === "then") return undefined; // avoid Promise-like behavior
+        throw new Error(
+          `PrismaClient is not available (DATABASE_URL not set). Attempted to access: ${String(prop)}`,
+        );
+      },
+    });
+  }
+
   return new PrismaClient({
     log:
       process.env.NODE_ENV === "development"
         ? ["query", "error", "warn"]
         : ["error"],
-    // Connection handling
     datasources: {
       db: {
         url: process.env.DATABASE_URL,
@@ -39,7 +51,7 @@ export default prisma;
 export async function withRetry<T>(
   operation: () => Promise<T>,
   maxRetries: number = 3,
-  delay: number = 1000
+  delay: number = 1000,
 ): Promise<T> {
   let lastError: Error | null = null;
 
@@ -50,7 +62,7 @@ export async function withRetry<T>(
       lastError = error;
       console.error(
         `Database operation failed (attempt ${attempt}/${maxRetries}):`,
-        error.message
+        error.message,
       );
 
       // Don't retry on validation errors

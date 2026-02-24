@@ -33,7 +33,8 @@ model Tour {
   description  String?
   days         Int
   priceFrom    Float
-  mainImage    String?
+  mainImage    String?       // Legacy: base64 data (will be cleared after migration)
+  mainImageUrl String?       // Cloudinary URL — preferred source for images
   images       String[]      @default([])
   includes     String[]      @default([])
   excludes     String[]      @default([])  // NEW: Package excludes

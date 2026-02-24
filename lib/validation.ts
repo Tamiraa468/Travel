@@ -11,7 +11,8 @@ export const createTourSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   days: z.number().int().min(1, "Days must be at least 1"),
   priceFrom: z.number().min(0, "Price must be positive"),
-  mainImage: z
+  mainImage: z.string().optional().or(z.literal("")).nullable(),
+  mainImageUrl: z
     .string()
     .url("Invalid image URL")
     .optional()

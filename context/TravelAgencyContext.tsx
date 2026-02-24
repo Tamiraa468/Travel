@@ -26,8 +26,13 @@ export type Tour = {
   title: string;
   description: string;
   price: number;
+  priceFrom?: number;
+  days?: number;
   duration: string;
   image?: string; // Cloudinary URL or string path
+  mainImage?: string | null;
+  mainImageUrl?: string | null;
+  images?: string[];
   location?: string;
   highlights?: string[];
   itinerary?: Array<{
@@ -100,18 +105,33 @@ export default function TravelAgencyProvider({
       const dbTours = result.data || result; // Handle both { data: [] } and []
 
       // Map database tours to context Tour type
-      const mapped = dbTours.map((t: any) => ({
-        id: t.id,
-        slug: t.slug, // Add slug for URL generation
-        title: t.title,
-        description: t.description,
-        price: t.priceFrom || t.price || 0, // Map priceFrom to price
-        duration: `${t.days || 1} days`, // Create duration from days
-        location: "Mongolia", // Default location
-        image: t.mainImage || "", // Use mainImage
-        highlights: t.highlights || [],
-        included: t.includes || [],
-      }));
+      const mapped = dbTours.map((t: any) => {
+        const primaryImage =
+          t.mainImageUrl ||
+          (t.mainImage && !String(t.mainImage).startsWith("data:")
+            ? t.mainImage
+            : "") ||
+          t.images?.[0] ||
+          "";
+
+        return {
+          id: t.id,
+          slug: t.slug, // Add slug for URL generation
+          title: t.title,
+          description: t.description,
+          price: t.priceFrom || t.price || 0, // Map priceFrom to price
+          priceFrom: t.priceFrom || t.price || 0,
+          days: t.days || 1,
+          duration: `${t.days || 1} days`, // Create duration from days
+          location: "Mongolia", // Default location
+          image: primaryImage,
+          mainImage: t.mainImage || null,
+          mainImageUrl: t.mainImageUrl || null,
+          images: Array.isArray(t.images) ? t.images : [],
+          highlights: t.highlights || [],
+          included: t.includes || [],
+        };
+      });
       setTours(mapped);
     } catch (error) {
       console.error("Error fetching tours from database:", error);
