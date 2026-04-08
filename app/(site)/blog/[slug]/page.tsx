@@ -91,6 +91,7 @@ export default async function BlogPostPage({ params }: Props) {
               priority
               sizes={SIZES.hero}
               className="object-cover opacity-80"
+              unoptimized={!post.coverImage.includes("res.cloudinary.com")}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-forest-900/70 to-transparent" />
           </div>
@@ -182,6 +183,7 @@ export default async function BlogPostPage({ params }: Props) {
                           fill
                           sizes={SIZES.card}
                           className="object-cover"
+                          unoptimized={!relatedPost.coverImage.includes("res.cloudinary.com")}
                         />
                       </div>
                     )}

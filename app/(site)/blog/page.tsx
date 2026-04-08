@@ -1,6 +1,8 @@
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import BlogCard from "@/Components/BlogCard";
+import GuestStoryCard from "@/Components/GuestStoryCard";
+import GuestStoryForm from "@/Components/GuestStoryForm";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -60,6 +62,13 @@ export default async function BlogPage({ searchParams }: Props) {
     by: ["category"],
     where: { isPublished: true },
     _count: true,
+  });
+
+  // Get approved guest stories
+  const guestStories = await prisma.guestStory.findMany({
+    where: { isApproved: true, isPublished: true },
+    orderBy: { createdAt: "desc" },
+    take: 6,
   });
 
   return (
@@ -155,6 +164,32 @@ export default async function BlogPage({ searchParams }: Props) {
             </div>
           )}
         </div>
+        {/* Guest Stories Section */}
+        <section className="bg-sand/50 py-16">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-serif font-bold text-forest-900 mb-3">
+                Traveler Stories
+              </h2>
+              <p className="text-stone max-w-2xl mx-auto">
+                Read real experiences from travelers who explored Mongolia, or share your own story to inspire others.
+              </p>
+            </div>
+
+            {guestStories.length > 0 && (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                {guestStories.map((story) => (
+                  <GuestStoryCard key={story.id} story={story} />
+                ))}
+              </div>
+            )}
+
+            {/* Write Your Story Form */}
+            <div className="max-w-3xl mx-auto">
+              <GuestStoryForm />
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

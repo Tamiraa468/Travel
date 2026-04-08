@@ -56,6 +56,7 @@ export default function BlogCard({ post }: Props) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
+            unoptimized={!post.coverImage.includes("res.cloudinary.com")}
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-forest-500 to-forest-700 flex items-center justify-center">

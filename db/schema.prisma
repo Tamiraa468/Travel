@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -334,6 +335,32 @@ enum BlogCategory {
   CULTURE
   ADVENTURE
   TIPS
+}
+
+// ============================================
+// GUEST STORY MODEL (visitor blog posts)
+// ============================================
+model GuestStory {
+  id          String   @id @default(cuid())
+  name        String
+  email       String?
+  country     String?
+  title       String
+  slug        String   @unique
+  content     String
+  coverImage  String?
+  rating      Int      @default(5)
+  tourName    String?
+  travelDate  String?
+  isApproved  Boolean  @default(false)
+  isPublished Boolean  @default(false)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isApproved])
+  @@index([isPublished])
 }
 
 // ============================================
