@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.discovermongolia.mn)",
+      "Bash(curl -s -H \"Accept: application/json\" \"https://www.discovermongolia.mn/blogs?category=travel-tips\")",
+      "Bash(curl -s \"https://www.discovermongolia.mn/api/blogs\")",
+      "Bash(curl -s \"https://www.discovermongolia.mn/blogs?category=travel-tips\")",
+      "Bash(curl -s -H \"RSC: 1\" -H \"Next-Router-State-Tree: %5B%22%22%2C%7B%22children%22%3A%5B%22blogs%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D\" \"https://www.discovermongolia.mn/blogs?category=travel-tips\")",
+      "Read(//tmp/**)",
+      "Bash(grep -oiE 'blog[^\"<> ]{5,50}' /tmp/dm_blogs.html)",
+      "Bash(curl -s \"https://www.discovermongolia.mn/_next/static/chunks/0t1et0tty8o9s.js\")",
+      "Bash(grep -oE '<script[^>]*>[^<]{100,}' /tmp/dm_blogs.html)",
+      "Bash(grep -oE '\"[^\"]{20,200}\"')",
+      "Bash(awk '{print length, NR}')",
+      "WebSearch",
+      "Bash(node scripts/import-blogs.js)",
+      "Bash(node -e ':*)",
+      "Bash(curl -s http://localhost:3000/api/blog)",
+      "Bash(curl -s http://localhost:3001/api/blog)",
+      "Bash(node scripts/upload-blog-images.js)",
+      "Bash(npx prisma:*)",
+      "Bash(npx next:*)"
+    ]
+  }
+}
