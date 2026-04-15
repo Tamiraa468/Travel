@@ -19,7 +19,12 @@
       "Bash(curl -s http://localhost:3001/api/blog)",
       "Bash(node scripts/upload-blog-images.js)",
       "Bash(npx prisma:*)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)"
     ]
   }
 }
