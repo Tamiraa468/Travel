@@ -61,7 +61,7 @@ export default async function WhyMongoliaSubPage({ params }: Props) {
           </div>
         )}
 
-        <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">

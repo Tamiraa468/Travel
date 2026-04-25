@@ -39,7 +39,7 @@ export default async function TravelGuideSubPage({ params }: Props) {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-grow bg-sand">
-        <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">

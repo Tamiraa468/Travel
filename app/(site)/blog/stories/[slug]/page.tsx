@@ -56,7 +56,7 @@ export default async function GuestStoryPage({ params }: Props) {
       <main className="flex-grow">
         {/* Hero */}
         <section className="bg-gradient-to-b from-forest-900 via-forest-700 to-forest-900 py-16">
-          <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto px-6 text-center">
             <span className="inline-block px-3 py-1 bg-gold-500/20 text-gold-300 rounded-full text-sm mb-4">
               Traveler Story
             </span>
@@ -98,7 +98,7 @@ export default async function GuestStoryPage({ params }: Props) {
           </div>
         </section>
 
-        <article className="max-w-4xl mx-auto px-4 py-12">
+        <article className="max-w-4xl mx-auto px-6 py-12">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-forest-700 hover:text-gold-700 mb-8"
@@ -125,7 +125,7 @@ export default async function GuestStoryPage({ params }: Props) {
         {/* More Stories */}
         {moreStories.length > 0 && (
           <section className="bg-sand py-12">
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-7xl mx-auto px-6">
               <h2 className="text-2xl font-bold mb-8 text-forest-900">
                 More Traveler Stories
               </h2>

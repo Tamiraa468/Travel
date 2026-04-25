@@ -97,7 +97,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         )}
 
-        <article className="max-w-4xl mx-auto px-4 py-12">
+        <article className="max-w-4xl mx-auto px-6 py-12">
           {/* Back Link */}
           <Link
             href="/blog"
@@ -164,7 +164,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
           <section className="bg-sand py-12">
-            <div className="max-w-7xl mx-auto px-4">
+            <div className="max-w-7xl mx-auto px-6">
               <h2 className="text-2xl font-bold mb-8 text-forest-900">
                 Related Posts
               </h2>

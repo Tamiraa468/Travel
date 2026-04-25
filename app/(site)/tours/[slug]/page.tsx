@@ -142,7 +142,7 @@ export default async function TourPage({ params }: Props) {
         {/* Decorative top curve */}
         <div className="absolute -top-16 left-0 w-full h-16 bg-slate-50 rounded-t-[50%]" />
 
-        <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10 relative">
+        <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10 relative">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-12">
             {/* Tour Overview Card */}

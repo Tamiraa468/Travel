@@ -112,7 +112,7 @@ export default function ContactClient() {
         </div>
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300" />
 
-        <div className="container mx-auto px-4 relative z-10 text-center">
+        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -147,7 +147,7 @@ export default function ContactClient() {
       </section>
 
       <main className="flex-grow py-16">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Contact Info Cards */}
             <div className="space-y-4">

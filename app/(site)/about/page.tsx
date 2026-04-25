@@ -56,7 +56,7 @@ export default async function AboutPage() {
 
         {/* Story Section */}
         <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
@@ -106,7 +106,7 @@ export default async function AboutPage() {
 
         {/* Mission & Values */}
         <section className="py-16 bg-sand">
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-ivory p-8 rounded-xl shadow-sm">
                 <div className="w-14 h-14 bg-gold-500/10 rounded-xl flex items-center justify-center mb-4">
@@ -156,7 +156,7 @@ export default async function AboutPage() {
 
         {/* Why Choose Us */}
         <section className="py-16 bg-ivory">
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-6">
             <h2 className="text-3xl font-bold text-center mb-12 text-forest-900">
               Why Choose Maralgoo Dreamland?
             </h2>
@@ -205,7 +205,7 @@ export default async function AboutPage() {
 
         {/* CTA Section */}
         <section className="py-16 bg-forest-900">
-          <div className="max-w-4xl mx-auto px-4 text-center text-white">
+          <div className="max-w-4xl mx-auto px-6 text-center text-white">
             <h2 className="text-3xl font-bold mb-4">
               Ready to Explore Mongolia?
             </h2>

@@ -77,7 +77,7 @@ export default async function BlogPage({ searchParams }: Props) {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="bg-gradient-to-b from-forest-900 via-forest-700 to-forest-900 py-20">
-          <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className="max-w-7xl mx-auto px-6 text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gold-300 to-gold-300">
                 Travel News & Stories
@@ -91,7 +91,7 @@ export default async function BlogPage({ searchParams }: Props) {
         </section>
 
         {/* Category Filter */}
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-wrap gap-2 justify-center">
             <Link
               href="/blog"
@@ -120,7 +120,7 @@ export default async function BlogPage({ searchParams }: Props) {
         </div>
 
         {/* Blog Grid */}
-        <div className="max-w-7xl mx-auto px-4 pb-16">
+        <div className="max-w-7xl mx-auto px-6 pb-16">
           {posts.length > 0 ? (
             <>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -166,7 +166,7 @@ export default async function BlogPage({ searchParams }: Props) {
         </div>
         {/* Guest Stories Section */}
         <section className="bg-sand/50 py-16">
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-serif font-bold text-forest-900 mb-3">
                 Traveler Stories

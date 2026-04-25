@@ -4,15 +4,18 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - npx prisma generate --schema=./db/schema.prisma
     build:
       commands:
-        - env | grep -E '^(DATABASE_URL|SESSION_SECRET|ID_ENCODER_SECRET|ADMIN_EMAIL|ADMIN_PASSWORD|NEXT_PUBLIC_BASE_URL|NEXT_PUBLIC_CURRENCY|NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME|NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET|SMTP_USER|SMTP_PASS|SMTP_HOST|SMTP_PORT|SMTP_SECURE|EMAIL_PASSWORD|CLOUDINARY_API_KEY|CLOUDINARY_API_SECRET|REDIS_URL)=' >> .env.production
-        - REDIS_URL= npm run build
+        # Amplify Console-оос тохируулсан env var-уудыг .env.production руу бичих
+        - env | grep -E '^(DATABASE_URL|SESSION_SECRET|ID_ENCODER_SECRET|ADMIN_EMAIL|ADMIN_PASSWORD|NEXT_PUBLIC_BASE_URL|NEXT_PUBLIC_CURRENCY|NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME|NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY|STRIPE_SECRET_KEY|STRIPE_WEBHOOK_SECRET|SMTP_USER|SMTP_PASS|SMTP_HOST|SMTP_PORT|SMTP_SECURE|EMAIL_PASSWORD|CLOUDINARY_API_KEY|CLOUDINARY_API_SECRET|REDIS_URL)=' > .env.production || true
+        # Build үед Redis холбогдохгүй байхаар хоослох
+        - REDIS_URL= npx next build
   artifacts:
     baseDirectory: .next
     files:
       - "**/*"
   cache:
     paths:
-      - ".npm/**/*"
-      - ".next/cache/**/*"
+      - node_modules/**/*
+      - .next/cache/**/*

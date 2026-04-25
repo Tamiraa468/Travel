@@ -35,7 +35,7 @@ export default async function ToursPage() {
       <Navbar />
       <main className="flex-grow">
         <section className="bg-gradient-to-b from-forest-900 via-forest-700 to-forest-900 py-20 md:py-28">
-          <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto px-6">
             {/* Section Header */}
             <div className="max-w-3xl mx-auto text-center mb-16">
               <span className="inline-block text-gold-500 text-sm font-semibold tracking-widest uppercase mb-4">

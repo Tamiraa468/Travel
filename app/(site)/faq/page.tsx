@@ -38,7 +38,7 @@ export default async function FAQPage() {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-forest-900 to-forest-700 py-16">
-          <div className="max-w-7xl mx-auto px-4 text-center text-white">
+          <div className="max-w-7xl mx-auto px-6 text-center text-white">
             <HelpCircle className="w-16 h-16 mx-auto mb-4 opacity-80" />
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Frequently Asked Questions
@@ -51,7 +51,7 @@ export default async function FAQPage() {
         </section>
 
         {/* FAQ Content */}
-        <section className="max-w-4xl mx-auto px-4 py-16">
+        <section className="max-w-4xl mx-auto px-6 py-16">
           {result.length > 0 ? (
             <FAQAccordion
               faqs={result}
@@ -72,7 +72,7 @@ export default async function FAQPage() {
 
         {/* Contact CTA */}
         <section className="bg-sand py-12">
-          <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto px-6 text-center">
             <h2 className="text-2xl font-bold mb-4 text-forest-900">
               Still have questions?
             </h2>

@@ -7,7 +7,7 @@ const AboutUs = () => {
     <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-grow bg-sand">
-        <div className="container mx-auto px-4 py-16">
+        <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-4xl font-bold text-center mb-12 text-forest-900">
               About Us
