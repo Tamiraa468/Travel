@@ -15,6 +15,10 @@ import {
   CheckCircle2,
   AlertCircle,
   Mail,
+  Tent,
+  PawPrint,
+  PartyPopper,
+  Compass,
 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -188,44 +192,44 @@ export default async function WhyMongoliaPage() {
                   title: "Nomadic Culture",
                   description:
                     "Live with nomadic families and experience their traditional lifestyle firsthand.",
-                  icon: "🏕️",
+                  Icon: Tent,
                 },
                 {
                   title: "Vast Landscapes",
                   description:
                     "From the Gobi Desert to pristine lakes and snow-capped mountains.",
-                  icon: "🏔️",
+                  Icon: Mountain,
                 },
                 {
                   title: "Unique Wildlife",
                   description:
                     "Spot snow leopards, wild horses, and the rare Gobi bear.",
-                  icon: "🐎",
+                  Icon: PawPrint,
                 },
                 {
                   title: "Rich History",
                   description:
                     "Walk in the footsteps of Chinggis Khan and discover ancient monasteries.",
-                  icon: "🏛️",
+                  Icon: Landmark,
                 },
                 {
                   title: "Traditional Festivals",
                   description:
                     "Experience Naadam, Eagle Festival, and Tsagaan Sar celebrations.",
-                  icon: "🎪",
+                  Icon: PartyPopper,
                 },
                 {
                   title: "Adventure Activities",
                   description:
                     "Horse trekking, camel riding, hiking, and off-road expeditions.",
-                  icon: "🎯",
+                  Icon: Compass,
                 },
               ].map((item, index) => (
                 <div
                   key={index}
                   className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-sand"
                 >
-                  <span className="text-4xl mb-4 block">{item.icon}</span>
+                  <item.Icon className="w-10 h-10 mb-4 text-gold-500" />
                   <h3 className="text-lg font-semibold mb-2 text-forest-900">
                     {item.title}
                   </h3>
