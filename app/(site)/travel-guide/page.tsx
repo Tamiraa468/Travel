@@ -155,56 +155,322 @@ export default async function TravelGuidePage() {
                       description:
                         "Requirements and application process for Mongolia visa",
                       icon: FileText,
+                      href: "#visa-info",
                     },
                     {
                       title: "Best Time to Travel",
                       description: "Weather patterns and seasonal highlights",
                       icon: Cloud,
+                      href: "#weather",
                     },
                     {
                       title: "Getting There",
                       description:
                         "Flights, border crossings, and transportation options",
                       icon: Plane,
+                      href: "#getting-there",
                     },
                     {
                       title: "Health & Safety",
                       description: "Vaccinations, insurance, and safety tips",
                       icon: Shield,
+                      href: "#health",
                     },
                     {
                       title: "What to Pack",
                       description:
                         "Essential items for your Mongolia adventure",
                       icon: Home,
+                      href: "#packing",
                     },
                     {
                       title: "Currency & Money",
                       description:
                         "Mongolian Tugrik, ATMs, and payment methods",
                       icon: FileText,
+                      href: "#currency",
                     },
                   ].map((item, index) => (
-                    <div
+                    <a
                       key={index}
-                      className="bg-ivory p-6 rounded-xl border border-sand"
+                      href={item.href}
+                      className="group bg-ivory p-6 rounded-xl border border-sand hover:border-gold-300 hover:shadow-md transition-all"
                     >
-                      <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center mb-4">
+                      <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-gold-500/20 transition-colors">
                         <item.icon className="w-6 h-6 text-forest-700" />
                       </div>
-                      <h3 className="font-semibold text-lg mb-2">
+                      <h3 className="font-semibold text-lg mb-2 group-hover:text-forest-700 transition-colors">
                         {item.title}
                       </h3>
                       <p className="text-charcoal text-sm">
                         {item.description}
                       </p>
-                      <span className="text-xs text-stone mt-2 block">
-                        Content coming soon
+                      <span className="text-xs text-gold-600 mt-3 inline-flex items-center gap-1 font-medium">
+                        Read more →
                       </span>
-                    </div>
+                    </a>
                   ))}
                 </>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* Best Time to Travel */}
+        <section id="weather" className="py-16 bg-ivory scroll-mt-24">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center">
+                <Cloud className="w-6 h-6 text-forest-700" />
+              </div>
+              <h2 className="text-3xl font-bold text-forest-900">
+                Best Time to Travel
+              </h2>
+            </div>
+            <p className="text-lg text-charcoal mb-8">
+              Mongolia has four distinct seasons. Choose your trip window based
+              on the experience you want.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                {
+                  season: "Summer (June – August)",
+                  best: "Best overall season",
+                  desc: "Long days, warm steppes (15–25°C), Naadam Festival in early July, lush green grasslands. The most popular time — book ahead.",
+                  color: "border-gold-500",
+                },
+                {
+                  season: "Spring (April – May)",
+                  best: "Quiet & blooming",
+                  desc: "Cool mornings, fewer crowds, melting snow in the north, dust storms possible in the Gobi. Good for cultural trips.",
+                  color: "border-forest-500",
+                },
+                {
+                  season: "Autumn (September – October)",
+                  best: "Photographer's favorite",
+                  desc: "Crisp air, golden larches, Eagle Festival in early October, stable weather. Excellent for trekking and horse riding.",
+                  color: "border-gold-600",
+                },
+                {
+                  season: "Winter (November – March)",
+                  best: "For the bold",
+                  desc: "Extreme cold (–20 to –40°C), Ice Festival on Khuvsgul Lake, Tsagaan Sar in February. Pack serious thermal gear.",
+                  color: "border-blue-500",
+                },
+              ].map((s) => (
+                <div
+                  key={s.season}
+                  className={`bg-white rounded-xl p-6 border-l-4 ${s.color} shadow-sm`}
+                >
+                  <h3 className="font-bold text-forest-900 text-lg mb-1">
+                    {s.season}
+                  </h3>
+                  <div className="text-sm font-semibold text-gold-600 mb-2">
+                    {s.best}
+                  </div>
+                  <p className="text-sm text-charcoal">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Getting There */}
+        <section id="getting-there" className="py-16 bg-sand scroll-mt-24">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center">
+                <Plane className="w-6 h-6 text-forest-700" />
+              </div>
+              <h2 className="text-3xl font-bold text-forest-900">
+                Getting There
+              </h2>
+            </div>
+            <p className="text-lg text-charcoal mb-8">
+              Reach Mongolia by air through Ulaanbaatar&apos;s Chinggis Khaan
+              International Airport (UBN), or overland by train and road.
+            </p>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-ivory rounded-xl p-6 border border-sand">
+                <Plane className="w-8 h-8 text-forest-700 mb-3" />
+                <h3 className="font-bold text-forest-900 mb-2">By Air</h3>
+                <p className="text-sm text-charcoal">
+                  Direct flights from Seoul, Tokyo, Beijing, Shanghai, Hong Kong,
+                  Istanbul, Frankfurt, Moscow and Bangkok. National carrier:
+                  MIAT Mongolian Airlines.
+                </p>
+              </div>
+              <div className="bg-ivory rounded-xl p-6 border border-sand">
+                <FileText className="w-8 h-8 text-forest-700 mb-3" />
+                <h3 className="font-bold text-forest-900 mb-2">By Train</h3>
+                <p className="text-sm text-charcoal">
+                  The Trans-Mongolian Railway connects Ulaanbaatar with Moscow
+                  (5 days) and Beijing (30 hours). One of the world&apos;s
+                  iconic rail journeys.
+                </p>
+              </div>
+              <div className="bg-ivory rounded-xl p-6 border border-sand">
+                <Car className="w-8 h-8 text-forest-700 mb-3" />
+                <h3 className="font-bold text-forest-900 mb-2">By Road</h3>
+                <p className="text-sm text-charcoal">
+                  Land borders with Russia (Altanbulag, Tsagaannuur) and China
+                  (Zamiin-Uud, Bulgan). Visa-free transit available for most
+                  nationalities.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Health & Safety */}
+        <section id="health" className="py-16 bg-ivory scroll-mt-24">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center">
+                <Shield className="w-6 h-6 text-forest-700" />
+              </div>
+              <h2 className="text-3xl font-bold text-forest-900">
+                Health &amp; Safety
+              </h2>
+            </div>
+            <p className="text-lg text-charcoal mb-8">
+              Mongolia is generally a safe destination. A bit of preparation
+              goes a long way.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                {
+                  title: "Vaccinations",
+                  body: "No mandatory vaccines for entry. Recommended: Hepatitis A & B, Tetanus, Typhoid. Consult your doctor 4–6 weeks before travel.",
+                },
+                {
+                  title: "Travel Insurance",
+                  body: "Strongly recommended — including medical evacuation coverage. Remote regions are far from hospitals.",
+                },
+                {
+                  title: "Altitude & Sun",
+                  body: "Ulaanbaatar sits at 1,350m. The sun is intense at altitude — bring SPF 50+, sunglasses, and a hat.",
+                },
+                {
+                  title: "Drinking Water",
+                  body: "Tap water in cities is generally safe but bottled or filtered water is recommended in the countryside.",
+                },
+                {
+                  title: "Personal Safety",
+                  body: "Crime is low. Watch for pickpockets in crowded markets in Ulaanbaatar. Avoid walking alone at night.",
+                },
+                {
+                  title: "Emergency Numbers",
+                  body: "Police: 102 · Ambulance: 103 · Fire: 101 · Tourist Police (UB): +976 7000-1284.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="bg-white rounded-xl p-6 border border-sand shadow-sm"
+                >
+                  <h3 className="font-bold text-forest-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-charcoal">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* What to Pack */}
+        <section id="packing" className="py-16 bg-sand scroll-mt-24">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center">
+                <Home className="w-6 h-6 text-forest-700" />
+              </div>
+              <h2 className="text-3xl font-bold text-forest-900">
+                What to Pack
+              </h2>
+            </div>
+            <p className="text-lg text-charcoal mb-8">
+              Mongolia&apos;s weather can swing 20°C in a single day. Layers
+              are essential year-round.
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { title: "Layered Clothing", items: "Lightweight base layers, fleece, waterproof outer shell" },
+                { title: "Sturdy Footwear", items: "Hiking boots with ankle support, sandals for camp" },
+                { title: "Sun Protection", items: "Wide-brim hat, SPF 50+ sunscreen, polarized sunglasses" },
+                { title: "Sleeping Gear", items: "Sleeping bag rated to -10°C if camping or in ger camps" },
+                { title: "Power & Tech", items: "Universal adapter (Type C/E), power bank, headlamp" },
+                { title: "First-Aid Kit", items: "Personal medications, ibuprofen, motion sickness pills, band-aids" },
+                { title: "Documents", items: "Passport, visa, travel insurance, printed itinerary copies" },
+                { title: "Cash & Cards", items: "Some MNT in small bills, USD as backup, debit card with no FX fees" },
+                { title: "Daypack", items: "20–30L backpack for day trips, packable rain cover" },
+              ].map((p) => (
+                <div
+                  key={p.title}
+                  className="bg-ivory rounded-xl p-5 border border-sand"
+                >
+                  <h3 className="font-semibold text-forest-900 mb-1">
+                    {p.title}
+                  </h3>
+                  <p className="text-sm text-charcoal">{p.items}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Currency & Money */}
+        <section id="currency" className="py-16 bg-ivory scroll-mt-24">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gold-500/10 rounded-xl flex items-center justify-center">
+                <FileText className="w-6 h-6 text-forest-700" />
+              </div>
+              <h2 className="text-3xl font-bold text-forest-900">
+                Currency &amp; Money
+              </h2>
+            </div>
+            <p className="text-lg text-charcoal mb-8">
+              The official currency is the Mongolian Tugrik (MNT or ₮). Cards
+              work in cities; cash is essential in the countryside.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {[
+                {
+                  title: "Currency",
+                  body: "Mongolian Tugrik (₮ / MNT). Notes: 100, 500, 1,000, 5,000, 10,000, 20,000. Approximate rate: 1 USD ≈ 3,400 ₮ (verify before travel).",
+                },
+                {
+                  title: "ATMs",
+                  body: "Widely available in Ulaanbaatar and aimag (province) centers. Most accept Visa and Mastercard. Daily withdrawal limits typically apply.",
+                },
+                {
+                  title: "Cards",
+                  body: "Hotels, restaurants and large shops in UB accept cards. Outside the city, cash is king.",
+                },
+                {
+                  title: "Currency Exchange",
+                  body: "Banks and exchange booths in UB give the best rates. USD, EUR, CNY, KRW, JPY, RUB and GBP are easy to exchange.",
+                },
+                {
+                  title: "Tipping",
+                  body: "Not customary historically, but 10% is increasingly common in tourist restaurants. For drivers/guides on multi-day tours: $5–10/day.",
+                },
+                {
+                  title: "Mobile Payments",
+                  body: "Domestic apps like SocialPay and QPay are everywhere but require a Mongolian bank account. Foreign visitors should plan around cash + cards.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="bg-white rounded-xl p-6 border border-sand shadow-sm"
+                >
+                  <h3 className="font-bold text-forest-900 mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-charcoal">{item.body}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

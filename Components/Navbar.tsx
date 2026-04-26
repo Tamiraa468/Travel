@@ -142,6 +142,7 @@ const Navbar: React.FC = () => {
         { href: "/about", label: t.common.aboutUs },
         { href: "/why-mongolia", label: t.common.whyMongolia },
         { href: "/travel-guide", label: t.common.travelGuide },
+        { href: "/hotels", label: t.common.hotels },
       ],
     },
     { href: "/blog", label: t.common.blog },
