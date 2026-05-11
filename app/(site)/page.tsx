@@ -99,7 +99,7 @@ export default function Home() {
         <HeaderSlider />
         <RecommendedTours />
         <WhyChooseUs />
-        {/* <PartnersSection /> */}
+        <PartnersSection />
         {/* <TestimonialsSection /> */}
         <CTASection />
       </main>
