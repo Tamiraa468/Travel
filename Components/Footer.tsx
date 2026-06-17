@@ -228,9 +228,14 @@ const Footer = () => {
               <Link href="#" className="hover:text-gold-500 transition-colors">
                 {t.footer.privacyPolicy}
               </Link>
-              <Link href="#" className="hover:text-gold-500 transition-colors">
+              <a
+                href="/Maralgoo_Dreamland_Travel_Terms_of_Service.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gold-500 transition-colors"
+              >
                 {t.footer.termsOfService}
-              </Link>
+              </a>
               <Link href="#" className="hover:text-gold-500 transition-colors">
                 {t.footer.cookiePolicy}
               </Link>
